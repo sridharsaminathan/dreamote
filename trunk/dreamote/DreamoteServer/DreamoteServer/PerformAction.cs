@@ -24,7 +24,13 @@ namespace DreamoteServer
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetCursorPos(int X, int Y);
-        
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
 
         public PerformAction()
         {
@@ -64,7 +70,21 @@ namespace DreamoteServer
         {
 
         }
-        
+
+        private string GetActiveWindowTitle()
+        {
+            const int nChars = 256;
+            IntPtr handle = IntPtr.Zero;
+            StringBuilder Buff = new StringBuilder(nChars);
+            handle = GetForegroundWindow();
+
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return null;
+        }
+
 
     }
 }
