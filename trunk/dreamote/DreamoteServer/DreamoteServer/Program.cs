@@ -15,7 +15,10 @@ namespace DreamoteServer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            DreamoteServerGui gui = new DreamoteServerGui();
+            gui.Text = "Dreamote Server GUI";
+            
+            Application.Run(gui);
         }
     }
 }

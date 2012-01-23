@@ -1,6 +1,6 @@
 ﻿namespace DreamoteServer
 {
-    partial class Form1
+    partial class DreamoteServerGui
     {
         /// <summary>
         /// Required designer variable.
