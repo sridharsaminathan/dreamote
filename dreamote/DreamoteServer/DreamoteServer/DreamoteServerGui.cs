@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace DreamoteServer
 {
-    public partial class Form1 : Form
+    public partial class DreamoteServerGui : Form
     {
-        public Form1()
+        public DreamoteServerGui()
         {
             InitializeComponent();
         }
