@@ -67,6 +67,7 @@
     <Compile Include="DreamoteServerGui.Designer.cs">
       <DependentUpon>DreamoteServerGui.cs</DependentUpon>
     </Compile>
+    <Compile Include="PerformAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DreamoteServerGui.resx">
