@@ -15,6 +15,7 @@ namespace DreamoteServer
         private const int MOUSEEVENT_RIGHTUP = 0x10;
         private const int MOUSEEVENT_MIDDLEDOWN = 0x020;
         private const int MOUSEEVENT_MIDDLEUP = 0x040;
+        private const int MOUSEEVENT_SCROLLWHEEL = 0x800;
 
 
         [DllImport("user32.dll")]
@@ -59,6 +60,10 @@ namespace DreamoteServer
 
         }
 
+        public void ScrollWheel()
+        {
+
+        }
         
 
     }

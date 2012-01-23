@@ -15,5 +15,10 @@ namespace DreamoteServer
         {
             InitializeComponent();
         }
+
+        private void btn_start_server_Click(object sender, EventArgs e)
+        {
+           
+        }
     }
 }
