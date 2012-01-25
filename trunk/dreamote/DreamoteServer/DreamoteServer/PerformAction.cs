@@ -71,7 +71,7 @@ namespace DreamoteServer
 
         }
 
-        private string GetActiveWindowTitle()
+        public string GetActiveWindowTitle()
         {
             const int nChars = 256;
             IntPtr handle = IntPtr.Zero;
@@ -83,6 +83,13 @@ namespace DreamoteServer
                 return Buff.ToString();
             }
             return null;
+        }
+        public Boolean ChangeActiveWindow()
+        {
+
+
+
+            return true;
         }
 
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btn_start_server = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -35,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txt_ip = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.checkbox_boot = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -105,19 +108,40 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "IP";
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipText = "Dreamote Server";
+            this.notifyIcon1.BalloonTipTitle = "Dreamote Title";
+            this.notifyIcon1.Text = "Dreamote";
+            this.notifyIcon1.Visible = true;
+            // 
+            // checkbox_boot
+            // 
+            this.checkbox_boot.AutoSize = true;
+            this.checkbox_boot.Location = new System.Drawing.Point(18, 175);
+            this.checkbox_boot.Name = "checkbox_boot";
+            this.checkbox_boot.Size = new System.Drawing.Size(164, 17);
+            this.checkbox_boot.TabIndex = 3;
+            this.checkbox_boot.Text = "Run this on Windows Startup";
+            this.checkbox_boot.UseVisualStyleBackColor = true;
+            this.checkbox_boot.CheckStateChanged += new System.EventHandler(this.checkbox_boot_CheckStateChanged);
+            // 
             // DreamoteServerGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(306, 262);
+            this.Controls.Add(this.checkbox_boot);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "DreamoteServerGui";
             this.Text = "Dreamote Server Gui";
+            this.Resize += new System.EventHandler(this.DreamoteServerGui_Resize);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -130,6 +154,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txt_ip;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.CheckBox checkbox_boot;
     }
 }
 
