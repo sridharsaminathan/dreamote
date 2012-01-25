@@ -50,8 +50,10 @@ namespace DreamoteServer
                 //start server
                 txt_port.Enabled = false;
             }
+            PerformAction per = new PerformAction();
+            System.Threading.Thread.Sleep(5000);
+            per.ScrollWheel();
             
-
         }
 
         
