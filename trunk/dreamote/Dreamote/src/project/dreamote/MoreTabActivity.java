@@ -1,0 +1,13 @@
+package project.dreamote;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class MoreTabActivity extends Activity{
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.more_tab);
+	}
+}
