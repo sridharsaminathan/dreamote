@@ -40,6 +40,7 @@ public class MainTabHostActivity extends TabActivity {
         createTab(intent, R.string.more_tab_tag, android.R.drawable.ic_dialog_alert);
 
         tabHost.setCurrentTab(1);
+        
     }
     
     private void createTab(Intent intent, int tagId, int drawableId) {
