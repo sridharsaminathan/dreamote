@@ -19,7 +19,7 @@ public class MainTabHostActivity extends TabActivity {
         setContentView(R.layout.main_tab_host);
         
         res = getResources(); 
-        tabHost = getTabHost(); 
+        tabHost = getTabHost();
         
         
         // Create an Intent to launch an Activity for the tab (to be reused)
