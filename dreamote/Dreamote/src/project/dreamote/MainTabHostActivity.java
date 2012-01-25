@@ -59,7 +59,9 @@ public class MainTabHostActivity extends ActivityGroup {
     	TextView view = new TextView(this);
 //    	view.setTextSize(10);
     	view.setTextAppearance(this, R.style.tab_text);
-    	view.setGravity(Gravity.CENTER_HORIZONTAL);
+    	view.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+    	view.setPadding(0, 0, 0, 4);
+//    	view.setPadding(0, 0, 0, 4);
     	view.setText(tag);
     	view.setBackgroundDrawable(res.getDrawable(drawableId));
         TabSpec spec = tabHost.newTabSpec(tag).setIndicator(view).setContent(intent);
