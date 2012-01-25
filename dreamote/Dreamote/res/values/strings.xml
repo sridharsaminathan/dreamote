@@ -4,4 +4,10 @@
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">Dreamote</string>
 
+    
+    <string name="mousepad_tab_tag">mousepad</string>
+    <string name="programs_tab_tag">programs</string>
+    <string name="empty_tab_tag">empty</string>
+    <string name="server_tab_tag">servers</string>
+    <string name="more_tab_tag">more</string>
 </resources>
