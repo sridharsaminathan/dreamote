@@ -9,13 +9,33 @@ namespace DreamoteServer
 {
     public class PerformAction
     {
+        //Mouse Constants
         private const int MOUSEEVENT_LEFTDOWN = 0x02;
         private const int MOUSEEVENT_LEFTUP = 0x04;
         private const int MOUSEEVENT_RIGHTDOWN = 0x08;
         private const int MOUSEEVENT_RIGHTUP = 0x10;
         private const int MOUSEEVENT_MIDDLEDOWN = 0x020;
         private const int MOUSEEVENT_MIDDLEUP = 0x040;
-        private const int MOUSEEVENT_SCROLLWHEEL = 0x800;
+
+
+        //Scroll Constants
+        private const int WM_SCROLL = 276; // Horizontal scroll
+        private const int WM_VSCROLL = 277; // Vertical scroll
+        private const int SB_LINEUP = 0; // Scrolls one line up
+        private const int SB_LINELEFT = 0;// Scrolls one cell left
+        private const int SB_LINEDOWN = 1; // Scrolls one line down
+        private const int SB_LINERIGHT = 1;// Scrolls one cell right
+        private const int SB_PAGEUP = 2; // Scrolls one page up
+        private const int SB_PAGELEFT = 2;// Scrolls one page left
+        private const int SB_PAGEDOWN = 3; // Scrolls one page down
+        private const int SB_PAGERIGTH = 3; // Scrolls one page right
+        private const int SB_PAGETOP = 6; // Scrolls to the upper left
+        private const int SB_LEFT = 6; // Scrolls to the left
+        private const int SB_PAGEBOTTOM = 7; // Scrolls to the upper right
+        private const int SB_RIGHT = 7; // Scrolls to the right
+        private const int SB_ENDSCROLL = 8; // Ends scroll
+
+
 
 
         [DllImport("user32.dll")]
@@ -31,6 +51,11 @@ namespace DreamoteServer
         [DllImport("user32.dll")]
         static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
 
         public PerformAction()
         {
@@ -68,6 +93,9 @@ namespace DreamoteServer
 
         public void ScrollWheel()
         {
+          
+
+            SendMessage(GetActiveWindowHandle(), WM_VSCROLL, (IntPtr)SB_LINEDOWN, IntPtr.Zero);
 
         }
 
@@ -84,12 +112,19 @@ namespace DreamoteServer
             }
             return null;
         }
-        public Boolean ChangeActiveWindow()
+        private IntPtr GetActiveWindowHandle()
         {
-
-
-
-            return true;
+            return GetForegroundWindow();
+        }
+        public Boolean SetActiveWindow(String program)
+        {
+            System.Diagnostics.Process[] p = System.Diagnostics.Process.GetProcessesByName(program);
+            if (p.Length > 0)
+            {
+                SetForegroundWindow(p[0].MainWindowHandle);
+                return true;
+            }
+            return false;
         }
 
 
