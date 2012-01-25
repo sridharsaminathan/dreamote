@@ -18,21 +18,21 @@
 	            android:id="@android:id/tabcontent"
 	            android:layout_width="fill_parent"
 	            android:layout_height="fill_parent"
+	            android:background="@color/page_background_grey"
 	            android:layout_weight="1" >
 	        </FrameLayout>
 	        <TabWidget 
 	            android:id="@android:id/tabs"
 	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
+	            android:layout_height="60dip"
 	            android:layout_weight="0"
-	            android:layout_marginBottom="-5dip"
 	        />
 	    </LinearLayout>
 	</TabHost>
 	<SlidingDrawer 
 	    android:id="@+id/media_drawer"
 	    android:layout_width="fill_parent"
-	    android:layout_height="250dip"
+	    android:layout_height="265dip"
 	    android:handle="@+id/media_drawer_handle"
 	    android:content="@+id/media_drawer_content"
 	    android:layout_alignParentBottom="true"
@@ -41,7 +41,7 @@
 	        android:id="@id/media_drawer_content"
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
-	        android:background="@android:color/background_light"
+	        android:background="@color/drawer_content_background"
 	        >
 	        <TextView 
 	            android:layout_width="wrap_content"
@@ -50,11 +50,11 @@
 	            android:textColor="@android:color/black"
 	            android:text="Media Drawer"/>
 	    </RelativeLayout>
-	    <ImageView 
+	    <View 
 	        android:id="@id/media_drawer_handle"
 	        android:layout_width="80dip"
 	        android:layout_height="55dip"
-	        android:src="@drawable/media_drawer_handle_btn"
+	        android:background="@drawable/media_drawer_handle_selector"
 	    />
 	</SlidingDrawer>
 </RelativeLayout>
