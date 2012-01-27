@@ -77,7 +77,7 @@ namespace DreamoteServer
 
         public void LeftMousePress()
         {
-            DoMouseEvent(MOUSEEVENT_LEFTUP);
+            DoMouseEvent(MOUSEEVENT_LEFTDOWN);
         }
         public void LeftMouseRelease()
         {
