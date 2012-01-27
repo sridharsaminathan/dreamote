@@ -17,12 +17,13 @@ namespace DreamoteServer
         private const int DEFAULT_PORT = 53135;
         private RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private const String REGISTRY_NAME = "DreamoteServer";
+        private ServerCommunication serverCom;
 
         public DreamoteServerGui()
         {
             InitializeComponent();
             InitializeGuiComponents();
-            
+            serverCom = new ServerCommunication();
         }
 
         private void InitializeGuiComponents()
@@ -50,8 +51,9 @@ namespace DreamoteServer
                 //start server
                 txt_port.Enabled = false;
             }
-            System.Threading.Thread.Sleep(5000);
-            SendKeys.Send("aäåaasd");
+
+           // serverCom.receive();
+
             
         }
 
