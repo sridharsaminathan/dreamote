@@ -34,13 +34,4 @@
 		android:layout_above="@id/mouse_buttons_layout"
 		android:background="@drawable/mousepad_background"
 	/>
-	<TextView 
-		android:id="@+id/mouse_pos_txt"
-		android:layout_width="60dip"
-		android:layout_height="15dip"
-		android:textSize="10dip"
-		android:gravity="center"
-		android:textColor="#ff0000"
-		android:background="@android:color/black"
-	/>
 </RelativeLayout>

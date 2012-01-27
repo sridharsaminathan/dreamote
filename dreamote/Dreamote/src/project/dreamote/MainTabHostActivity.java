@@ -65,7 +65,26 @@ public class MainTabHostActivity extends ActivityGroup{
         tabHost.addTab(spec);
     }
 
-    public void sendData(String data) {
-    	communication.sendCommand(data);
+    public void sendMouseMove(float oldX, float oldY, float newX, float newY) {
+    	communication.sendCommand(MessageGenerator.createMouseMoveMessage(oldX, oldY, newX, newY));
     }
+    
+    public void sendMouseClick(int action) {
+		switch(action) {
+		case ActionConstants.ACTION_MOUSE_LEFT_PRESS:
+			communication.sendCommand(MessageGenerator.createMouseLeftBtnPress());
+			break;
+		case ActionConstants.ACTION_MOUSE_RIGHT_PRESS:
+			communication.sendCommand(MessageGenerator.createMouseRightBtnPress());
+			break;
+		case ActionConstants.ACTION_MOUSE_LEFT_RELEAS:
+			communication.sendCommand(MessageGenerator.createMouseLeftBtnRelease());
+			break;
+		case ActionConstants.ACTION_MOUSE_RIGHT_RELEASE:
+			communication.sendCommand(MessageGenerator.createMouseRightBtnRelease());
+			break;
+		default:
+			return;
+		}
+	}
 }
