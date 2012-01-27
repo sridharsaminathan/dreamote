@@ -8,7 +8,9 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 
-public class MousepadTabActivity extends Activity implements OnTouchListener {
+public class MousepadTabActivity extends Activity implements OnTouchListener, OnClickListener {
+	private static final int PAD_CLICK_DIFF = 7;
+	
 	private MainTabHostActivity parent;
 	
 	private View mousePad;			// The view acting as mousepad
@@ -17,6 +19,8 @@ public class MousepadTabActivity extends Activity implements OnTouchListener {
 	
 	private float oldX;
 	private float oldY;
+	private float pressedX;
+	private float pressedY;
 	int diffX;
 	int diffY;
 	
@@ -38,6 +42,7 @@ public class MousepadTabActivity extends Activity implements OnTouchListener {
     
     private void setListeners() {
     	mousePad.setOnTouchListener(this);
+    	mousePad.setOnClickListener(this);
     	leftMouseBtn.setOnTouchListener(this);
     	rightMouseBtn.setOnTouchListener(this);
     }
@@ -47,13 +52,31 @@ public class MousepadTabActivity extends Activity implements OnTouchListener {
 		case MotionEvent.ACTION_DOWN:
 			return handleActionDown(v.getId(), event.getX(), event.getY());
 		case MotionEvent.ACTION_MOVE:
-			boolean returnValue = handleActionMove(v.getId(), event.getX(), event.getY());
-			return returnValue;
+			return handleActionMove(v.getId(), event.getX(), event.getY());
 		case MotionEvent.ACTION_UP:
-			return handleActionUp(v.getId());
+			return handleActionUp(v.getId(), event.getX(), event.getY());
 		default:
 			return false;
 		}
+		
+//		switch(event.getAction()) {
+//		case MotionEvent.ACTION_DOWN:
+//			handleActionDown(v.getId(), event.getX(), event.getY());
+//			break;
+//		case MotionEvent.ACTION_MOVE:
+//			handleActionMove(v.getId(), event.getX(), event.getY());
+//			break;
+//		case MotionEvent.ACTION_UP:
+//			handleActionUp(v.getId(), event.getX(), event.getY());
+//			break;
+//		}
+//		
+//		int xDiff = (int)Math.abs(pressedX - event.getX());
+//		int yDiff = (int)Math.abs(pressedY - event.getY());
+//		if(xDiff < PAD_CLICK_DIFF && yDiff < PAD_CLICK_DIFF) {
+//			return false;  // OnClick on mousepad will not be performed
+//		}
+//		return true;
 	}
 	
 	private boolean handleActionMove(int viewId, float eventX, float eventY) {
@@ -66,29 +89,42 @@ public class MousepadTabActivity extends Activity implements OnTouchListener {
 		return false;
 	}
 	
-	private boolean handleActionUp(int viewId) {
+	private boolean handleActionUp(int viewId, float eventX, float eventY) {
 		if (viewId == leftMouseBtn.getId()) {
 			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_LEFT_RELEAS);
-			return true;
 		} else if (viewId == rightMouseBtn.getId()) {
 			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_RIGHT_RELEASE);
-			return true;
-		} else
-			return false;
+		} else if (viewId == mousePad.getId()) {
+			int xDiff = (int)Math.abs(pressedX - eventX);
+			int yDiff = (int)Math.abs(pressedY - eventY);
+			if(xDiff > PAD_CLICK_DIFF || yDiff > PAD_CLICK_DIFF) {
+				return true;  // OnClick on mousepad will not be performed
+			}
+		}
+	    return false;
 	}
 	
 	private boolean handleActionDown(int viewId, float eventX, float eventY) {
 		if(viewId == mousePad.getId()) {
-			oldX = eventX;
-			oldY = eventY;
-			return true;
+			pressedX = oldX = eventX;
+			pressedY = oldY = eventY;
+			return false;
 		} else if (viewId == leftMouseBtn.getId()) {
 			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_LEFT_PRESS);
-			return true;
+			leftMouseBtn.performClick();
+			return false;
 		} else if (viewId == rightMouseBtn.getId()) {
 			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_RIGHT_PRESS);
-			return true;
+			return false;
 		} else
 			return false;
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v.getId() == mousePad.getId()) {
+			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_LEFT_PRESS);
+			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_LEFT_RELEAS);
+		}
 	}
 }
