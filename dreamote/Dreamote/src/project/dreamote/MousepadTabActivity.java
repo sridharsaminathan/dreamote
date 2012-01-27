@@ -21,8 +21,8 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 	private float oldY;
 	private float pressedX;
 	private float pressedY;
-	int diffX;
-	int diffY;
+	private float maxXdiff;
+	private float maxYdiff;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,29 +54,12 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 		case MotionEvent.ACTION_MOVE:
 			return handleActionMove(v.getId(), event.getX(), event.getY());
 		case MotionEvent.ACTION_UP:
-			return handleActionUp(v.getId(), event.getX(), event.getY());
+			boolean returnValue = handleActionUp(v.getId(), event.getX(), event.getY());
+			maxXdiff = maxYdiff = 0;
+			return returnValue;
 		default:
 			return false;
 		}
-		
-//		switch(event.getAction()) {
-//		case MotionEvent.ACTION_DOWN:
-//			handleActionDown(v.getId(), event.getX(), event.getY());
-//			break;
-//		case MotionEvent.ACTION_MOVE:
-//			handleActionMove(v.getId(), event.getX(), event.getY());
-//			break;
-//		case MotionEvent.ACTION_UP:
-//			handleActionUp(v.getId(), event.getX(), event.getY());
-//			break;
-//		}
-//		
-//		int xDiff = (int)Math.abs(pressedX - event.getX());
-//		int yDiff = (int)Math.abs(pressedY - event.getY());
-//		if(xDiff < PAD_CLICK_DIFF && yDiff < PAD_CLICK_DIFF) {
-//			return false;  // OnClick on mousepad will not be performed
-//		}
-//		return true;
 	}
 	
 	private boolean handleActionMove(int viewId, float eventX, float eventY) {
@@ -84,6 +67,10 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 			parent.sendMouseMove(oldX, oldY, eventX, eventY);
 			oldX = eventX;
 			oldY = eventY;
+			float xDiff = Math.abs(pressedX-eventX);
+			float yDiff = Math.abs(pressedY-eventY);
+			maxXdiff = xDiff > maxXdiff ? xDiff : maxXdiff;
+			maxYdiff = yDiff > maxYdiff ? yDiff : maxYdiff;
 			return true;
 		}
 		return false;
@@ -95,9 +82,9 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 		} else if (viewId == rightMouseBtn.getId()) {
 			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_RIGHT_RELEASE);
 		} else if (viewId == mousePad.getId()) {
-			int xDiff = (int)Math.abs(pressedX - eventX);
-			int yDiff = (int)Math.abs(pressedY - eventY);
-			if(xDiff > PAD_CLICK_DIFF || yDiff > PAD_CLICK_DIFF) {
+//			int xDiff = (int)Math.abs(pressedX - eventX);
+//			int yDiff = (int)Math.abs(pressedY - eventY);
+			if(maxXdiff > PAD_CLICK_DIFF || maxYdiff > PAD_CLICK_DIFF) {
 				return true;  // OnClick on mousepad will not be performed
 			}
 		}
