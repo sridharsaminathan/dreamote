@@ -27,7 +27,13 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	}
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		String tmp ="";
+		
+		if(event.getAction() == KeyEvent.ACTION_UP){
+			
+			char t = (char)event.getUnicodeChar();
+			
+		}
+		
 		return super.dispatchKeyEvent(event);
 
 	}

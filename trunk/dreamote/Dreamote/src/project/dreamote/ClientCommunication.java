@@ -5,21 +5,40 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 
 public class ClientCommunication {
 
     private String serverIP;
     private DatagramSocket clientSocket;
+    private InetAddress IPAddress;
     
     /**
      * 
      * @param address String of IP address to the server.
+     * @throws SocketException 
      */
     public ClientCommunication(String address){
         this.serverIP = address;
-        sendCommand("Connecting");    //Establish connection.
+        //sendCommand("Connecting");    //Establish connection.
+        clientSocket = null;
+        createSocket();
     }
+    
+    private void createSocket(){
+    	
+    	try {
+    		IPAddress = InetAddress.getByName(serverIP);
+			clientSocket = new DatagramSocket();
+		} catch (SocketException e) {
+			e.printStackTrace();
+		
+		}catch(UnknownHostException es){
+			es.printStackTrace();
+		}
+    }
+    
     
     /**
      * 
@@ -27,15 +46,10 @@ public class ClientCommunication {
      */
     public void sendCommand(String command){
         try {
-            clientSocket = new DatagramSocket();         
-            InetAddress IPAddress = InetAddress.getByName(serverIP);
             byte[] sendData = new byte[1024];
             sendData = command.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
             clientSocket.send(sendPacket);
-            if(!(command.equals("mouseMove"))) //No ack for mouse movement to decrease the traffic.
-                receiveACK();
-            clientSocket.close();
         }catch (SocketException e) {
             System.out.println("Could not create socket");
         } catch (IOException e) {
@@ -56,6 +70,14 @@ public class ClientCommunication {
         }catch (IOException e) {
             System.out.println("Could not receive package");
         }
-    }    
+    }
+    
+    public boolean closeSocket(){
+    	if(clientSocket != null){
+    		clientSocket.close();
+    		return true;
+    	}
+    	return false;
+    }
       
 }
