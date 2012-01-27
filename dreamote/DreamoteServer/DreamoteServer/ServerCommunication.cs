@@ -5,12 +5,7 @@ using System.Text;
 
 public class ServerCommunication
 {
-    //ActionController ac;
-    static void Main()
-    {
-        ServerCommunication sc = new ServerCommunication();
-        sc.receive();
-    }
+   
     IPEndPoint sender;
     UdpClient newsock;
     public ServerCommunication()
@@ -26,7 +21,7 @@ public class ServerCommunication
         sender = new IPEndPoint(IPAddress.Any, 0);
 
         data = newsock.Receive(ref sender);
-        send("Connected");
+        //send("Connected");
         while (true)
         {
             data = newsock.Receive(ref sender);
