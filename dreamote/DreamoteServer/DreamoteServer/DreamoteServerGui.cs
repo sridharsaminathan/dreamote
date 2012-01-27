@@ -52,7 +52,7 @@ namespace DreamoteServer
                 txt_port.Enabled = false;
             }
 
-           // serverCom.receive();
+           serverCom.receive();
 
             
         }

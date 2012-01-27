@@ -63,8 +63,10 @@ namespace DreamoteServer
 
         }
 
-        public static void SetCursorPosition(int x, int y)
+        public static void SetCursorPosition(int xDiff, int yDiff)
         {
+            int x = Cursor.Position.X + xDiff;
+            int y = Cursor.Position.Y + yDiff;
             SetCursorPos(x, y);
         }
 
