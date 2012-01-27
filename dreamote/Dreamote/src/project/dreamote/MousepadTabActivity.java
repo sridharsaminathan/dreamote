@@ -47,6 +47,7 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 		diffY = oldY - newY;
 		TextView tv = (TextView)findViewById(R.id.mouse_pos_txt);
 		tv.setText("" + ((int)newX) + " ; " + ((int)newY));
+		((MainTabHostActivity)this.getParent()).sendData("mouseMove;" + diffX + ";" + diffY);
     }
 	
 	public boolean onTouch(View v, MotionEvent event) {
