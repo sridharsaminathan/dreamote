@@ -65,43 +65,45 @@ namespace DreamoteServer
 
         public static void SetCursorPosition(int xDiff, int yDiff)
         {
-            int x = Cursor.Position.X + xDiff;
-            int y = Cursor.Position.Y + yDiff;
-            SetCursorPos(x, y);
+            SetCursorPos(Cursor.Position.X + xDiff, Cursor.Position.Y + yDiff);
         }
 
 
-
-        public void LeftMouseClick()
+        private void DoMouseEvent(int dwFlags)
         {
-            int X = Cursor.Position.X;
-            int Y = Cursor.Position.Y;
-            mouse_event(MOUSEEVENT_LEFTDOWN | MOUSEEVENT_LEFTUP, X, Y, 0, 0);
-
+            mouse_event(dwFlags, Cursor.Position.X, Cursor.Position.Y, 0, 0);
         }
 
-        public void RighMouseClick()
-        {
-            int X = Cursor.Position.X;
-            int Y = Cursor.Position.Y;
-            mouse_event(MOUSEEVENT_RIGHTDOWN | MOUSEEVENT_RIGHTUP, X, Y, 0, 0);
 
+        public void LeftMousePress()
+        {
+            DoMouseEvent(MOUSEEVENT_LEFTUP);
+        }
+        public void LeftMouseRelease()
+        {
+            DoMouseEvent(MOUSEEVENT_LEFTUP);
         }
 
-        public void MiddleMouseClick()
+        public void RightMousePress()
         {
-            int X = Cursor.Position.X;
-            int Y = Cursor.Position.Y;
-            mouse_event(MOUSEEVENT_MIDDLEDOWN | MOUSEEVENT_MIDDLEUP, X, Y, 0, 0);
-
+            DoMouseEvent(MOUSEEVENT_RIGHTDOWN);
+        }
+        public void RightMouseRelease()
+        {
+            DoMouseEvent(MOUSEEVENT_RIGHTUP);
+        }
+        public void MiddleMousePress()
+        {
+            DoMouseEvent(MOUSEEVENT_MIDDLEDOWN);
+        }
+        public void MiddleMouseRelease()
+        {
+            DoMouseEvent(MOUSEEVENT_MIDDLEUP);
         }
 
         public void ScrollWheel()
         {
-          
-
             SendMessage(GetActiveWindowHandle(), WM_VSCROLL, (IntPtr)SB_LINEDOWN, IntPtr.Zero);
-
         }
         //gets the title of active window
         public string GetActiveWindowTitle()
