@@ -50,7 +50,8 @@ namespace DreamoteServer
                 //start server
                 txt_port.Enabled = false;
             }
-            
+            System.Threading.Thread.Sleep(5000);
+            SendKeys.Send("aäåaasd");
             
         }
 
