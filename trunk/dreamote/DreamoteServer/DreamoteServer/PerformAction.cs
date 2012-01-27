@@ -68,6 +68,8 @@ namespace DreamoteServer
             SetCursorPos(x, y);
         }
 
+
+
         public void LeftMouseClick()
         {
             int X = Cursor.Position.X;
@@ -99,7 +101,7 @@ namespace DreamoteServer
             SendMessage(GetActiveWindowHandle(), WM_VSCROLL, (IntPtr)SB_LINEDOWN, IntPtr.Zero);
 
         }
-
+        //gets the title of active window
         public string GetActiveWindowTitle()
         {
             const int nChars = 256;
@@ -117,6 +119,8 @@ namespace DreamoteServer
         {
             return GetForegroundWindow();
         }
+
+        //set the activ window
         public Boolean SetActiveWindow(String program)
         {
             System.Diagnostics.Process[] p = System.Diagnostics.Process.GetProcessesByName(program);
@@ -151,6 +155,11 @@ namespace DreamoteServer
             }
         }*/
 
+        //sends a keyboard key to the application in focus
+        public void sendKeyBoardKey(String key)
+        {
+            SendKeys.Send(key);
+        }
 
 
     }
