@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class MainTabHostActivity extends ActivityGroup{
 	private TabHost tabHost;		// The activity TabHost
 	private Resources res;			// Resource object to get Drawables
+	private ClientCommunication communication;  // Used to contact server
 	
     /** Called when the activity is first created. */
     @Override
@@ -19,6 +20,7 @@ public class MainTabHostActivity extends ActivityGroup{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_host);
         
+        communication = new ClientCommunication("192.168.0.194");
         res = getResources(); 
         tabHost = (TabHost)findViewById(android.R.id.tabhost);
         tabHost.setup(getLocalActivityManager());
@@ -61,5 +63,9 @@ public class MainTabHostActivity extends ActivityGroup{
     	view.setBackgroundDrawable(res.getDrawable(drawableId));
         TabSpec spec = tabHost.newTabSpec(tag).setIndicator(view).setContent(intent);
         tabHost.addTab(spec);
+    }
+
+    public void sendData(String data) {
+    	communication.sendCommand(data);
     }
 }
