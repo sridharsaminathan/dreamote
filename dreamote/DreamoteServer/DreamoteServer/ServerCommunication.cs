@@ -9,11 +9,12 @@ namespace DreamoteServer
 {
     public class ServerCommunication
     {
-
+        private HandleAction handleAction;
         IPEndPoint sender;
         UdpClient newsock;
         public ServerCommunication()
         {
+            handleAction = new HandleAction();
 
         }
         public void receive()
@@ -30,8 +31,8 @@ namespace DreamoteServer
                 data = newsock.Receive(ref sender);
                 //Console.WriteLine(Encoding.ASCII.GetString(data, 0, data.Length));
 
-                String[] spkit = Encoding.ASCII.GetString(data, 0, data.Length).Split(';');
-                PerformAction.SetCursorPosition(int.Parse(spkit[1]), int.Parse(spkit[2]));
+                handleAction.performAction(Encoding.ASCII.GetString(data, 0, data.Length));
+
                 //ac.action(Encoding.ASCII.GetString(data, 0, data.Length));
                 //send(Encoding.ASCII.GetString(data, 0, data.Length));
             }
