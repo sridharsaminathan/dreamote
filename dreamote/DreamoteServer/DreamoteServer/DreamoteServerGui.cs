@@ -15,7 +15,7 @@ namespace DreamoteServer
 {
     public partial class DreamoteServerGui : Form
     {
-        private const int DEFAULT_PORT = 53135;
+        private const int DEFAULT_PORT = 9876;
         private RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private const String REGISTRY_NAME = "DreamoteServer";
         private ServerCommunication serverCom = null;
@@ -53,7 +53,7 @@ namespace DreamoteServer
                 //start server
                 txt_port.Enabled = false;
                 btn_start_server.Enabled = false;
-                serverCom = new ServerCommunication();
+                serverCom = new ServerCommunication(port);
                 workThread = new Thread(new ThreadStart(serverCom.receive));
                 workThread.Start();
             }

@@ -13,19 +13,20 @@ namespace DreamoteServer
         private IPEndPoint sender;
         private UdpClient newsock = null;
         private bool retreiveData = true;
+        private int port;
 
 
-        public ServerCommunication()
+        public ServerCommunication( int port)
         {
             handleAction = new HandleAction();
-
+            this.port = port;
         }
 
 
         public void receive()
         {
             byte[] data = new byte[1024];
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 9876);
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, port);
             newsock = new UdpClient(ipep);
             sender = new IPEndPoint(IPAddress.Any, 0);
 
