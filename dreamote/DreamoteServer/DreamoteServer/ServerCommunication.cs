@@ -10,13 +10,18 @@ namespace DreamoteServer
     public class ServerCommunication
     {
         private HandleAction handleAction;
-        IPEndPoint sender;
-        UdpClient newsock;
+        private IPEndPoint sender;
+        private UdpClient newsock = null;
+        private bool retreiveData = true;
+
+
         public ServerCommunication()
         {
             handleAction = new HandleAction();
 
         }
+
+
         public void receive()
         {
             byte[] data = new byte[1024];
@@ -24,17 +29,11 @@ namespace DreamoteServer
             newsock = new UdpClient(ipep);
             sender = new IPEndPoint(IPAddress.Any, 0);
 
-            data = newsock.Receive(ref sender);
-            //send("Connected");
-            while (true)
+           
+            while (retreiveData)
             {
                 data = newsock.Receive(ref sender);
-                //Console.WriteLine(Encoding.ASCII.GetString(data, 0, data.Length));
-
                 handleAction.performAction(Encoding.ASCII.GetString(data, 0, data.Length));
-
-                //ac.action(Encoding.ASCII.GetString(data, 0, data.Length));
-                //send(Encoding.ASCII.GetString(data, 0, data.Length));
             }
         }
         public void send(String msg)
@@ -48,6 +47,21 @@ namespace DreamoteServer
             sendData = Encoding.ASCII.GetBytes(msg);
             newsock.Send(sendData, sendData.Length, sender);
 
+
+        }
+
+        public void CloseConnections()
+        {
+            retreiveData = false;
+            if (newsock != null)
+                try
+                {
+                    newsock.Close();
+                }
+                catch (SocketException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
 
         }
     }

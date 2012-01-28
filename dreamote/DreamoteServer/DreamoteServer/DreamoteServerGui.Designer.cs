@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.checkbox_boot = new System.Windows.Forms.CheckBox();
+            this.btn_stop_server = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +55,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_stop_server);
             this.groupBox1.Controls.Add(this.btn_start_server);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
@@ -126,6 +128,16 @@
             this.checkbox_boot.UseVisualStyleBackColor = true;
             this.checkbox_boot.CheckStateChanged += new System.EventHandler(this.checkbox_boot_CheckStateChanged);
             // 
+            // btn_stop_server
+            // 
+            this.btn_stop_server.Location = new System.Drawing.Point(119, 19);
+            this.btn_stop_server.Name = "btn_stop_server";
+            this.btn_stop_server.Size = new System.Drawing.Size(75, 23);
+            this.btn_stop_server.TabIndex = 1;
+            this.btn_stop_server.Text = "Stop Server";
+            this.btn_stop_server.UseVisualStyleBackColor = true;
+            this.btn_stop_server.Click += new System.EventHandler(this.btn_stop_server_Click);
+            // 
             // DreamoteServerGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,6 +168,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.CheckBox checkbox_boot;
+        private System.Windows.Forms.Button btn_stop_server;
     }
 }
 
