@@ -17,7 +17,7 @@ namespace DreamoteServer
 
         public void performAction(String actionStr)
         {
-            String[] splitStr = splitString(actionStr);
+            String[] splitStr = actionStr.Split(';');
 
             
             switch(int.Parse(splitStr[0]))
@@ -45,13 +45,6 @@ namespace DreamoteServer
                     break;
             }
                 
-        }
-
-        public String[] splitString(String str)
-        {
-
-            String[] splitStr = str.Split(';');
-            return splitStr;
         }
 
     }
