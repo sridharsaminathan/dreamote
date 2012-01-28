@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Win32;
+using System.Threading;
 
 namespace DreamoteServer
 {
@@ -17,13 +18,14 @@ namespace DreamoteServer
         private const int DEFAULT_PORT = 53135;
         private RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private const String REGISTRY_NAME = "DreamoteServer";
-        private ServerCommunication serverCom;
+        private ServerCommunication serverCom = null;
+        private Thread workThread = null;
 
         public DreamoteServerGui()
         {
             InitializeComponent();
             InitializeGuiComponents();
-            serverCom = new ServerCommunication();
+            
         }
 
         private void InitializeGuiComponents()
@@ -50,10 +52,16 @@ namespace DreamoteServer
             {
                 //start server
                 txt_port.Enabled = false;
+                btn_start_server.Enabled = false;
+                serverCom = new ServerCommunication();
+                workThread = new Thread(new ThreadStart(serverCom.receive));
+                workThread.Start();
             }
-
-           serverCom.receive();
-
+            else
+            {
+                //show popup about wrong port
+            }
+            
             
         }
 
@@ -100,6 +108,18 @@ namespace DreamoteServer
                 rkApp.DeleteValue(REGISTRY_NAME, false);
             }
 
+        }
+
+        private void btn_stop_server_Click(object sender, EventArgs e)
+        {
+            btn_start_server.Enabled = true;
+            txt_port.Enabled = true;
+            if (serverCom != null)
+            {
+                serverCom.CloseConnections();
+                if (workThread != null)
+                    workThread.Abort();
+            }
         }
     }
 }
