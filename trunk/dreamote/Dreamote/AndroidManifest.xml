@@ -23,6 +23,11 @@
         <activity android:name=".EmptyTabActivity" />
         <activity android:name=".ProgramsSelectTabActivity" />
         <activity android:name=".ServerSelectTabActivity" />
+         <activity android:name=".About"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <activity android:name=".Preferences" />
     </application>
 
 </manifest>
