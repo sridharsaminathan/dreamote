@@ -31,7 +31,7 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 		if(event.getAction() == KeyEvent.ACTION_UP){
 			
 			char t = (char)event.getUnicodeChar();
-			
+			String tmp = "";
 		}
 		
 		return super.dispatchKeyEvent(event);

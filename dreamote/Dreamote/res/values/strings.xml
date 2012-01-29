@@ -10,4 +10,6 @@
     <string name="empty_tab_tag">empty</string>
     <string name="server_tab_tag">Servers</string>
     <string name="more_tab_tag">More</string>
+    <string name="about_text">blablabla</string>
+    <string name="pref_first_category_title">First Category</string>
 </resources>
