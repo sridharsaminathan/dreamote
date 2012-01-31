@@ -44,7 +44,7 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 					sendString = "{SPACE}";
 				}
 				else if(keyCode == KeyEvent.KEYCODE_DEL){
-					sendString = "{DEL}";
+					sendString = "{BACKSPACE}";
 				}
 				else{
 					sendString = (char)event.getUnicodeChar() + "";
