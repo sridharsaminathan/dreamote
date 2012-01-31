@@ -162,7 +162,19 @@ namespace DreamoteServer
         //sends a keyboard key to the application in focus
         public void sendKeyBoardKey(String key)
         {
-            SendKeys.Send(key);
+            if(key.Equals("{SPACE}"))
+            {
+                key = " ";
+
+            }
+            try
+            {
+                SendKeys.SendWait(key);
+            }
+            catch(ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
 
