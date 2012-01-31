@@ -39,6 +39,7 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.checkbox_boot = new System.Windows.Forms.CheckBox();
             this.btn_stop_server = new System.Windows.Forms.Button();
+            this.lbl_port_invalid = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +67,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lbl_port_invalid);
             this.groupBox2.Controls.Add(this.txt_port);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.txt_ip);
@@ -138,6 +140,17 @@
             this.btn_stop_server.UseVisualStyleBackColor = true;
             this.btn_stop_server.Click += new System.EventHandler(this.btn_stop_server_Click);
             // 
+            // lbl_port_invalid
+            // 
+            this.lbl_port_invalid.AutoSize = true;
+            this.lbl_port_invalid.ForeColor = System.Drawing.Color.Red;
+            this.lbl_port_invalid.Location = new System.Drawing.Point(195, 42);
+            this.lbl_port_invalid.Name = "lbl_port_invalid";
+            this.lbl_port_invalid.Size = new System.Drawing.Size(63, 13);
+            this.lbl_port_invalid.TabIndex = 4;
+            this.lbl_port_invalid.Text = "Port Invalid!";
+            this.lbl_port_invalid.Visible = false;
+            // 
             // DreamoteServerGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,6 +182,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.CheckBox checkbox_boot;
         private System.Windows.Forms.Button btn_stop_server;
+        private System.Windows.Forms.Label lbl_port_invalid;
     }
 }
 

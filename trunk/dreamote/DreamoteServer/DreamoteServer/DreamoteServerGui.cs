@@ -52,6 +52,7 @@ namespace DreamoteServer
             {
                 //start server
                 txt_port.Enabled = false;
+                lbl_port_invalid.Visible = false;
                 btn_start_server.Enabled = false;
                 serverCom = new ServerCommunication(port);
                 workThread = new Thread(new ThreadStart(serverCom.receive));
@@ -59,7 +60,9 @@ namespace DreamoteServer
             }
             else
             {
+                
                 //show popup about wrong port
+                lbl_port_invalid.Visible = true;
             }
             
             
