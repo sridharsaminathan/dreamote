@@ -20,8 +20,8 @@ public class MainTabHostActivity extends ActivityGroup{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_host);
         
-//        communication = new ClientCommunication("192.168.0.194"); // Martin Numé
-        communication = new ClientCommunication("192.168.0.197"); // Niclas
+        communication = new ClientCommunication("192.168.0.194"); // Martin Numé
+//        communication = new ClientCommunication("192.168.0.197"); // Niclas
         
         res = getResources(); 
         tabHost = (TabHost)findViewById(android.R.id.tabhost);
@@ -69,6 +69,11 @@ public class MainTabHostActivity extends ActivityGroup{
 
     public void sendMouseMove(float oldX, float oldY, float newX, float newY) {
     	communication.sendCommand(MessageGenerator.createMouseMoveMessage(oldX, oldY, newX, newY));
+    }
+    
+    public void sendKeyEvent(String key){
+    	
+    	communication.sendCommand(MessageGenerator.createKeyboardEvent(key));
     }
     
     public void sendMouseClick(int action) {

@@ -26,4 +26,8 @@ public class MessageGenerator implements ActionConstants{
 		return "" + ACTION_MOUSE_RIGHT_RELEASE;
 	}
 	
+	public static String createKeyboardEvent(String key){
+		return "" + ACTION_EVENT_KEYBOARD + ";" + key;
+	}
+	
 }

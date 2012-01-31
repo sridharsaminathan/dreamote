@@ -11,12 +11,14 @@ import android.widget.Button;
 
 public class ProgramsSelectTabActivity extends Activity implements OnClickListener{
 	private InputMethodManager inputMgr = null;
+	private MainTabHostActivity parent;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.programs_select);
 		setListeners();
+		parent = (MainTabHostActivity)this.getParent();
 		
 	}
 	private void setListeners(){
@@ -28,15 +30,35 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		
-		if(event.getAction() == KeyEvent.ACTION_UP){
-			
-			char t = (char)event.getUnicodeChar();
-			String tmp = "";
+		String sendString = "";
+		if(event.getAction() == KeyEvent.ACTION_MULTIPLE){
+			if(!event.getCharacters().equals("")){
+				parent.sendKeyEvent(event.getCharacters());
+				
+				
+			}	
+		}
+		else if(event.getAction() == KeyEvent.ACTION_UP){
+				int keyCode = event.getKeyCode();
+				if(event.getKeyCode() == KeyEvent.KEYCODE_SPACE){
+					sendString = "{SPACE}";
+				}
+				else if(keyCode == KeyEvent.KEYCODE_DEL){
+					sendString = "{DEL}";
+				}
+				else{
+					sendString = (char)event.getUnicodeChar() + "";
+				}
+				
+				if(!sendString.equals(" ")){
+					parent.sendKeyEvent(sendString);
+				}
 		}
 		
 		return super.dispatchKeyEvent(event);
-
 	}
+	
+
 	
 	@Override
 	public void onClick(View v) {
