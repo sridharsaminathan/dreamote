@@ -44,8 +44,10 @@ namespace DreamoteServer
                         pa.LeftMouseRelease();
                     break;
                 case ServerConstants.ACTION_EVENT_KEYBOARD:
-                    if(splitStr.Length == 2)
-                        pa.sendKeyBoardKey(splitStr[1]);
+                    if (splitStr.Length > 1)
+                    {
+                        pa.sendKeyBoardKey(actionStr.Substring(actionStr.IndexOf(';')+1));
+                    }
                     break;
             }
                 
