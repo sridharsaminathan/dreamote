@@ -20,8 +20,9 @@ public class MainTabHostActivity extends ActivityGroup{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_host);
         
-        communication = new ClientCommunication("192.168.0.194"); // Martin Numé
+//        communication = new ClientCommunication("192.168.0.194"); // Martin Numé
 //        communication = new ClientCommunication("192.168.0.197"); // Niclas
+        communication = new ClientCommunication("129.16.164.56");
         
         res = getResources(); 
         tabHost = (TabHost)findViewById(android.R.id.tabhost);
