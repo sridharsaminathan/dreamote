@@ -12,13 +12,13 @@ namespace DreamoteServer
         private HandleAction handleAction;
         private IPEndPoint sender;
         private UdpClient newsock = null;
-        private bool retreiveData = true;
+        private bool threadRunning = true;
         private int port;
-
+        
 
         public ServerCommunication( int port)
         {
-            handleAction = new HandleAction();
+            handleAction = new HandleAction(this);
             this.port = port;
         }
 
@@ -27,11 +27,12 @@ namespace DreamoteServer
         {
             byte[] data = new byte[1024];
             IPEndPoint ipep = new IPEndPoint(IPAddress.Any, port);
-            newsock = new UdpClient(ipep);
             sender = new IPEndPoint(IPAddress.Any, 0);
+            newsock = new UdpClient(ipep);
+            
 
            
-            while (retreiveData)
+            while (threadRunning)
             {
                 data = newsock.Receive(ref sender);
                 handleAction.performAction(Encoding.UTF8.GetString(data, 0, data.Length));
@@ -39,13 +40,10 @@ namespace DreamoteServer
         }
         public void send(String msg)
         {
-
-            //        Console.WriteLine("Message received from {0}:", sender.ToString());
-            //        Console.WriteLine(Encoding.ASCII.GetString(data, 0, data.Length));
-
-
-            byte[] sendData = new byte[1024];
-            sendData = Encoding.ASCII.GetBytes(msg);
+            
+            
+            int length = Encoding.UTF8.GetBytes(msg).Length;
+            byte[] sendData = new byte[length+10];
             newsock.Send(sendData, sendData.Length, sender);
 
 
@@ -53,11 +51,13 @@ namespace DreamoteServer
 
         public void CloseConnections()
         {
-            retreiveData = false;
+            threadRunning = false;
             if (newsock != null)
                 try
                 {
+                 
                     newsock.Close();
+                    
                 }
                 catch (SocketException e)
                 {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Management;
+using System.Diagnostics;
 
 namespace DreamoteServer
 {
@@ -136,6 +137,23 @@ namespace DreamoteServer
             return false;
         }
 
+        public String GetOpenWindows()
+        {
+            IEnumerable<Process> processes = Process.GetProcesses().Where(p => p.MainWindowHandle != IntPtr.Zero && !p.ProcessName.Equals("explorer") && !p.ProcessName.Equals("DreamoteServer"));
+           
+
+            StringBuilder builder = new StringBuilder();
+            
+            foreach (var process in processes)
+            {
+                builder.Append(";");
+                builder.Append(process.ProcessName +  ":" + process.MainWindowTitle);
+                
+                
+            }
+            builder.Remove(0, 1);
+            return builder.ToString();
+        }
 
         /*private void Shutdown()
         {

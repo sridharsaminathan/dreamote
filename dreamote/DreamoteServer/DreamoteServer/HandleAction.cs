@@ -8,11 +8,13 @@ namespace DreamoteServer
 {
     public class HandleAction
     {
-        PerformAction pa;
+        private PerformAction pa;
+        private ServerCommunication serverCommunication;
         
-        public HandleAction()
+        public HandleAction(ServerCommunication serverCommunication)
         {
             pa = new PerformAction();
+            this.serverCommunication = serverCommunication;
         }
 
         public void performAction(String actionStr)
@@ -48,6 +50,9 @@ namespace DreamoteServer
                     {
                         pa.sendKeyBoardKey(actionStr.Substring(actionStr.IndexOf(';')+1));
                     }
+                    break;
+                case ServerConstants.ACTION_GET_OPEN_WINDOWS:
+                    serverCommunication.send(pa.GetOpenWindows());
                     break;
             }
                 
