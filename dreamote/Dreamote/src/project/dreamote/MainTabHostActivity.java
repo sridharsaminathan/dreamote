@@ -1,18 +1,27 @@
 package project.dreamote;
 
 import android.app.ActivityGroup;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-public class MainTabHostActivity extends ActivityGroup{
+public class MainTabHostActivity extends ActivityGroup implements OnClickListener{
 	private TabHost tabHost;		// The activity TabHost
 	private Resources res;			// Resource object to get Drawables
 	private ClientCommunication communication;  // Used to contact server
+	
+	private InputMethodManager inputMgr = null;
+	private Button keyboardBtn;
 	
     /** Called when the activity is first created. */
     @Override
@@ -22,10 +31,24 @@ public class MainTabHostActivity extends ActivityGroup{
         
 //        communication = new ClientCommunication("192.168.0.194"); // Martin Numé
 //        communication = new ClientCommunication("192.168.0.197"); // Niclas
-        communication = new ClientCommunication("129.16.164.56");
+        communication = new ClientCommunication("192.168.0.196");
         
-        res = getResources(); 
-        tabHost = (TabHost)findViewById(android.R.id.tabhost);
+        findViews();
+        setListeners();
+        createTabs();
+    }
+    
+    private void findViews() {
+    	tabHost = (TabHost)findViewById(android.R.id.tabhost);
+    	keyboardBtn = (Button)findViewById(R.id.keyboard_btn);
+    }
+    
+    private void setListeners() {
+    	keyboardBtn.setOnClickListener(this);
+    }
+    
+    private void createTabs() {
+    	res = getResources(); 
         tabHost.setup(getLocalActivityManager());
         
         tabHost.getTabWidget().setBackgroundDrawable(res.getDrawable(R.drawable.tab_background));
@@ -94,5 +117,44 @@ public class MainTabHostActivity extends ActivityGroup{
 		default:
 			return;
 		}
+	}
+    
+    @Override
+	public void onClick(View v) {
+		switch(v.getId()) {
+		case R.id.keyboard_btn:
+			inputMgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMgr.toggleSoftInput(0, 0);
+			break;
+		}
+	}
+    
+    @Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		
+		String sendString = "";
+		if(event.getAction() == KeyEvent.ACTION_MULTIPLE){
+			if(!event.getCharacters().equals("")){
+				sendKeyEvent(event.getCharacters());
+			}	
+		}
+		else if(event.getAction() == KeyEvent.ACTION_UP){
+			int keyCode = event.getKeyCode();
+			if(event.getKeyCode() == KeyEvent.KEYCODE_SPACE){
+				sendString = "{SPACE}";
+			}
+			else if(keyCode == KeyEvent.KEYCODE_DEL){
+				sendString = "{BACKSPACE}";
+			}
+			else{
+				sendString = (char)event.getUnicodeChar() + "";
+			}
+			
+			if(!sendString.equals(" ")){
+				sendKeyEvent(sendString);
+			}
+		}
+		
+		return super.dispatchKeyEvent(event);
 	}
 }

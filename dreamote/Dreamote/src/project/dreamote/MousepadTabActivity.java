@@ -15,12 +15,10 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 	private static final int PAD_CLICK_DIFF = 7;
 	
 	private MainTabHostActivity parent;
-	private InputMethodManager inputMgr = null;
 	
 	private View mousePad;			// The view acting as mousepad
 	private Button leftMouseBtn; 	// The left mouse button
 	private Button rightMouseBtn;	// The right mouse button
-	private Button keyboardBtn;
 	
 	private float oldX;
 	private float oldY;
@@ -43,7 +41,6 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
     	mousePad = findViewById(R.id.mousepad);
     	leftMouseBtn = (Button)findViewById(R.id.left_mouse_btn);
     	rightMouseBtn = (Button)findViewById(R.id.right_mouse_btn);
-    	keyboardBtn = (Button)findViewById(R.id.keyboard_btn);
     }
     
     private void setListeners() {
@@ -51,7 +48,6 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
     	mousePad.setOnClickListener(this);
     	leftMouseBtn.setOnTouchListener(this);
     	rightMouseBtn.setOnTouchListener(this);
-    	keyboardBtn.setOnClickListener(this);
     }
     
     @Override
@@ -122,39 +118,6 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_LEFT_PRESS);
 			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_LEFT_RELEAS);
 			break;
-		case R.id.keyboard_btn:
-			inputMgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-			inputMgr.toggleSoftInput(0, 0);
-			break;
 		}
-	}
-	
-	@Override
-	public boolean dispatchKeyEvent(KeyEvent event) {
-		
-		String sendString = "";
-		if(event.getAction() == KeyEvent.ACTION_MULTIPLE){
-			if(!event.getCharacters().equals("")){
-				parent.sendKeyEvent(event.getCharacters());
-			}	
-		}
-		else if(event.getAction() == KeyEvent.ACTION_UP){
-			int keyCode = event.getKeyCode();
-			if(event.getKeyCode() == KeyEvent.KEYCODE_SPACE){
-				sendString = "{SPACE}";
-			}
-			else if(keyCode == KeyEvent.KEYCODE_DEL){
-				sendString = "{BACKSPACE}";
-			}
-			else{
-				sendString = (char)event.getUnicodeChar() + "";
-			}
-			
-			if(!sendString.equals(" ")){
-				parent.sendKeyEvent(sendString);
-			}
-		}
-		
-		return super.dispatchKeyEvent(event);
 	}
 }
