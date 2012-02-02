@@ -50,6 +50,7 @@ namespace DreamoteServer
             int port = DEFAULT_PORT;
             if (int.TryParse(txt_port.Text, out port))
             {
+                //Console.WriteLine((new PerformAction()).GetOpenWindows());
                 //start server
                 txt_port.Enabled = false;
                 lbl_port_invalid.Visible = false;
@@ -57,6 +58,7 @@ namespace DreamoteServer
                 serverCom = new ServerCommunication(port);
                 workThread = new Thread(new ThreadStart(serverCom.receive));
                 workThread.Start();
+
             }
             else
             {
@@ -122,6 +124,7 @@ namespace DreamoteServer
                 serverCom.CloseConnections();
                 if (workThread != null)
                     workThread.Abort();
+                
             }
         }
     }

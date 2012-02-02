@@ -13,5 +13,6 @@ namespace DreamoteServer
         public const int ACTION_MOUSE_RIGHT_RELEASE = 0x03;
         public const int ACTION_MOUSE_LEFT_RELEASE = 0x04;
         public const int ACTION_EVENT_KEYBOARD = 0x05;
+        public const int ACTION_GET_OPEN_WINDOWS = 0x06;
     }
 }
