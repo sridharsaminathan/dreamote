@@ -34,11 +34,4 @@
 		android:layout_above="@id/mouse_buttons_layout"
 		android:background="@drawable/mousepad_background"
 	/>
-	<Button 
-		android:id="@+id/keyboard_btn"
-		android:layout_width="50dip"
-		android:layout_height="25dip"
-		android:background="@drawable/keyboard_selector"
-		android:layout_alignParentRight="true"
-	/>
 </RelativeLayout>
