@@ -50,7 +50,11 @@ namespace DreamoteServer
             int port = DEFAULT_PORT;
             if (int.TryParse(txt_port.Text, out port))
             {
-                //Console.WriteLine((new PerformAction()).GetOpenWindows());
+                /*foreach (var s in (new PerformAction()).GetInstalledApps())
+                {
+                    Console.WriteLine(s);
+                }*/
+                
                 //start server
                 txt_port.Enabled = false;
                 lbl_port_invalid.Visible = false;

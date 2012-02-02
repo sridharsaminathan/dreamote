@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Management;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace DreamoteServer
 {
@@ -201,5 +202,34 @@ namespace DreamoteServer
                 }
             }  
         }
+
+        public List<String> GetInstalledApps()
+        {
+            List<String> lstInstalled = new List<String>();
+
+            string uninstallKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(uninstallKey))
+            {
+                foreach (string skName in rk.GetSubKeyNames())
+                {
+                    using (RegistryKey sk = rk.OpenSubKey(skName))
+                    {
+                        try
+                        {
+                            String program = (String)sk.GetValue("DisplayName");
+                            lstInstalled.Add(program);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                }
+            }
+            return lstInstalled;
+        }
+
+
+
     }
 }
