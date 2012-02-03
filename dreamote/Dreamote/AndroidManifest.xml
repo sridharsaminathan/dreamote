@@ -25,10 +25,14 @@
         <activity android:name=".EmptyTabActivity" />
         <activity android:name=".ProgramsSelectTabActivity" />
         <activity android:name=".ServerSelectTabActivity" />
-         <activity android:name=".About"
+        <activity android:name=".ManuallyConnectActivity" 
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Dialog">
-        </activity>
+            android:theme="@style/dialogTheme"
+        />
+        <activity android:name=".About"
+            android:screenOrientation="portrait"
+            android:theme="@style/dialogTheme"
+        />
         <activity android:name=".Preferences" />
     </application>
 

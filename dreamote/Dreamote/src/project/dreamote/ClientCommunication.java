@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 public class ClientCommunication {
 
     private String serverIP;
+    private int serverPort;
     private DatagramSocket clientSocket;
     private InetAddress IPAddress;
     
@@ -19,8 +20,10 @@ public class ClientCommunication {
      * @param address String of IP address to the server.
      * @throws SocketException 
      */
-    public ClientCommunication(String address){
-        this.serverIP = address;
+    public ClientCommunication(String ip, int port){
+        this.serverIP = ip;
+        this.serverPort = port;
+//        ip = "192.168.0.197"; // Niclas
         //sendCommand("Connecting");    //Establish connection.
         clientSocket = null;
         createSocket();
@@ -48,7 +51,7 @@ public class ClientCommunication {
         try {
             byte[] sendData = new byte[1024];
             sendData = command.getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, serverPort);
             clientSocket.send(sendPacket);
         }catch (SocketException e) {
             System.out.println("Could not create socket");
@@ -79,5 +82,11 @@ public class ClientCommunication {
     	}
     	return false;
     }
-      
+    
+    public void updateServerInfo(String ip, int port) {
+    	this.serverIP = ip;
+    	this.serverPort = port;
+    	
+    	createSocket();
+    }
 }

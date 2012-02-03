@@ -29,9 +29,8 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_host);
         
-//        communication = new ClientCommunication("192.168.0.194"); // Martin Numé
-//        communication = new ClientCommunication("192.168.0.197"); // Niclas
-        communication = new ClientCommunication("192.168.0.196");
+        communication = new ClientCommunication(
+        		Preferences.getConnectedServerIp(this), Preferences.getConnectedServerPort(this));
         
         findViews();
         setListeners();
@@ -73,6 +72,11 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
         tabHost.setCurrentTab(0);
     }
     
+    public void updateServerInfo() {
+    	communication.updateServerInfo(
+    			Preferences.getConnectedServerIp(this), Preferences.getConnectedServerPort(this));
+    }
+    
     /**
      * @param intent
      * @param tagId
@@ -96,7 +100,6 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     }
     
     public void sendKeyEvent(String key){
-    	
     	communication.sendCommand(MessageGenerator.createKeyboardEvent(key));
     }
     
@@ -131,7 +134,6 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     
     @Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		
 		String sendString = "";
 		if(event.getAction() == KeyEvent.ACTION_MULTIPLE){
 			if(!event.getCharacters().equals("")){
@@ -154,7 +156,6 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 				sendKeyEvent(sendString);
 			}
 		}
-		
 		return super.dispatchKeyEvent(event);
 	}
 }

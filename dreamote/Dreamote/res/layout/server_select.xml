@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:padding="3dip" >
 	<TextView 
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_centerInParent="true"
-	    android:text="ServerSelectTabActivity"/>
+	    android:text="@string/found_servers_lbl"
+	    style="@style/white_lbl_text"
+	/>
+	<Button 
+	    android:id="@+id/update_server_list_btn"
+	  	android:layout_width="30dip"
+	  	android:layout_height="30dip"
+	  	android:layout_alignParentRight="true"
+	  	android:background="@android:color/background_dark"  
+	/>
+	<ListView 
+	    android:id="@+id/found_servers_list"
+	    android:layout_width="fill_parent"
+	    android:layout_height="100dip"
+	    android:layout_below="@id/update_server_list_btn"
+	    android:layout_marginTop="2dip"
+	    android:layout_marginBottom="10dip"
+	/>
+	<TextView 
+		android:id="@+id/server_history_lbl"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/found_servers_list"
+		android:layout_marginBottom="2dip"
+		android:text="@string/server_history_lbl"
+		style="@style/white_lbl_text"
+	/>
+	<ListView 
+	    android:id="@+id/server_history_list"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/server_history_lbl"
+	    android:layout_above="@+id/manually_connect_btn"
+	    android:layout_marginBottom="10dip"
+	/>
+	<Button 
+		android:id="@id/manually_connect_btn"
+		android:layout_width="wrap_content"
+		android:layout_height="40dip"
+		android:layout_alignParentBottom="true" 
+		android:layout_centerHorizontal="true"
+		android:text="@string/manually_connect_lbl"   
+	/>
 </RelativeLayout>
