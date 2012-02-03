@@ -30,7 +30,7 @@ namespace DreamoteServer
 
         private void InitializeGuiComponents()
         {
-            txt_ip.Text = PerformAction.getIpAddres();
+            txt_ip.Text = PerformAction.GetIpAddres();
             txt_port.Text = DEFAULT_PORT.ToString();
 
             if (rkApp.GetValue(REGISTRY_NAME) == null)
@@ -54,7 +54,6 @@ namespace DreamoteServer
                 {
                     Console.WriteLine(s);
                 }*/
-                txt_ip.Text = (new PerformAction()).GetComputerName();
                 //start server
                 txt_port.Enabled = false;
                 lbl_port_invalid.Visible = false;

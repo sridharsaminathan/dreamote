@@ -237,7 +237,9 @@ namespace DreamoteServer
             return System.Environment.MachineName;
         }
 
-        public static String getIpAddres()
+         
+
+        public static String GetIpAddres()
         {
             IPHostEntry host;
             string localIP = "?";
