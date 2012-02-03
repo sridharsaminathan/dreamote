@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HandleAction.cs" />
+    <Compile Include="MessageGenerator.cs" />
     <Compile Include="ServerConstants.cs" />
     <Compile Include="ServerCommunication.cs" />
     <Compile Include="DreamoteServerGui.cs">
