@@ -14,7 +14,6 @@
 	  	android:layout_width="30dip"
 	  	android:layout_height="30dip"
 	  	android:layout_alignParentRight="true"
-	  	android:background="@android:color/background_dark"  
 	/>
 	<ListView 
 	    android:id="@+id/found_servers_list"
@@ -23,6 +22,8 @@
 	    android:layout_below="@id/update_server_list_btn"
 	    android:layout_marginTop="2dip"
 	    android:layout_marginBottom="10dip"
+	    android:cacheColorHint="@null"
+	    android:background="@drawable/listview_background"
 	/>
 	<TextView 
 		android:id="@+id/server_history_lbl"
@@ -40,13 +41,17 @@
 	    android:layout_below="@id/server_history_lbl"
 	    android:layout_above="@+id/manually_connect_btn"
 	    android:layout_marginBottom="10dip"
+	    android:cacheColorHint="@null"
+	    android:background="@drawable/listview_background"
 	/>
 	<Button 
 		android:id="@id/manually_connect_btn"
 		android:layout_width="wrap_content"
-		android:layout_height="40dip"
+		android:layout_height="35dip"
 		android:layout_alignParentBottom="true" 
 		android:layout_centerHorizontal="true"
-		android:text="@string/manually_connect_lbl"   
+		android:background="@drawable/btn_selector"
+		android:text="@string/manually_connect_lbl"
+		style="@style/white_lbl_text"
 	/>
 </RelativeLayout>

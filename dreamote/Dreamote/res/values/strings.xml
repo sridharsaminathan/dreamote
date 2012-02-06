@@ -24,6 +24,9 @@
     
     <string name="connect_lbl">Connect</string>
     <string name="cancel_lbl">Cancel</string>
+    <string name="ok_lbl">OK</string>
+    
+    <string name="server_connect_error">Could not connect. \nMake sure IP format is correct</string>
     
         
     <!-- Key values -->
