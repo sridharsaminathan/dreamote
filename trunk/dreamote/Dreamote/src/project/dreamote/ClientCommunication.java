@@ -29,16 +29,17 @@ public class ClientCommunication {
         createSocket();
     }
     
-    private void createSocket(){
-    	
+    private boolean createSocket(){
     	try {
+    		clientSocket = new DatagramSocket();
     		IPAddress = InetAddress.getByName(serverIP);
-			clientSocket = new DatagramSocket();
+			return true;
 		} catch (SocketException e) {
 			e.printStackTrace();
-		
+			return false;
 		}catch(UnknownHostException es){
 			es.printStackTrace();
+			return false;
 		}
     }
     
@@ -47,17 +48,20 @@ public class ClientCommunication {
      * 
      * @param command String of the Command that is going to be executed.
      */
-    public void sendCommand(String command){
+    public boolean sendCommand(String command){
         try {
             byte[] sendData = new byte[1024];
             sendData = command.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, serverPort);
             clientSocket.send(sendPacket);
+            return true;
         }catch (SocketException e) {
             System.out.println("Could not create socket");
+            return false;
         } catch (IOException e) {
             System.out.println("Could not send package");
-        }   
+            return false;
+        }
     }
     
     /**
@@ -83,10 +87,10 @@ public class ClientCommunication {
     	return false;
     }
     
-    public void updateServerInfo(String ip, int port) {
+    public boolean updateServerInfo(String ip, int port) {
     	this.serverIP = ip;
     	this.serverPort = port;
     	
-    	createSocket();
+    	return createSocket();
     }
 }

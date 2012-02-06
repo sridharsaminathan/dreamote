@@ -1,7 +1,9 @@
 package project.dreamote;
 
 import android.app.ActivityGroup;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	
 	private InputMethodManager inputMgr = null;
 	private Button keyboardBtn;
+	
+	private Context context = this;
 	
     /** Called when the activity is first created. */
     @Override
@@ -73,8 +77,20 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     }
     
     public void updateServerInfo() {
-    	communication.updateServerInfo(
+    	boolean connected = communication.updateServerInfo(
     			Preferences.getConnectedServerIp(this), Preferences.getConnectedServerPort(this));
+    	
+    	if(!connected) {
+    		 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    		 builder.setMessage(context.getString(R.string.server_connect_error))
+    	       .setCancelable(false)
+    	       .setPositiveButton(context.getString(R.string.ok_lbl), new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	           }
+    	       });
+    		 AlertDialog alert = builder.create();
+    		 alert.show();
+    	}
     }
     
     /**

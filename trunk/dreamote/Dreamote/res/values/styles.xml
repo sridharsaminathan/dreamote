@@ -8,4 +8,12 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="list_txt_large" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="list_txt_small" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">11sp</item>
+    </style>
 </resources>
