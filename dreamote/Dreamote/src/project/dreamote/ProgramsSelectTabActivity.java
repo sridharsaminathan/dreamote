@@ -29,9 +29,15 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 		list.add(new String[]{ "Itunes", "Itunes" });
 		
 		ArrayList<String[]> list2 = new ArrayList<String[]>();
-		list.add(new String[]{ "Skype", "Skype - martinnume" });
-		list.add(new String[]{ "firefox", "SweClockers.com" });
-		list.add(new String[]{ "Eclipse", "Java - Dreamote/src/project/dreamote.." });
+		list2.add(new String[]{ "Skype", "Skype - martinnume" });
+		list2.add(new String[]{ "firefox", "SweClockers.com" });
+		list2.add(new String[]{ "Eclipse", "Java - Dreamote/src/project/dreamote.." });
+		list2.add(new String[]{ "Skype", "Skype - martinnume" });
+		list2.add(new String[]{ "firefox", "SweClockers.com" });
+		list2.add(new String[]{ "Eclipse", "Java - Dreamote/src/project/dreamote.." });
+		list2.add(new String[]{ "Skype", "Skype - martinnume" });
+		list2.add(new String[]{ "firefox", "SweClockers.com" });
+		list2.add(new String[]{ "Eclipse", "Java - Dreamote/src/project/dreamote.." });
 		
 		fillSupportedProgramsList(list);
 		fillOtherProgramsList(list2);
@@ -53,7 +59,9 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 				String[] info = list.get(i);
 				if(info.length == 2){
 					View listItem = getLayoutInflater().inflate(R.layout.programs_list_item, null);
-				
+					(listItem.findViewById(R.id.programs_clickarea)).setOnClickListener(this);
+					
+					
 					TextView programTitle = (TextView)listItem.findViewById(R.id.txt_programs_title);
 					programTitle.setText(info[0]);
 					TextView programInfo = (TextView)listItem.findViewById(R.id.txt_programs_info);
@@ -73,7 +81,8 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 				String[] info = list.get(i);
 				if(info.length == 2){
 					View listItem = getLayoutInflater().inflate(R.layout.programs_list_item, null);
-				
+					
+					(listItem.findViewById(R.id.programs_clickarea)).setOnClickListener(this);
 					TextView programTitle = (TextView)listItem.findViewById(R.id.txt_programs_title);
 					programTitle.setText(info[0]);
 					TextView programInfo = (TextView)listItem.findViewById(R.id.txt_programs_info);
