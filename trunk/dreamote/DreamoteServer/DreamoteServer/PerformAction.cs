@@ -21,6 +21,7 @@ namespace DreamoteServer
         private const int MOUSEEVENT_RIGHTUP = 0x10;
         private const int MOUSEEVENT_MIDDLEDOWN = 0x020;
         private const int MOUSEEVENT_MIDDLEUP = 0x040;
+        private const int MOUSEEVENT_WHEEL = 0x800;
 
 
         //Scroll Constants
@@ -107,12 +108,17 @@ namespace DreamoteServer
 
         public void ScrollWheelDown()
         {
-            SendMessage(GetActiveWindowHandle(), WM_VSCROLL, (IntPtr)SB_LINEDOWN, IntPtr.Zero);
+         
+            mouse_event(MOUSEEVENT_WHEEL,0, 0, -50, 0);
+            
         }
         public void ScrollWheelUp()
         {
-            SendMessage(GetActiveWindowHandle(), WM_VSCROLL, (IntPtr)SB_LINEUP, IntPtr.Zero);
+
+            mouse_event(MOUSEEVENT_WHEEL, 0, 0, 50, 0);
         }
+
+        
         //gets the title of active window
         public string GetActiveWindowTitle()
         {
