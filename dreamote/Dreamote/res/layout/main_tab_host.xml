@@ -47,12 +47,13 @@
 	        android:layout_height="fill_parent"
 	        android:background="@color/drawer_content_background"
 	        >
-	        <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
+	        <Button
+	            android:id="@+id/btn_play_pause"
+	            android:layout_width="70dip"
+	            android:layout_height="70dip"
 	            android:layout_centerInParent="true"
-	            android:textColor="@android:color/black"
-	            android:text="Media Drawer"/>
+	            android:background="@drawable/btn_play_pause_selector"
+	        />
 	    </RelativeLayout>
 	    <View 
 	        android:id="@id/media_drawer_handle"
