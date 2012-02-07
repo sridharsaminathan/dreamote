@@ -52,7 +52,24 @@
 	            android:layout_width="70dip"
 	            android:layout_height="70dip"
 	            android:layout_centerInParent="true"
+	            android:padding="2dip"
 	            android:background="@drawable/btn_play_pause_selector"
+	        />
+	        <Button
+	            android:id="@+id/btn_previous"
+	            android:layout_width="50dip"
+	            android:layout_height="50dip"
+	            android:layout_centerVertical="true"
+	            android:layout_toLeftOf="@id/btn_play_pause"
+	            android:background="@drawable/btn_media_previous_selector"
+	        />
+	        <Button
+	            android:id="@+id/btn_next"
+	            android:layout_width="50dip"
+	            android:layout_height="50dip"
+	            android:layout_centerVertical="true"
+	            android:layout_toRightOf="@id/btn_play_pause"
+	            android:background="@drawable/btn_media_next_selector"
 	        />
 	    </RelativeLayout>
 	    <View 
