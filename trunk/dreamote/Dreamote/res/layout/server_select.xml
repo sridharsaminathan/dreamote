@@ -9,11 +9,13 @@
 	    android:text="@string/found_servers_lbl"
 	    style="@style/white_lbl_text"
 	/>
-	<Button 
+	<Button
 	    android:id="@+id/update_server_list_btn"
-	  	android:layout_width="30dip"
-	  	android:layout_height="30dip"
+	  	android:layout_width="32dip"
+	  	android:layout_height="32dip"
 	  	android:layout_alignParentRight="true"
+	  	android:layout_margin="3dip"
+	  	android:background="@drawable/btn_update_selector"
 	/>
 	<ListView 
 	    android:id="@+id/found_servers_list"
