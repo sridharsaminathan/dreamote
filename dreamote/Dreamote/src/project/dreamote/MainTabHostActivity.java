@@ -138,6 +138,17 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 		}
 	}
     
+    public void sendMouseScroll(int action) {
+    	switch(action) {
+    	case ActionConstants.ACTION_SCROLL_DOWN:
+    		communication.sendCommand(MessageGenerator.createScrollDown());
+    		break;
+    	case ActionConstants.ACTION_SCROLL_UP:
+    		communication.sendCommand(MessageGenerator.createScrollUp());
+    		break;
+    	}
+    }
+    
     @Override
 	public void onClick(View v) {
 		switch(v.getId()) {

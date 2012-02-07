@@ -34,4 +34,14 @@
 		android:layout_above="@id/mouse_buttons_layout"
 		android:background="@drawable/mousepad_background"
 	/>
+	<View 
+		android:id="@+id/mouse_scroll"
+		android:layout_width="25dip"
+		android:layout_height="fill_parent"
+		android:layout_alignParentRight="true"
+		android:layout_marginBottom="25dip"
+		android:layout_marginTop="25dip"
+		android:layout_above="@id/mouse_buttons_layout"
+		android:background="@drawable/scroll_view_background"
+	/>
 </RelativeLayout>
