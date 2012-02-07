@@ -14,23 +14,33 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:text="Supported Programs"
+		    android:paddingBottom="3dp"
+		    android:layout_marginLeft="5dp"
+		    style="@style/white_lbl_text"
 		    />
 		<LinearLayout 
 		 	android:id ="@+id/layout_supported_programs"		    
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical"
+		    android:paddingLeft="10dp"
+		    android:paddingRight="10dp"
 		    />
 		<TextView
 		    android:id="@+id/txt_other_programs" 
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:text="Other Programs"/>
+		    android:text="Other Programs"
+		    android:layout_marginLeft="5dp"
+		    style="@style/white_lbl_text"/>
 		<LinearLayout 
 		    android:id="@+id/layout_other_programs"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical"
+		    android:paddingLeft="10dp"
+		    android:paddingRight="10dp"
+		    
 		  />
 	</LinearLayout>
 </ScrollView>
