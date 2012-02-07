@@ -30,4 +30,11 @@ public class MessageGenerator implements ActionConstants{
 		return "" + ACTION_EVENT_KEYBOARD + ";" + key;
 	}
 	
+	public static String createScrollUp(){
+		return "" + ACTION_SCROLL_UP;
+	}
+	public static String createScrollDown(){
+		return "" + ACTION_SCROLL_DOWN;
+	}
+	
 }
