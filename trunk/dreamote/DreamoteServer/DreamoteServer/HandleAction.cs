@@ -54,9 +54,11 @@ namespace DreamoteServer
                 case ServerConstants.ACTION_GET_OPEN_WINDOWS:
                     serverCommunication.send( MessageGenerator.CreateStringOpenWindows(pa.GetOpenWindows()));
                     break;
-                case ServerConstants.ACTION_CONNECT:
-                    String msg = MessageGenerator.CreateConnectReply(pa.GetComputerName(), PerformAction.GetIpAddres());
-                    serverCommunication.send(msg);
+                case ServerConstants.ACTION_SCROLL_UP:
+                    pa.ScrollWheelUp();
+                    break;
+                case ServerConstants.ACTION_SCROLL_DOWN:
+                    pa.ScrollWheelDown();
                     break;
             }
                 

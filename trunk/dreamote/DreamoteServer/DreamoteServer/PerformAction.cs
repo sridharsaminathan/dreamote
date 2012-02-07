@@ -105,9 +105,13 @@ namespace DreamoteServer
             DoMouseEvent(MOUSEEVENT_MIDDLEUP);
         }
 
-        public void ScrollWheel()
+        public void ScrollWheelDown()
         {
             SendMessage(GetActiveWindowHandle(), WM_VSCROLL, (IntPtr)SB_LINEDOWN, IntPtr.Zero);
+        }
+        public void ScrollWheelUp()
+        {
+            SendMessage(GetActiveWindowHandle(), WM_VSCROLL, (IntPtr)SB_LINEUP, IntPtr.Zero);
         }
         //gets the title of active window
         public string GetActiveWindowTitle()
