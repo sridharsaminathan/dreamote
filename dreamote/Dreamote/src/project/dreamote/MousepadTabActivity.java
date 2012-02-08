@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MousepadTabActivity extends Activity implements OnTouchListener, OnClickListener {
 	private static final int PAD_CLICK_DIFF = 7;
@@ -39,6 +40,15 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 		
 		findViews();
 		setListeners();
+		
+		
+	}
+	@Override
+	public void onResume(){
+		super.onResume();
+		if(!ClientCommunication.isConnected(this)){
+			(Toast.makeText(this, getString(R.string.enable_wifi_message), Toast.LENGTH_SHORT)).show();
+		}
 	}
 	
 	private void findViews() {
