@@ -279,7 +279,6 @@ namespace DreamoteServer
 
         public void SetMasterVolume(int vol){
             device.AudioEndpointVolume.MasterVolumeLevelScalar = ((float)vol / 100.0f);
-
         }
 
     }
