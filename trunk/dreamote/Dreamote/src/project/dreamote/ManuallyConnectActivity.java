@@ -44,15 +44,33 @@ public class ManuallyConnectActivity extends Activity implements OnClickListener
 		if(v.getId() == connectBtn.getId()) {
 			String ip = ipTxt.getText().toString();
 			String port = portTxt.getText().toString();
-			if(ip.length() == 0) {
-				Toast.makeText(this, "", Toast.LENGTH_SHORT);
-			} else if(ip.length() == 0) {
-				Toast.makeText(this, "", Toast.LENGTH_SHORT);
-			} else {
+			if(isIPValid(ip)) {
 				Preferences.setConnectedServer(this, ip, Integer.parseInt(port));
 				this.setResult(RESULT_OK);
 				this.finish();
+			
+			} else {
+				(Toast.makeText(this, "Invalid ip", Toast.LENGTH_SHORT)).show();
 			}
 		}
+	}
+	private boolean isIPValid(String ip) {
+        try{
+			String[] octets = ip.split("\\.");
+	        if(octets.length != 4)
+	        	return false;
+	        
+	        for (String s : octets) {
+	                int i = Integer.parseInt(s);
+	                if (i > 255 || i < 0) {
+	                        throw new NumberFormatException();
+	                }
+	        }
+        }
+        catch(NumberFormatException es){
+        	es.printStackTrace();
+        	return false;
+        }
+        return true;
 	}
 }
