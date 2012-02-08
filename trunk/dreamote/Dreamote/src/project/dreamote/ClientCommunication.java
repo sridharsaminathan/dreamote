@@ -27,7 +27,6 @@ public class ClientCommunication {
     public ClientCommunication(String ip, int port){
         this.serverIP = ip;
         this.serverPort = port;
-//        ip = "192.168.0.197"; // Niclas
         //sendCommand("Connecting");    //Establish connection.
         clientSocket = null;
         createSocket();

@@ -1,5 +1,10 @@
 package project.dreamote;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
+import project.dreamote.components.OnVolumeChangeListener;
+import project.dreamote.components.VolumeController;
 import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,8 +23,10 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-public class MainTabHostActivity extends ActivityGroup implements OnClickListener{
+
+public class MainTabHostActivity extends ActivityGroup implements OnClickListener, OnVolumeChangeListener{
 	private TabHost tabHost;		// The activity TabHost
+	private VolumeController volumeController;
 	private Resources res;			// Resource object to get Drawables
 	private ClientCommunication communication;  // Used to contact server
 	
@@ -37,6 +45,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
         		Preferences.getConnectedServerIp(this), Preferences.getConnectedServerPort(this));
         
         findViews();
+        setupVolumeController();
         setListeners();
         createTabs();
     }
@@ -44,10 +53,29 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     private void findViews() {
     	tabHost = (TabHost)findViewById(android.R.id.tabhost);
     	keyboardBtn = (Button)findViewById(R.id.keyboard_btn);
+    	volumeController = (VolumeController)findViewById(R.id.volume_controller);
     }
     
     private void setListeners() {
     	keyboardBtn.setOnClickListener(this);
+    	volumeController.setOnVolumeChangeListener(this);
+    }
+    
+    private void setupVolumeController() {
+    	String[] imageNames = getResources().getStringArray(R.array.volume_image_names);
+    	ArrayList<Integer> imageIds = new ArrayList<Integer>();
+    	for(String name : imageNames) {
+	    	try {
+	    	    Class<R.drawable> res = R.drawable.class;
+	    	    Field field = res.getField(name);
+	    	    int drawableId = field.getInt(null);
+	    	    imageIds.add(drawableId);
+	    	}
+	    	catch (Exception e) {
+	    	    Log.e("MyTag", "Failure to get drawable id.", e);
+	    	}
+    	}
+    	volumeController.setBackgroundImages(imageIds);
     }
     
     private void createTabs() {
@@ -183,11 +211,16 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 				sendString = "{DOWN}";
 			} else{
 				sendString = String.valueOf((char)event.getUnicodeChar());
-			}			
+			}		
 			if(!sendString.equals(" ")){
 				sendKeyEvent(sendString);
 			}
 		}
 		return super.dispatchKeyEvent(event);
+	}
+    
+    @Override
+	public void onVolumeChange(int volume) {
+		communication.sendCommand(MessageGenerator.createSetVolume(volume));
 	}
 }
