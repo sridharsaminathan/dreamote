@@ -60,6 +60,19 @@ namespace DreamoteServer
                 case ServerConstants.ACTION_SCROLL_DOWN:
                     pa.ScrollWheelDown();
                     break;
+                case ServerConstants.ACTION_SET_VOLUME:
+                    if (splitStr.Length == 2)
+                    {
+                        int vol = 0;
+                        if (int.TryParse(splitStr[1], out vol))
+                        {
+                            pa.SetMasterVolume(vol);
+                        }
+                    }
+                    break;
+                case ServerConstants.ACTION_GET_VOLUME:
+                    serverCommunication.send(MessageGenerator.CreateStringGetVolume(pa.GetMasterVolume()));
+                    break;
             }
                 
         }

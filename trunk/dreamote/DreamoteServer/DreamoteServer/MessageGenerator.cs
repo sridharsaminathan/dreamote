@@ -15,6 +15,11 @@ namespace DreamoteServer
 
         }
 
+        public static String CreateStringGetVolume(int vol)
+        {
+            return ServerConstants.ACTION_GET_VOLUME.ToString() + ";" + vol.ToString();
+        }
+
 
     }
 }
