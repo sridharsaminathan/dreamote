@@ -15,4 +15,7 @@ public interface ActionConstants {
 	public static final int ACTION_TEST_CONNECTION_REPLY = 0x0B;
 	public static final int ACTION_SCROLL_UP = 0x0C;
 	public static final int ACTION_SCROLL_DOWN = 0x0D;
+	
+	public static final int ACTION_SET_VOLUME = 0x0E;
+	public static final int ACTION_GET_VOLUME = 0x0F;
 }
