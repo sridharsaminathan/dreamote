@@ -37,4 +37,8 @@ public class MessageGenerator implements ActionConstants{
 		return "" + ACTION_SCROLL_DOWN;
 	}
 	
+	public static String createSetVolume(){
+		return "" + ACTION_SET_VOLUME;
+	}
+	
 }
