@@ -4,9 +4,9 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
@@ -42,6 +42,7 @@ public class VolumeController extends ImageView implements OnTouchListener{
 	public void setBackgroundImages(List<Integer> drawableIds) {
 		this.drawableIds = drawableIds;
 		nrOfSteps = drawableIds.size();
+		currVolume = nrOfSteps/2;
 		updateBackgroundImage();
 	}
 	
@@ -72,7 +73,7 @@ public class VolumeController extends ImageView implements OnTouchListener{
 			updateBackgroundImage();
 			notifyListener();
 		}
-		return false;
+		return true;
 	}
 	
 	private void notifyListener() {
