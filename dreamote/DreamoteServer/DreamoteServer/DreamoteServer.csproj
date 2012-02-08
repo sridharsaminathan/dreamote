@@ -51,6 +51,7 @@
   <ItemGroup>
     <Reference Include="CoreAudioApi">
       <HintPath>D:\Firefox\CoreAudio2_Src\CoreAudioApi\bin\Debug\CoreAudioApi.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
