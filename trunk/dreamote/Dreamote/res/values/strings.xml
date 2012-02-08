@@ -27,7 +27,7 @@
     <string name="ok_lbl">OK</string>
     
     <string name="server_connect_error">Could not connect. \nMake sure IP format is correct</string>
-    
+    <string name="enable_wifi_message">Enable Wifi</string>
         
     <!-- Key values -->
     <string name="shared_prefs_key">shared prefs</string>
