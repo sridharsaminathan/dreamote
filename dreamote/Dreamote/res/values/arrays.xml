@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="volume_image_names">
+        <item >volume_0</item>
+        <item >volume_1</item>
+        <item >volume_2</item>
+        <item >volume_3</item>
+        <item >volume_4</item>
+        <item >volume_5</item>
+        <item >volume_6</item>
+        <item >volume_7</item>
+        <item >volume_8</item>
+        <item >volume_9</item>
+        <item >volume_10</item>
+    </string-array>
+</resources>
