@@ -171,14 +171,19 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 			int keyCode = event.getKeyCode();
 			if(event.getKeyCode() == KeyEvent.KEYCODE_SPACE){
 				sendString = "{SPACE}";
-			}
-			else if(keyCode == KeyEvent.KEYCODE_DEL){
+			} else if(keyCode == KeyEvent.KEYCODE_DEL){
 				sendString = "{BACKSPACE}";
-			}
-			else{
-				sendString = (char)event.getUnicodeChar() + "";
-			}
-			
+			} else if(keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+				sendString = "{LEFT}";
+			}  else if(keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+				sendString = "{RIGHT}";
+			}  else if(keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+				sendString = "{UP}";
+			} else if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+				sendString = "{DOWN}";
+			} else{
+				sendString = String.valueOf((char)event.getUnicodeChar());
+			}			
 			if(!sendString.equals(" ")){
 				sendKeyEvent(sendString);
 			}
