@@ -9,6 +9,8 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.Net;
 using System.Net.Sockets;
+using CoreAudioApi;
+
 
 namespace DreamoteServer
 {
@@ -63,9 +65,13 @@ namespace DreamoteServer
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
 
+        
+        private MMDevice device;
+
         public PerformAction()
         {
-
+            MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
+            device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
         }
 
         public static void SetCursorPosition(int xDiff, int yDiff)
@@ -265,6 +271,16 @@ namespace DreamoteServer
             return localIP;
         }
 
+        public int GetMasterVolume()
+        {
+            return (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
+
+        }
+
+        public void SetMasterVolume(int vol){
+            device.AudioEndpointVolume.MasterVolumeLevelScalar = ((float)vol / 100.0f);
+
+        }
 
     }
 }
