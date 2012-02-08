@@ -18,7 +18,7 @@ namespace DreamoteServer
 
         public ServerCommunication( int port)
         {
-            handleAction = new HandleAction(this);
+            
             this.port = port;
         }
 
@@ -29,7 +29,7 @@ namespace DreamoteServer
             IPEndPoint ipep = new IPEndPoint(IPAddress.Any, port);
             sender = new IPEndPoint(IPAddress.Any, 0);
             newsock = new UdpClient(ipep);
-            
+            handleAction = new HandleAction(this);
 
            
             while (threadRunning)
