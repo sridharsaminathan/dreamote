@@ -197,10 +197,15 @@ namespace DreamoteServer
             {
                 SendKeys.SendWait(" ");
             }
-
             else if(key.Equals("{BACKSPACE}")) {
                 SendKeys.SendWait(key);
-            } else {
+            }
+            else if (key.Equals("\n"))
+            {
+                SendKeys.SendWait("\n");
+            }
+            else
+            {
                 try
                 {
                     for (int i = 0; i < key.Length; i++)
@@ -208,7 +213,7 @@ namespace DreamoteServer
                         SendKeys.SendWait("{" + key.Substring(i, 1) + "}");
                     }
                 }
-                catch(ArgumentException e)
+                catch (ArgumentException e)
                 {
                     Console.WriteLine(e.Message);
                 }
