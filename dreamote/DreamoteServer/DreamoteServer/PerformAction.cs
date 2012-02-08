@@ -197,12 +197,8 @@ namespace DreamoteServer
             {
                 SendKeys.SendWait(" ");
             }
-            else if(key.Equals("{BACKSPACE}")) {
+            else if(key.Equals("{BACKSPACE}") || key.Equals("\n") || key.Equals("{LEFT}") || key.Equals("{UP}") || key.Equals("{RIGHT}") || key.Equals("{DOWN}")) {
                 SendKeys.SendWait(key);
-            }
-            else if (key.Equals("\n"))
-            {
-                SendKeys.SendWait("\n");
             }
             else
             {
