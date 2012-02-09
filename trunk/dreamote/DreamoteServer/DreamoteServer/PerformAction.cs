@@ -248,7 +248,7 @@ namespace DreamoteServer
             return lstInstalled;
         }
 
-        public String GetComputerName()
+        public static String GetComputerName()
         {
             
             return System.Environment.MachineName;
@@ -274,7 +274,6 @@ namespace DreamoteServer
         public int GetMasterVolume()
         {
             return (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
-
         }
 
         public void SetMasterVolume(int vol){

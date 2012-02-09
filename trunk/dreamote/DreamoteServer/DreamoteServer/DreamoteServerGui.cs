@@ -19,7 +19,9 @@ namespace DreamoteServer
         private RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
         private const String REGISTRY_NAME = "DreamoteServer";
         private ServerCommunication serverCom = null;
+        private Broadcast broadcastCom = null;
         private Thread workThread = null;
+        private Thread broadcastThread = null;
 
         public DreamoteServerGui()
         {
@@ -56,6 +58,12 @@ namespace DreamoteServer
                 txt_port.Enabled = false;
                 lbl_port_invalid.Visible = false;
                 btn_start_server.Enabled = false;
+
+                broadcastCom = new Broadcast(port);
+                broadcastThread = new Thread(new ThreadStart(broadcastCom.broadcastReceive));
+                broadcastThread.Start();
+
+
                 serverCom = new ServerCommunication(port);
                 workThread = new Thread(new ThreadStart(serverCom.receive));
                 workThread.Start();

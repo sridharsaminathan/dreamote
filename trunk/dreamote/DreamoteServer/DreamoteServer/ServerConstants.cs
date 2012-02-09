@@ -20,7 +20,10 @@ namespace DreamoteServer
         
         public const int ACTION_SCROLL_UP = 0x0C;
         public const int ACTION_SCROLL_DOWN = 0x0D;
+
         public const int ACTION_SET_VOLUME = 0x0E;
         public const int ACTION_GET_VOLUME = 0x0F;
+
+       public const int BROADCAST_PORT = 9050;
     }
 }

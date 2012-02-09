@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Broadcast.cs" />
     <Compile Include="HandleAction.cs" />
     <Compile Include="MessageGenerator.cs" />
     <Compile Include="ServerConstants.cs" />
