@@ -1,6 +1,5 @@
 package project.dreamote;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -9,10 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class ServerSelectTabActivity extends Activity implements OnClickListener{
+public class ServerSelectTabActivity extends Activity implements OnClickListener, OnItemClickListener{
 	private ListView foundServersList;
 	private ListView serverHistoryList;
 	private Button updateServerListBtn;
@@ -47,6 +48,7 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 	private void setListeners() {
 		connectManuallyBtn.setOnClickListener(this);
 		updateServerListBtn.setOnClickListener(this);
+		foundServersList.setOnItemClickListener(this);
 	}
 	
 	private void fillFoundServerList() {
@@ -83,6 +85,9 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 			break;
 		case R.id.update_server_list_btn:
 			broadCastList.clear();
+			Thread thread = new Thread(new BroadCastRepliesThread(this));
+			thread.start();
+			
 			final Context context = this.getApplicationContext();
 			new Thread(new Runnable() {
 			    public void run() {
@@ -90,8 +95,7 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 			    }
 			  }).start();
 			
-			Thread thread = new Thread(new BroadCastRepliesThread(this));
-			thread.start();
+			
 			break;
 		}
 	}
@@ -101,5 +105,19 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 		if(resultCode == Activity.RESULT_OK) {
 			((MainTabHostActivity)this.getParent()).updateServerInfo();
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+		if(position <= broadCastList.size()){
+			
+			String[] item = broadCastList.get(position);
+			
+			if(item.length >= 3){
+				Preferences.setConnectedServer(this, item[1], Integer.parseInt(item[2]));
+				((MainTabHostActivity)this.getParent()).updateServerInfo();
+			}
+		}
+		
 	}
 }
