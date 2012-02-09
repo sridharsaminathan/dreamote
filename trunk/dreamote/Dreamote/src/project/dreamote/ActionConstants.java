@@ -18,4 +18,8 @@ public interface ActionConstants {
 	
 	public static final int ACTION_SET_VOLUME = 0x0E;
 	public static final int ACTION_GET_VOLUME = 0x0F;
+	
+	
+	public static final int BROADCAST_PORT = 9050;
+	public static final long BROADCAST_WAIT_FOR_REPLY_TIME = 1500;
 }

@@ -41,4 +41,8 @@ public class MessageGenerator implements ActionConstants{
 		return "" + ACTION_SET_VOLUME + ";" + volume;
 	}
 	
+	public static String createBroadCast(){
+		return "" + ACTION_BROADCAST;
+	}
+	
 }

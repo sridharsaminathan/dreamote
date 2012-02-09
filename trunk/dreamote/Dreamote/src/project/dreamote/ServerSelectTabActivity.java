@@ -1,8 +1,10 @@
 package project.dreamote;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,7 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 	private Button updateServerListBtn;
 	private Button connectManuallyBtn;
 	
+	private ArrayList<String[]> broadCastList;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,14 +26,14 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 		
 		findViews();
 		setListeners();
-		
+		broadCastList = new ArrayList<String[]>();
 		
 		// TestValues
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		list.add(new String[]{ "Niclas server", "192.168.0.197" });
 		list.add(new String[]{ "Martin server", "192.168.0.192" });
 		list.add(new String[]{ "Daniel server", "192.168.0.194" });
-		fillFoundServerList(list);
+		//fillFoundServerList();
 		fillServerHistoryList(list);
 	}
 	
@@ -46,8 +49,8 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 		updateServerListBtn.setOnClickListener(this);
 	}
 	
-	private void fillFoundServerList(ArrayList<String[]> list) {
-		foundServersList.setAdapter(new ServerListAdapter(this, R.layout.server_list_item, list));
+	private void fillFoundServerList() {
+		foundServersList.setAdapter(new ServerListAdapter(this, R.layout.server_list_item, broadCastList));
 		foundServersList.invalidate();
 	}
 	
@@ -55,7 +58,23 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 		serverHistoryList.setAdapter(new ServerListAdapter(this, R.layout.server_list_item, list));
 		serverHistoryList.invalidate();
 	}
-
+	
+	 private void threadedFillFoundServerList(){
+			this.runOnUiThread(new Runnable(){
+				@Override
+					public void run() {
+						fillFoundServerList();
+						
+					}
+	    		});
+		}
+	
+	public void receiveServerData(String[] data){
+		broadCastList.add(data);
+		threadedFillFoundServerList();
+		
+	}
+	
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()) {
@@ -63,7 +82,16 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 			startActivityForResult(new Intent(this, ManuallyConnectActivity.class), 0);
 			break;
 		case R.id.update_server_list_btn:
+			broadCastList.clear();
+			final Context context = this.getApplicationContext();
+			new Thread(new Runnable() {
+			    public void run() {
+			    	ClientCommunication.sendBroadCast(context);
+			    }
+			  }).start();
 			
+			Thread thread = new Thread(new BroadCastRepliesThread(this));
+			thread.start();
 			break;
 		}
 	}
