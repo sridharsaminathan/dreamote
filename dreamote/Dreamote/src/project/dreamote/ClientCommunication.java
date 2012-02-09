@@ -9,11 +9,14 @@ import java.net.UnknownHostException;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.DhcpInfo;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 
 
-public class ClientCommunication {
+public class ClientCommunication implements ActionConstants{
 
+	
     private String serverIP;
     private int serverPort;
     private DatagramSocket clientSocket;
@@ -106,7 +109,51 @@ public class ClientCommunication {
         }
         return networkInfo == null ? false : networkInfo.isConnected();
     }
-
+    
+   
+    	
+    public static InetAddress getBroadcastAddress(Context context) {
+    	try{
+    		WifiManager myWifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+    		DhcpInfo myDhcpInfo = myWifiManager.getDhcpInfo();
+    		if (myDhcpInfo == null) {
+    			System.out.println("Could not get broadcast address");
+    			return null;
+    		}
+    		int broadcast = (myDhcpInfo.ipAddress & myDhcpInfo.netmask)
+    					| ~myDhcpInfo.netmask;
+    		byte[] quads = new byte[4];
+    		for (int k = 0; k < 4; k++)
+    		quads[k] = (byte) ((broadcast >> k * 8) & 0xFF);
+    		return InetAddress.getByAddress(quads);
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	}
+    	return null;
+    }
+    
+    
+    public static void sendBroadCast(Context context){
+    	InetAddress i = getBroadcastAddress(context);
+		if(i != null){
+			sendBroadcast(i);
+		}
+    }
+    
+    private static void sendBroadcast(InetAddress broadcastAdr){
+        try{            
+            byte[] sendData = new byte[1024];        
+            
+            sendData = MessageGenerator.createBroadCast().getBytes();
+            DatagramSocket bCastSocket = new DatagramSocket();
+            DatagramPacket sendPacket = new DatagramPacket(sendData,sendData.length,broadcastAdr, BROADCAST_PORT);
+            bCastSocket.setBroadcast(true);
+            bCastSocket.send(sendPacket);
+        }catch(IOException e){
+        	e.printStackTrace();
+        }
+    }
+    	
     
     
 
