@@ -76,6 +76,20 @@ namespace DreamoteServer
             return null;
         }
 
+        public void CloseConnections()
+        {
+            threadRunning = false;
+            try
+            {
+                sock.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+        }
+
 
     }
 }

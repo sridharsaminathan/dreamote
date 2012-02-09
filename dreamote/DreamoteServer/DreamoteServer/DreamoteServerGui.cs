@@ -122,6 +122,14 @@ namespace DreamoteServer
                     workThread.Abort();
                 
             }
+            if (broadcastCom != null)
+            {
+                broadcastCom.CloseConnections();
+                if (broadcastThread != null)
+                    broadcastThread.Abort();
+            }
+
+
         }
     }
 }
