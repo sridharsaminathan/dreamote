@@ -25,10 +25,11 @@ public class BroadCastRepliesThread implements Runnable, ActionConstants {
 			while(running){
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				socket.receive(receivePacket);
-				String data = new String( receivePacket.getData());
+				String data = new String( receivePacket.getData(), 0 , receivePacket.getLength());
 				String[] dataArray = data.split(";");
 				
 				if(dataArray.length == 4 && ACTION_BROADCAST_REPLY == Integer.parseInt(dataArray[0])){
+					//            computername , ip-adress ,   port
 					String[] d = {dataArray[1], dataArray[2], dataArray[3]};
 					serverTab.receiveServerData(d);
 				}
