@@ -44,9 +44,8 @@ namespace DreamoteServer
         public void send(String msg)
         {
 
-
-            int length = Encoding.UTF8.GetBytes(msg).Length;
-            byte[] sendData = new byte[length + 10];
+            byte[] sendData = new byte[1024];
+            sendData = Encoding.UTF8.GetBytes(msg);
             newsock.Send(sendData, sendData.Length, sender);
 
 
