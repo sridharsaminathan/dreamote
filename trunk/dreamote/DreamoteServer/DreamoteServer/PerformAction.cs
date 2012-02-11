@@ -166,7 +166,8 @@ namespace DreamoteServer
             foreach (var process in processes)
             {
                 builder.Append(";");
-                builder.Append(process.ProcessName +  ":" + process.MainWindowTitle);
+                String title = process.MainWindowTitle; 
+                builder.Append(process.ProcessName +  ":" + (title.Length < 20 ? title : (title.Substring(0, 20) +  "...")));
                 
                 
             }
