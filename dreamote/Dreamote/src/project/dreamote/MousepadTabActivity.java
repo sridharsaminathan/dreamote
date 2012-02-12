@@ -3,6 +3,7 @@ package project.dreamote;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,10 +46,13 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 	}
 	@Override
 	public void onResume(){
-		super.onResume();
-		if(!ClientCommunication.isConnected(this)){
-			(Toast.makeText(this, getString(R.string.enable_wifi_message), Toast.LENGTH_SHORT)).show();
+		
+		if(!ClientCommunication.isConnected(this) && Preferences.getShowEnableWifiPopup(this)){
+			Toast toast = Toast.makeText(this, getString(R.string.enable_wifi_message), Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
 		}
+		super.onResume();
 	}
 	
 	private void findViews() {

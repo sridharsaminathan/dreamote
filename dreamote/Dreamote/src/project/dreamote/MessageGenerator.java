@@ -45,4 +45,8 @@ public class MessageGenerator implements ActionConstants{
 		return "" + ACTION_BROADCAST;
 	}
 	
+	public static String createGetOpenWindows(){
+		return "" + ACTION_GET_OPEN_WINDOWS;
+	}
+	
 }
