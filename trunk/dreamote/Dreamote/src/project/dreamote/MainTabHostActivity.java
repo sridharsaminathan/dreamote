@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -29,7 +30,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private VolumeController volumeController;
 	private Resources res;			// Resource object to get Drawables
 	private ClientCommunication communication;  // Used to contact server
-	
+	private Thread receiverThread = null;
 	private InputMethodManager inputMgr = null;
 	private Button keyboardBtn;
 	
@@ -54,6 +55,20 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	tabHost = (TabHost)findViewById(android.R.id.tabhost);
     	keyboardBtn = (Button)findViewById(R.id.keyboard_btn);
     	volumeController = (VolumeController)findViewById(R.id.volume_controller);
+    }
+    
+    private void startReceiverThread(){
+    	int receiverPort = communication.getCurrentPort();
+    	if(receiverPort >= 0 ){
+    		IncomingCommunication com = new IncomingCommunication(receiverPort);
+    		
+        	receiverThread = new Thread(com);
+        	receiverThread.start();
+    	}
+    }
+    
+    private void stopReceiverThread(){
+    	
     }
     
     private void setListeners() {
@@ -105,6 +120,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     }
     
     public void updateServerInfo() {
+    	
     	boolean connected = communication.updateServerInfo(
     			Preferences.getConnectedServerIp(this), Preferences.getConnectedServerPort(this));
     	
@@ -165,6 +181,10 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 			return;
 		}
 	}
+    public void sendGetOpenWindows(){
+    	communication.sendCommand(MessageGenerator.createGetOpenWindows());
+    }
+    
     
     public void sendMouseScroll(int action) {
     	switch(action) {
@@ -223,4 +243,6 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	public void onVolumeChange(int volume) {
 		communication.sendCommand(MessageGenerator.createSetVolume(volume));
 	}
+   
+    
 }

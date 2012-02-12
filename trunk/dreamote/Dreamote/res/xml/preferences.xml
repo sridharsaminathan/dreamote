@@ -3,7 +3,11 @@
         <PreferenceCategory
                 android:title="@string/pref_first_category_title">
                 
-                	
+                <CheckBoxPreference
+                        android:title="@string/prefs_enable_wifi_title"
+                        android:defaultValue="true"
+                        android:summary="@string/prefs_enable_wifi_summary"
+                        android:key="@string/prefs_enable_wifi_key" />
         </PreferenceCategory>
         
 </PreferenceScreen>

@@ -6,13 +6,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ProgramsSelectTabActivity extends Activity implements OnClickListener{
 	private MainTabHostActivity parent;
-	
-
+	private LinearLayout supportedPrograms;
+	private LinearLayout otherPrograms;
+	private Button refreshButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,28 +47,28 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	}
 	
 	private void findViews(){
+		supportedPrograms = (LinearLayout)findViewById(R.id.layout_supported_programs);
+		otherPrograms = (LinearLayout)findViewById(R.id.layout_other_programs);
+		refreshButton = (Button)findViewById(R.id.btn_update_programs_list);
 	}
 	
 	private void setListeners(){
-		
+		refreshButton.setOnClickListener(this);
 	}
 	
 	private void fillSupportedProgramsList(ArrayList<String[]> list){
 		if(list != null && list.size() > 0){
-			LinearLayout v = (LinearLayout)findViewById(R.id.layout_supported_programs);
-			v.removeAllViews();
+			supportedPrograms.removeAllViews();
 			for(int i = 0; i < list.size(); i++){
 				String[] info = list.get(i);
 				if(info.length == 2){
 					View listItem = getLayoutInflater().inflate(R.layout.programs_list_item, null);
 					(listItem.findViewById(R.id.programs_clickarea)).setOnClickListener(this);
-					
-					
 					TextView programTitle = (TextView)listItem.findViewById(R.id.txt_programs_title);
 					programTitle.setText(info[0]);
 					TextView programInfo = (TextView)listItem.findViewById(R.id.txt_programs_info);
 					programInfo.setText(info[1]);
-					v.addView(listItem);
+					supportedPrograms.addView(listItem);
 				}
 			}
 			
@@ -75,19 +77,17 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	}
 	private void fillOtherProgramsList(ArrayList<String[]> list ){
 		if(list != null && list.size() > 0){
-			LinearLayout v = (LinearLayout)findViewById(R.id.layout_other_programs);
-			v.removeAllViews();
+			otherPrograms.removeAllViews();
 			for(int i = 0; i < list.size(); i++){
 				String[] info = list.get(i);
 				if(info.length == 2){
 					View listItem = getLayoutInflater().inflate(R.layout.programs_list_item, null);
-					
 					(listItem.findViewById(R.id.programs_clickarea)).setOnClickListener(this);
 					TextView programTitle = (TextView)listItem.findViewById(R.id.txt_programs_title);
 					programTitle.setText(info[0]);
 					TextView programInfo = (TextView)listItem.findViewById(R.id.txt_programs_info);
 					programInfo.setText(info[1]);
-					v.addView(listItem);
+					otherPrograms.addView(listItem);
 				}
 			}
 			
@@ -97,7 +97,9 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 
 	@Override
 	public void onClick(View v) {
-		
+		if(v.getId() == R.id.btn_update_programs_list){
+			parent.sendGetOpenWindows();
+		}
 		
 	}
 	

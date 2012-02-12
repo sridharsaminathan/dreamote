@@ -93,6 +93,10 @@ public class ClientCommunication implements ActionConstants{
     	return false;
     }
     
+    public int getCurrentPort(){
+    	return clientSocket.getPort();
+    }
+    
     public boolean updateServerInfo(String ip, int port) {
     	this.serverIP = ip;
     	this.serverPort = port;

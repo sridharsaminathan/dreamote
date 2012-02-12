@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 public class Preferences extends PreferenceActivity{
 	 @Override
@@ -34,5 +35,10 @@ public class Preferences extends PreferenceActivity{
 				 context.getString(R.string.shared_prefs_key), MODE_PRIVATE);
 		 
 		 return pref.getInt(context.getString(R.string.port_key), 0);
+	 }
+	 
+	 public static boolean getShowEnableWifiPopup(Context context){
+		 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+		 return pref.getBoolean(context.getString(R.string.prefs_enable_wifi_key), true);
 	 }
 }
