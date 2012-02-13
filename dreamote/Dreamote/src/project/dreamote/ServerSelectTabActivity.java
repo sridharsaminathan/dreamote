@@ -1,6 +1,8 @@
 package project.dreamote;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class ServerSelectTabActivity extends Activity implements OnClickListener, OnItemClickListener{
+public class ServerSelectTabActivity extends Activity implements OnClickListener, OnItemClickListener, Observer{
 	private ListView foundServersList;
 	private ListView serverHistoryList;
 	private Button updateServerListBtn;
@@ -118,6 +120,12 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 				((MainTabHostActivity)this.getParent()).updateServerInfo();
 			}
 		}
+		
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		// TODO Auto-generated method stub
 		
 	}
 }

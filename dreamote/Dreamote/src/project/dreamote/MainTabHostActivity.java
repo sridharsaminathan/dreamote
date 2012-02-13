@@ -34,6 +34,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private InputMethodManager inputMgr = null;
 	private Button keyboardBtn;
 	
+	
 	private Context context = this;
 	
     /** Called when the activity is first created. */
