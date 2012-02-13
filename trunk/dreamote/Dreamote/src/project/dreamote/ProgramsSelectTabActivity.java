@@ -1,6 +1,8 @@
 package project.dreamote;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,7 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ProgramsSelectTabActivity extends Activity implements OnClickListener{
+public class ProgramsSelectTabActivity extends Activity implements OnClickListener, Observer{
 	private MainTabHostActivity parent;
 	private LinearLayout supportedPrograms;
 	private LinearLayout otherPrograms;
@@ -100,6 +102,12 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 		if(v.getId() == R.id.btn_update_programs_list){
 			parent.sendGetOpenWindows();
 		}
+		
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		// TODO Auto-generated method stub
 		
 	}
 	

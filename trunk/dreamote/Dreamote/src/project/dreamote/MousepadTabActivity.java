@@ -1,19 +1,19 @@
 package project.dreamote;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MousepadTabActivity extends Activity implements OnTouchListener, OnClickListener {
+public class MousepadTabActivity extends Activity implements OnTouchListener, OnClickListener, Observer {
 	private static final int PAD_CLICK_DIFF = 7;
 	private static final int SCROLL_TICK = 10;
 	
@@ -150,4 +150,10 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 			break;
 		}
 	}
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		
+		
+	}
+	
 }

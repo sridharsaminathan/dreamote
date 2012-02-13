@@ -10,6 +10,7 @@ public class IncomingCommunication extends Observable implements Runnable, Actio
 	private DatagramSocket socket = null;
 	private int port;
 	
+	
 	public IncomingCommunication(int port){
 		this.port = port;
 		
@@ -60,5 +61,6 @@ public class IncomingCommunication extends Observable implements Runnable, Actio
 		}
 		
 	}
-
+	
+	
 }
