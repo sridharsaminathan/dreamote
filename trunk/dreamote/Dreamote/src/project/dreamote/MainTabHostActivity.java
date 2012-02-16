@@ -2,6 +2,8 @@ package project.dreamote;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import project.dreamote.components.OnVolumeChangeListener;
 import project.dreamote.components.VolumeController;
@@ -12,7 +14,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -25,7 +26,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 
-public class MainTabHostActivity extends ActivityGroup implements OnClickListener, OnVolumeChangeListener{
+public class MainTabHostActivity extends ActivityGroup implements OnClickListener, OnVolumeChangeListener, Observer{
 	private TabHost tabHost;		// The activity TabHost
 	private VolumeController volumeController;
 	private Resources res;			// Resource object to get Drawables
@@ -33,9 +34,11 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private Thread receiverThread = null;
 	private InputMethodManager inputMgr = null;
 	private Button keyboardBtn;
-	
+	private IncomingCommunication com = null;
 	
 	private Context context = this;
+	private String[] programsDataArray = null;
+	private boolean dataAvailable = false;
 	
     /** Called when the activity is first created. */
     @Override
@@ -50,8 +53,20 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
         setupVolumeController();
         setListeners();
         createTabs();
+        
     }
     
+    @Override
+    public void onStart(){
+    	super.onStart();
+    	startReceiverThread();
+    }
+    
+    @Override
+    public void onStop(){
+    	super.onStop();
+    	stopReceiverThread();
+    }
     private void findViews() {
     	tabHost = (TabHost)findViewById(android.R.id.tabhost);
     	keyboardBtn = (Button)findViewById(R.id.keyboard_btn);
@@ -59,17 +74,39 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     }
     
     private void startReceiverThread(){
-    	int receiverPort = communication.getCurrentPort();
+    	int receiverPort = 52568;
+    	//int receiverPort = communication.getCurrentPort();
     	if(receiverPort >= 0 ){
-    		IncomingCommunication com = new IncomingCommunication(receiverPort);
-    		
+    		com = new IncomingCommunication(receiverPort);
+    		com.addObserver(this);
         	receiverThread = new Thread(com);
         	receiverThread.start();
     	}
     }
     
+    public boolean isDataAvailable(){
+    	return dataAvailable;
+    }
+    
+    public void setDataAvailble(boolean value){
+    	dataAvailable = value;
+    }
+    
+    public String[] getProgramsDataArray(){
+    	dataAvailable = false;
+    	return programsDataArray;
+    }
+    
     private void stopReceiverThread(){
-    	
+    	if(com != null){
+    		com.shutDown();
+    		
+    		
+    	}
+    	if(receiverThread != null){
+    		receiverThread.interrupt();
+    		receiverThread = null;
+    	}
     }
     
     private void setListeners() {
@@ -243,6 +280,16 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     @Override
 	public void onVolumeChange(int volume) {
 		communication.sendCommand(MessageGenerator.createSetVolume(volume));
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		if(data instanceof String[]){
+			
+			programsDataArray = (String[])data;
+			dataAvailable = true;
+		}
+		
 	}
    
     
