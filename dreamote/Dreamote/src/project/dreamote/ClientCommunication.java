@@ -94,7 +94,7 @@ public class ClientCommunication implements ActionConstants{
     }
     
     public int getCurrentPort(){
-    	return clientSocket.getPort();
+    	return clientSocket.getLocalPort();
     }
     
     public boolean updateServerInfo(String ip, int port) {
