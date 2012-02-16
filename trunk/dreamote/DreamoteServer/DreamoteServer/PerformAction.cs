@@ -43,7 +43,7 @@ namespace DreamoteServer
         private const int SB_RIGHT = 7; // Scrolls to the right
         private const int SB_ENDSCROLL = 8; // Ends scroll
 
-
+        private List<String> supportedPrograms;
 
 
         [DllImport("user32.dll")]
@@ -72,6 +72,7 @@ namespace DreamoteServer
         {
             MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
             device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+            supportedPrograms = SupportedPrograms.getSupportedPrograms();
         }
 
         public static void SetCursorPosition(int xDiff, int yDiff)
@@ -156,23 +157,67 @@ namespace DreamoteServer
             return false;
         }
 
-        public String GetOpenWindows()
+        private String StringArrayListToString(List<String[]> list)
         {
-            IEnumerable<Process> processes = Process.GetProcesses().Where(p => p.MainWindowHandle != IntPtr.Zero && !p.ProcessName.Equals("explorer") && !p.ProcessName.Equals("DreamoteServer"));
-           
-
             StringBuilder builder = new StringBuilder();
-            
-            foreach (var process in processes)
+            for (int i = 0; i < list.Count; i++)
             {
+                String[] program = list[i];
                 builder.Append(";");
-                String title = process.MainWindowTitle; 
-                builder.Append(process.ProcessName +  ":" + (title.Length < 20 ? title : (title.Substring(0, 20) +  "...")));
+                builder.Append(program[0]).Append(":").Append(program[1]);
                 
-                
+
             }
             builder.Remove(0, 1);
             return builder.ToString();
+
+        }
+
+        public void GetOpenWindows(out String supported, out String other)
+        {
+            List<String[]> sup = new List<String[]>();
+            List<String[]> oth = new List<String[]>();
+
+            List<String[]> openPrograms = GetOpenWindows();
+            for (int i = 0; i < openPrograms.Count; i++)
+            {
+                String[] program = openPrograms[i];
+                if (supportedPrograms.Contains(program[0].ToLower()))
+                {
+                    sup.Add(program);
+
+                }
+                else
+                {
+                    oth.Add(program);
+                }
+            }
+            supported = StringArrayListToString(sup);
+            other = StringArrayListToString(oth);
+        }
+
+
+        private List<String[]> GetOpenWindows()
+        {
+            List<String[]> programs = new List<String[]>();
+            IEnumerable<Process> processes = Process.GetProcesses().Where(p => p.MainWindowHandle != IntPtr.Zero && !p.ProcessName.Equals("explorer") && !p.ProcessName.Equals("DreamoteServer"));
+           
+
+            
+            
+            foreach (var process in processes)
+            {
+                String[] program = new String[2];
+                String title = process.MainWindowTitle;
+                title = (title.Length < 30 ? title : (title.Substring(0, 30) +  "..."));
+                String processName = process.ProcessName;
+                program[1] = title;
+                program[0] = processName;
+                programs.Add(program);
+                
+            }
+
+            return programs;
         }
 
         /*private void Shutdown()
