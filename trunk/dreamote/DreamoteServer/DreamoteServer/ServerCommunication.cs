@@ -41,13 +41,15 @@ namespace DreamoteServer
                 handleAction.performAction(Encoding.UTF8.GetString(data, 0, data.Length));
             }
         }
+
         public void send(String msg)
         {
-
+            sender.Port = 52568;
             byte[] sendData = new byte[1024];
             sendData = Encoding.UTF8.GetBytes(msg);
             newsock.Send(sendData, sendData.Length, sender);
-
+            Console.WriteLine("Sent " + msg);
+            Console.WriteLine("to port " + sender.Port.ToString());
 
         }
 
