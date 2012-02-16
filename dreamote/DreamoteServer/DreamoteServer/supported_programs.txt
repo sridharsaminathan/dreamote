@@ -1,0 +1,3 @@
+#Dreamote supported programs
+spotify:vlc
+
