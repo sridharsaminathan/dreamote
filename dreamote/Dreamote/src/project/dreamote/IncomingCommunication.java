@@ -23,6 +23,7 @@ public class IncomingCommunication extends Observable implements Runnable, Actio
 	public void run() {
 		try{
 			socket = new DatagramSocket(port);
+			socket.setReuseAddress(true);
 			byte[] receiveData = new byte[1024];
 			
 			while(running){
@@ -47,15 +48,17 @@ public class IncomingCommunication extends Observable implements Runnable, Actio
 				e.printStackTrace();
 				return;
 			}
+			setChanged();
 			notifyObservers(dataArray);
 			
 		}
 		
 	}
 	
-	public void stopThread(){
+	public void shutDown(){
 		running = false;
 		if(socket != null){
+			
 			socket.disconnect();
 			socket.close();
 		}
