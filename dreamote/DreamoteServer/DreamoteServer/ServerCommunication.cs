@@ -37,8 +37,15 @@ namespace DreamoteServer
 
             while (threadRunning)
             {
-                data = newsock.Receive(ref sender);
-                handleAction.performAction(Encoding.UTF8.GetString(data, 0, data.Length));
+                try
+                {
+                    data = newsock.Receive(ref sender);
+                    handleAction.performAction(Encoding.UTF8.GetString(data, 0, data.Length));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
 

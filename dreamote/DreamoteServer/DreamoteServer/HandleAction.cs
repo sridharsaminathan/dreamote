@@ -73,6 +73,12 @@ namespace DreamoteServer
                 case ServerConstants.ACTION_GET_VOLUME:
                     serverCommunication.send(MessageGenerator.CreateStringGetVolume(pa.GetMasterVolume()));
                     break;
+                case ServerConstants.ACTION_SET_FOCUS_WINDOW:
+                    if (splitStr.Length == 2)
+                    {
+                        pa.SetActiveWindow(splitStr[1]);
+                    }
+                    break;
             }
                 
         }
