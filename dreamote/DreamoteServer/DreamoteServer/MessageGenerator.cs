@@ -11,7 +11,7 @@ namespace DreamoteServer
 
         public static String CreateStringOpenWindows(String openWindows)
         {
-            return "" + ServerConstants.ACTION_GET_OPEN_WINDOWS_REPLY + openWindows;
+            return "" + ServerConstants.ACTION_GET_OPEN_WINDOWS_REPLY + ";" + openWindows;
 
         }
 
