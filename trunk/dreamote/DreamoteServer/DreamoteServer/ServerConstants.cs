@@ -24,6 +24,8 @@ namespace DreamoteServer
         public const int ACTION_SET_VOLUME = 0x0E;
         public const int ACTION_GET_VOLUME = 0x0F;
 
+        public const int ACTION_SET_FOCUS_WINDOW = 0x10;
+
        public const int BROADCAST_PORT = 9050;
     }
 }
