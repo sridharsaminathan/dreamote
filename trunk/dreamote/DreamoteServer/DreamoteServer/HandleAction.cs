@@ -85,6 +85,15 @@ namespace DreamoteServer
                         pa.SetActiveWindow(splitStr[1]);
                     }
                     break;
+                case ServerConstants.ACTION_MEDIA_PLAY_PAUSE:
+                    pa.PausePlay();
+                    break;
+                case ServerConstants.ACTION_MEDIA_NEXT:
+
+                    break;
+                case ServerConstants.ACTION_MEDIA_PREVIOUS:
+
+                    break;
             }
                 
         }

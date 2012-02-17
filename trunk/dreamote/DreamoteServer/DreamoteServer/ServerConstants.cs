@@ -27,6 +27,11 @@ namespace DreamoteServer
         public const int ACTION_SET_FOCUS_WINDOW = 0x10;
         public const int ACTION_GET_OPEN_OTHER_WINDOWS_REPLY = 0x11;
 
+        //mediabuttons
+        public const int ACTION_MEDIA_PLAY_PAUSE = 0x12;
+        public const int ACTION_MEDIA_NEXT = 0x13;
+        public const int ACTION_MEDIA_PREVIOUS  = 0x14;
+
        public const int BROADCAST_PORT = 9050;
     }
 }
