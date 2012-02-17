@@ -14,7 +14,7 @@ namespace DreamoteServer
     {
         private int port;
         private IPEndPoint sender;
-        private Socket sock;
+        private Socket sock = null;
         private bool threadRunning = true;
 
 
@@ -81,7 +81,11 @@ namespace DreamoteServer
             threadRunning = false;
             try
             {
-                sock.Close();
+                if (sock != null)
+                {
+
+                    sock.Close();
+                }
             }
             catch (Exception e)
             {
