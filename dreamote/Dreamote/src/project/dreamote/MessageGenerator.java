@@ -49,4 +49,8 @@ public class MessageGenerator implements ActionConstants{
 		return "" + ACTION_GET_OPEN_WINDOWS;
 	}
 	
+	public static String createSetFocusWindow(String window){
+		return "" + ACTION_SET_FOCUS_WINDOW + ";" + window;
+	}
+	
 }

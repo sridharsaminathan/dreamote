@@ -26,7 +26,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 
-public class MainTabHostActivity extends ActivityGroup implements OnClickListener, OnVolumeChangeListener, Observer{
+public class MainTabHostActivity extends ActivityGroup implements OnClickListener, OnVolumeChangeListener, Observer, ActionConstants{
 	private TabHost tabHost;		// The activity TabHost
 	private VolumeController volumeController;
 	private Resources res;			// Resource object to get Drawables
@@ -37,8 +37,10 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private IncomingCommunication com = null;
 	
 	private Context context = this;
-	private String[] programsDataArray = null;
-	private boolean dataAvailable = false;
+	private String[] supportedProgramsDataArray = null;
+	private String[] otherProgramsDataArray = null;
+	private boolean supportedDataAvailable = false;
+	private boolean otherDataAvailable = false;
 	
     /** Called when the activity is first created. */
     @Override
@@ -84,17 +86,29 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	}
     }
     
-    public boolean isDataAvailable(){
-    	return dataAvailable;
+    public boolean isSupportedDataAvailable(){
+    	return supportedDataAvailable;
+    }
+    public boolean isOtherDataAvailable(){
+    	return otherDataAvailable;
     }
     
-    public void setDataAvailble(boolean value){
-    	dataAvailable = value;
+    public void setSupportedDataAvailble(boolean value){
+    	supportedDataAvailable = value;
+    }
+    public void setOtherDataAvailable(boolean value){
+    	otherDataAvailable = value;
     }
     
-    public String[] getProgramsDataArray(){
-    	dataAvailable = false;
-    	return programsDataArray;
+    public String[] getSupportedProgramsDataArray(){
+    	supportedDataAvailable = false;
+    	return supportedProgramsDataArray;
+    }
+    
+    public String[] getOtherProgramsDataArray(){
+    	otherDataAvailable = false;
+    	return otherProgramsDataArray;
+    	
     }
     
     private void stopReceiverThread(){
@@ -223,6 +237,9 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	communication.sendCommand(MessageGenerator.createGetOpenWindows());
     }
     
+    public void sendSetFocusWindow(String window){
+    	communication.sendCommand(MessageGenerator.createSetFocusWindow(window));
+    }
     
     public void sendMouseScroll(int action) {
     	switch(action) {
@@ -286,8 +303,22 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	public void update(Observable observable, Object data) {
 		if(data instanceof String[]){
 			
-			programsDataArray = (String[])data;
-			dataAvailable = true;
+			String[] prog = (String[])data;
+			try{
+				int value = Integer.parseInt(prog[0]);
+				if(value == ACTION_GET_OPEN_OTHER_WINDOWS_REPLY){
+					otherProgramsDataArray = prog;
+					supportedDataAvailable = true;
+				}else if(value == ACTION_GET_OPEN_SUPPORTED_WDINOWS_REPLY){
+					supportedProgramsDataArray = prog;
+					otherDataAvailable = true;
+				}
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				return;
+			}
+			
 		}
 		
 	}
