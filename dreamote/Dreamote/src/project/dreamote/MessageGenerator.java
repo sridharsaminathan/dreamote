@@ -53,4 +53,15 @@ public class MessageGenerator implements ActionConstants{
 		return "" + ACTION_SET_FOCUS_WINDOW + ";" + window;
 	}
 	
+	public static String createMediaPlayPause(){
+		return "" + ACTION_MEDIA_PLAY_PAUSE;
+	}
+	
+	public static String createMediaNext(){
+		return "" + ACTION_MEDIA_NEXT;
+	}
+	public static String createMediaPrevious(){
+		return "" + ACTION_MEDIA_PREVIOUS;
+	}
+	
 }
