@@ -138,8 +138,9 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 			//test if we are already fetching data. prevents spamming on button to create loads of threads
 			if(!fetchingData){
 				fetchingData = true;
-				parent.sendGetOpenWindows();
 				fetchData();
+				parent.sendGetOpenWindows();
+				
 			}
 		}
 		else if(v.getId() == R.id.programs_clickarea){
@@ -171,7 +172,7 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 					else{
 						fetchAttempts++;
 						try{
-							Thread.sleep(500);
+							Thread.sleep(300);
 						}catch(Exception e){
 							e.printStackTrace();
 						}
