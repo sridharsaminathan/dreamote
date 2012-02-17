@@ -168,7 +168,9 @@ namespace DreamoteServer
                 
 
             }
+            if(builder.Length > 0)
             builder.Remove(0, 1);
+
             return builder.ToString();
 
         }
@@ -192,6 +194,7 @@ namespace DreamoteServer
                     oth.Add(program);
                 }
             }
+            
             supported = StringArrayListToString(sup);
             other = StringArrayListToString(oth);
         }
