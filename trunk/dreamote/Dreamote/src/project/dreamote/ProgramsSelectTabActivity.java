@@ -8,12 +8,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ProgramsSelectTabActivity extends Activity implements OnClickListener, Observer{
+public class ProgramsSelectTabActivity extends Activity implements OnClickListener{
 	private MainTabHostActivity parent;
 	private LinearLayout supportedPrograms;
 	private LinearLayout otherPrograms;
@@ -60,6 +62,7 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	
 	private void setListeners(){
 		refreshButton.setOnClickListener(this);
+		
 	}
 	
 	private void fillSupportedProgramsList(ArrayList<String[]> list){
@@ -79,7 +82,7 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 					
 				}
 			}
-			
+			(Toast.makeText(this, "Program List uppdated", Toast.LENGTH_SHORT)).show();
 		}
 		
 	}
@@ -116,7 +119,7 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 		
 	}
 	
-	private void threadedOtherProgramsList(final ArrayList<String[]> list){
+	private void threadedFillOtherProgramsList(final ArrayList<String[]> list){
 		this.runOnUiThread(new Runnable(){
 			@Override
 				public void run() {
@@ -129,10 +132,9 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.btn_update_programs_list){
-			parent.setDataAvailble(false); //set the flag to false so we only fetch the new data
-			
-			
-			
+			//set the flag to false so we only fetch the new data
+			parent.setSupportedDataAvailble(false);
+			parent.setOtherDataAvailable(false);
 			//test if we are already fetching data. prevents spamming on button to create loads of threads
 			if(!fetchingData){
 				fetchingData = true;
@@ -140,6 +142,12 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 				fetchData();
 			}
 		}
+		else if(v.getId() == R.id.programs_clickarea){
+			TextView titleTextView = (TextView)v.findViewById(R.id.txt_programs_title);
+			String windowTitle = titleTextView.getText().toString().toLowerCase();
+			parent.sendSetFocusWindow(windowTitle);
+		}
+		
 		
 	}
 	
@@ -153,10 +161,14 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 			public void run() {
 				int fetchAttempts = 0;
 				while(fetchAttempts < 10){
-					if(parent.isDataAvailable()){
-						handleFetchedData(parent.getProgramsDataArray());
+					if(parent.isSupportedDataAvailable()){
+						threadedFillSupportedProgramsList(handleFetchedData(parent.getSupportedProgramsDataArray()));
 						
-					}else{
+					}else if(parent.isOtherDataAvailable()){
+						threadedFillOtherProgramsList(handleFetchedData(parent.getOtherProgramsDataArray()));
+						
+					}
+					else{
 						fetchAttempts++;
 						try{
 							Thread.sleep(500);
@@ -176,25 +188,23 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	
 	
 	//take care of the data from the server. string looks like "program1:program1info;program2:program2info;" .....and so on
-	private void handleFetchedData(String[] data){
+	private ArrayList<String[]> handleFetchedData(String[] data){
+		ArrayList<String[]> inData = new ArrayList<String[]>();
 		if(data != null && data.length > 0 ){
-			ArrayList<String[]> inData = new ArrayList<String[]>();
+			
 			
 			for(int i = 0; i < data.length; i++ ){
 				String[] singleProgram = data[i].split(":");
 				inData.add(singleProgram);
 				
 			}
-			threadedOtherProgramsList(inData);
+			
 		}
-		
+		return inData;
 	}
 
-	@Override
-	public void update(Observable observable, Object data) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+
 	
 	
 }
