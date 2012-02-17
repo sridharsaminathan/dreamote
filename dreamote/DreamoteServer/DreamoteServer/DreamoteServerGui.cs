@@ -52,7 +52,7 @@ namespace DreamoteServer
             int port = DEFAULT_PORT;
             if (int.TryParse(txt_port.Text, out port))
             {
-                 //(new PerformAction()).SetMasterVolume(50);
+                (new PerformAction()).PausePlay();
                  
                 //start server
                 txt_port.Enabled = false;

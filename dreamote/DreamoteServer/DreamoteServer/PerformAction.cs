@@ -25,6 +25,8 @@ namespace DreamoteServer
         private const int MOUSEEVENT_MIDDLEUP = 0x040;
         private const int MOUSEEVENT_WHEEL = 0x800;
 
+        private const int KEYCODE_MEDIA_PLAY_PAUSE = 0x00000055;
+
 
         //Scroll Constants
         private const int WM_SCROLL = 276; // Horizontal scroll
@@ -123,6 +125,12 @@ namespace DreamoteServer
         {
 
             mouse_event(MOUSEEVENT_WHEEL, 0, 0, 50, 0);
+        }
+
+        public void PausePlay()
+        {
+            
+            
         }
 
         
