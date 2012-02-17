@@ -25,7 +25,7 @@ namespace DreamoteServer
 
         public void broadcastReceive()
         {
-            Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint iep = new IPEndPoint(IPAddress.Any, ServerConstants.BROADCAST_PORT);
             sock.Bind(iep);
 
