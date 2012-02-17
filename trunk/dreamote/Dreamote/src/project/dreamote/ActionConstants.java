@@ -22,6 +22,11 @@ public interface ActionConstants {
 	public static final int ACTION_SET_FOCUS_WINDOW = 0x10;
 	public static final int ACTION_GET_OPEN_OTHER_WINDOWS_REPLY = 0x11;
 	
+	//Mediabuttons
+	public static final int ACTION_MEDIA_PLAY_PAUSE = 0x12;
+	public static final int ACTION_MEDIA_NEXT = 0x13;
+	public static final int ACTION_MEDIA_PREVIOUS = 0x14;
+	
 	
 	public static final int BROADCAST_PORT = 9050;
 	public static final long BROADCAST_WAIT_FOR_REPLY_TIME = 1500;

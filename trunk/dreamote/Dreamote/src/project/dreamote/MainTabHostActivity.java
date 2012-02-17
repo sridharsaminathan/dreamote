@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -34,6 +35,10 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private Thread receiverThread = null;
 	private InputMethodManager inputMgr = null;
 	private Button keyboardBtn;
+	private Button mediaPlayPause;
+	private Button mediaNext;
+	private Button mediaPrevious;
+	
 	private IncomingCommunication com = null;
 	
 	private Context context = this;
@@ -73,6 +78,10 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	tabHost = (TabHost)findViewById(android.R.id.tabhost);
     	keyboardBtn = (Button)findViewById(R.id.keyboard_btn);
     	volumeController = (VolumeController)findViewById(R.id.volume_controller);
+    	mediaPlayPause = (Button)findViewById(R.id.btn_play_pause);
+    	mediaNext = (Button)findViewById(R.id.btn_next);
+    	mediaPrevious = (Button)findViewById(R.id.btn_previous);
+    	
     }
     
     private void startReceiverThread(){
@@ -126,6 +135,9 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     private void setListeners() {
     	keyboardBtn.setOnClickListener(this);
     	volumeController.setOnVolumeChangeListener(this);
+    	mediaPlayPause.setOnClickListener(this);
+    	mediaNext.setOnClickListener(this);
+    	mediaPrevious.setOnClickListener(this);
     }
     
     private void setupVolumeController() {
@@ -259,6 +271,15 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 			inputMgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 			inputMgr.toggleSoftInput(0, 0);
 			break;
+		case R.id.btn_play_pause:
+			communication.sendCommand(MessageGenerator.createMediaPlayPause());
+			break;
+		case R.id.btn_next:
+			communication.sendCommand(MessageGenerator.createMediaNext());
+			break;
+		case R.id.btn_previous:
+			communication.sendCommand(MessageGenerator.createMediaPrevious());
+			break;
 		}
 	}
     
@@ -308,10 +329,10 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 				int value = Integer.parseInt(prog[0]);
 				if(value == ACTION_GET_OPEN_OTHER_WINDOWS_REPLY){
 					otherProgramsDataArray = prog;
-					supportedDataAvailable = true;
+					otherDataAvailable = true;
 				}else if(value == ACTION_GET_OPEN_SUPPORTED_WDINOWS_REPLY){
 					supportedProgramsDataArray = prog;
-					otherDataAvailable = true;
+					supportedDataAvailable = true;
 				}
 			}
 			catch(Exception e){
