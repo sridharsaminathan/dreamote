@@ -1,3 +1,2 @@
 #Dreamote supported programs
-spotify:vlc
-
+spotify:vlc:wmplayer

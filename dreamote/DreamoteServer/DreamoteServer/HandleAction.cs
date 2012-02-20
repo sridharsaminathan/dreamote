@@ -57,8 +57,6 @@ namespace DreamoteServer
                     pa.GetOpenWindows(out supported, out other);
                     serverCommunication.send( MessageGenerator.CreateStringOpenSupportedWindows(supported));
                     serverCommunication.send(MessageGenerator.CreateStringOpenOtherWindows(other));
-                    Console.WriteLine("Supported programs " + supported);
-                    Console.WriteLine("Other " + other);
                     break;
                 case ServerConstants.ACTION_SCROLL_UP:
                     pa.ScrollWheelUp();
