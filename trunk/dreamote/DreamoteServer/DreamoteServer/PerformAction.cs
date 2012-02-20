@@ -127,10 +127,17 @@ namespace DreamoteServer
             mouse_event(MOUSEEVENT_WHEEL, 0, 0, 50, 0);
         }
 
-        public void PausePlay()
+        public void MediaPausePlay()
         {
-            
-            
+            SendKeys.SendWait(" ");
+        }
+        public void MediaPrevious()
+        {
+            SendKeys.SendWait("^{LEFT}");
+        }
+        public void MediaNext()
+        {
+            SendKeys.SendWait("^{RIGHT}");
         }
 
         

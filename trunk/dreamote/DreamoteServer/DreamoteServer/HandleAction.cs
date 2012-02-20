@@ -86,13 +86,13 @@ namespace DreamoteServer
                     }
                     break;
                 case ServerConstants.ACTION_MEDIA_PLAY_PAUSE:
-                    pa.PausePlay();
+                    pa.MediaPausePlay();
                     break;
                 case ServerConstants.ACTION_MEDIA_NEXT:
-
+                    pa.MediaNext();
                     break;
                 case ServerConstants.ACTION_MEDIA_PREVIOUS:
-
+                    pa.MediaPrevious();
                     break;
             }
                 
