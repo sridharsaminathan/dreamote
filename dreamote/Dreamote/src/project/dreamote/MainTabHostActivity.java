@@ -223,6 +223,10 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	communication.sendCommand(MessageGenerator.createMouseMoveMessage(oldX, oldY, newX, newY));
     }
     
+    public void sendMouseMove(float moveX, float moveY) {
+    	communication.sendCommand(MessageGenerator.createMouseMoveMessage(moveX, moveY));
+    }
+    
     public void sendKeyEvent(String key){
     	communication.sendCommand(MessageGenerator.createKeyboardEvent(key));
     }
