@@ -44,4 +44,27 @@
 		android:layout_above="@id/mouse_buttons_layout"
 		android:background="@drawable/scroll_view_background"
 	/>
+	
+	
+	
+	<TextView 
+		android:id="@+id/txt_x"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="7dip"
+	/>
+	<TextView 
+		android:id="@+id/txt_y"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="7dip"
+		android:layout_below="@id/txt_x"
+	/>
+	<TextView 
+		android:id="@+id/txt_z"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="7dip"
+		android:layout_below="@id/txt_y"
+	/>
 </RelativeLayout>

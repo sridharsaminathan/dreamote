@@ -4,6 +4,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.app.Activity;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -11,9 +15,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MousepadTabActivity extends Activity implements OnTouchListener, OnClickListener, Observer {
+public class MousepadTabActivity extends Activity implements OnTouchListener, SensorEventListener, OnClickListener, Observer {
 	private static final int PAD_CLICK_DIFF = 7;
 	private static final int SCROLL_TICK = 10;
 	
@@ -34,25 +39,46 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 	private float maxXdiff;
 	private float maxYdiff;
 	
+	SensorManager sensorManager = null;
+	private boolean tiltFuncOn = false;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mousepad);
 		
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		
 		findViews();
 		setListeners();
 		
-		
+		setGyroListener(true);
 	}
 	@Override
 	public void onResume(){
-		
+		super.onResume();
+		setGyroListener(true);
 		if(!ClientCommunication.isConnected(this) && Preferences.getShowEnableWifiPopup(this)){
 			Toast toast = Toast.makeText(this, getString(R.string.enable_wifi_message), Toast.LENGTH_SHORT);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}
-		super.onResume();
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		setGyroListener(false);
+	}
+	
+	private void setGyroListener(boolean set) {
+ 		if(set) {
+			sensorManager.registerListener(this, sensorManager.getDefaultSensor(
+					Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_FASTEST);
+		} else {
+			sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(
+					Sensor.TYPE_ACCELEROMETER));
+		}
 	}
 	
 	private void findViews() {
@@ -150,10 +176,30 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, On
 			break;
 		}
 	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		
 		
 	}
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	}
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		sendMouseMoves(-2*(int)event.values[0], -2*(int)event.values[1]);
+	}
 	
+	private void sendMouseMoves(int moveX, int moveY) {
+		int xDir;
+		int yDir;
+		while(moveX != 0 || moveY != 0) {
+			xDir = moveX < 0 ? -1 : moveX == 0 ? 0 : 1;
+			yDir = moveY < 0 ? -1 : moveY == 0 ? 0 : 1;
+			
+			parent.sendMouseMove(xDir, yDir);
+			moveX = moveX == 0 ? 0 : moveX - xDir;
+			moveY = moveY == 0 ? 0 : moveY - yDir;
+		}
+	}
 }

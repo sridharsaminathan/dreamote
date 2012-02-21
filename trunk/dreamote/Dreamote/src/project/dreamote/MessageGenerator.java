@@ -7,7 +7,11 @@ public class MessageGenerator implements ActionConstants{
 	public static String createMouseMoveMessage(float oldX, float oldY, float newX, float newY) {
 		int diffX = -(int)(MOUSE_MOVE_MULTI*(oldX - newX));
 		int diffY = -(int)(MOUSE_MOVE_MULTI*(oldY - newY));
-		return ACTION_MOUSE_MOVE + ";" + diffX + ";" + diffY*2;
+		return ACTION_MOUSE_MOVE + ";" + diffX + ";" + diffY;
+	}
+	
+	public static String createMouseMoveMessage(float moveX, float moveY) {
+		return ACTION_MOUSE_MOVE + ";" + (int)moveX + ";" + (int)moveY;
 	}
 	
 	public static String createMouseLeftBtnPress() {
