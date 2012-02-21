@@ -39,6 +39,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private Button mediaPlayPause;
 	private Button mediaNext;
 	private Button mediaPrevious;
+	private final static int RECEIVING_PORT= 52568;
 	private View drawerContent;
 	
 	private IncomingCommunication com = null;
@@ -96,14 +97,10 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     }
     
     private void startReceiverThread(){
-    	int receiverPort = 52568;
-    	//int receiverPort = communication.getCurrentPort();
-    	if(receiverPort >= 0 ){
-    		com = new IncomingCommunication(receiverPort);
+    		com = new IncomingCommunication(RECEIVING_PORT);
     		com.addObserver(this);
         	receiverThread = new Thread(com);
         	receiverThread.start();
-    	}
     }
     
     public boolean isSupportedDataAvailable(){
