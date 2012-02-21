@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -58,26 +57,20 @@ public class VolumeController extends ImageView implements OnTouchListener{
 	public boolean onTouch(View v, MotionEvent event) {
 		int height = v.getHeight();
 		int yPos = height-(int)event.getY();
-		stepHeight = height/nrOfSteps;
-	    int newVolume = currVolume;
-		for(int i = 1; i <= nrOfSteps; i++) {
-			if(yPos <= i*stepHeight){
-				newVolume = i-1;
-				break;
-			}
-		}
+		stepHeight = height/(nrOfSteps-1);
 		
-		newVolume = newVolume >= drawableIds.size() ? drawableIds.size()-1 : newVolume;
-		if(newVolume != currVolume) {
-			currVolume = newVolume;
-			updateBackgroundImage();
-			notifyListener();
-		}
+		currVolume = (yPos + stepHeight/2)/stepHeight;
+		currVolume = currVolume < 0 ? 0 : currVolume;
+		currVolume = currVolume >= nrOfSteps ? nrOfSteps-1 : currVolume;
+		
+		updateBackgroundImage();
+		notifyListener();
+		
 		return true;
 	}
 	
 	private void notifyListener() {
-		int volumeStepValue = MAX_VOLUME/nrOfSteps;
+		int volumeStepValue = MAX_VOLUME/(nrOfSteps-1);
 		listener.onVolumeChange(currVolume*volumeStepValue);
 	}
 }

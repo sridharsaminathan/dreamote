@@ -14,12 +14,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TabHost;
@@ -27,7 +28,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 
-public class MainTabHostActivity extends ActivityGroup implements OnClickListener, OnVolumeChangeListener, Observer, ActionConstants{
+public class MainTabHostActivity extends ActivityGroup implements OnClickListener, OnTouchListener, OnVolumeChangeListener, Observer, ActionConstants{
 	private TabHost tabHost;		// The activity TabHost
 	private VolumeController volumeController;
 	private Resources res;			// Resource object to get Drawables
@@ -38,6 +39,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private Button mediaPlayPause;
 	private Button mediaNext;
 	private Button mediaPrevious;
+	private View drawerContent;
 	
 	private IncomingCommunication com = null;
 	
@@ -81,7 +83,16 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	mediaPlayPause = (Button)findViewById(R.id.btn_play_pause);
     	mediaNext = (Button)findViewById(R.id.btn_next);
     	mediaPrevious = (Button)findViewById(R.id.btn_previous);
-    	
+    	drawerContent = findViewById(R.id.media_drawer_content);
+    }
+    
+    private void setListeners() {
+    	keyboardBtn.setOnClickListener(this);
+    	volumeController.setOnVolumeChangeListener(this);
+    	mediaPlayPause.setOnClickListener(this);
+    	mediaNext.setOnClickListener(this);
+    	mediaPrevious.setOnClickListener(this);
+    	drawerContent.setOnTouchListener(this);
     }
     
     private void startReceiverThread(){
@@ -130,14 +141,6 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     		receiverThread.interrupt();
     		receiverThread = null;
     	}
-    }
-    
-    private void setListeners() {
-    	keyboardBtn.setOnClickListener(this);
-    	volumeController.setOnVolumeChangeListener(this);
-    	mediaPlayPause.setOnClickListener(this);
-    	mediaNext.setOnClickListener(this);
-    	mediaPrevious.setOnClickListener(this);
     }
     
     private void setupVolumeController() {
@@ -341,7 +344,14 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 			}
 			
 		}
-		
+	}
+	
+	@Override
+	public boolean onTouch(View v, MotionEvent e) {
+		if(v.getId() == drawerContent.getId())
+			return true;
+		else
+			return false;
 	}
    
     
