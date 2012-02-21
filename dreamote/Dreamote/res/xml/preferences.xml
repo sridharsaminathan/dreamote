@@ -4,10 +4,31 @@
                 android:title="@string/pref_first_category_title">
                 
                 <CheckBoxPreference
-                        android:title="@string/prefs_enable_wifi_title"
-                        android:defaultValue="true"
-                        android:summary="@string/prefs_enable_wifi_summary"
-                        android:key="@string/prefs_enable_wifi_key" />
+                    android:title="@string/prefs_enable_wifi_title"
+                    android:defaultValue="true"
+                    android:summary="@string/prefs_enable_wifi_summary"
+                    android:key="@string/prefs_enable_wifi_key" />
+                
+                <CheckBoxPreference
+                	android:title="@string/prefs_tap_to_click_title"
+                	android:defaultValue="true"
+                	android:summary="@string/prefs_tap_to_click_summary"
+                	android:key="@string/prefs_tap_to_click_key"/>
+               <CheckBoxPreference
+                	android:title="@string/prefs_enable_mouse_tilting_title"
+                	android:defaultValue="false"
+                	android:summary="@string/prefs_enable_mouse_tilting_summary"
+                	android:key="@string/prefs_enable_mouse_tilting_key"/>
+               
+               	<SeekBarPreference
+               		android:title="@string/prefs_mouse_sensitivity_title"
+   					android:defaultValue="5"
+   					android:summary="@string/prefs_mouse_sensitivity_summary"
+   					android:key="@string/prefs_mouse_sensitivity_key">
+   				</SeekBarPreference>
+               
+                
+               	
         </PreferenceCategory>
         
 </PreferenceScreen>

@@ -1,5 +1,7 @@
 package project.dreamote;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -8,6 +10,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 public class Preferences extends PreferenceActivity{
+		private static final int MAX_SAVED_HOSTS = 5;
+	
+	
 	 @Override
      protected void onCreate(Bundle savedInstanceState) {
 		 	super.onCreate(savedInstanceState);
@@ -41,4 +46,48 @@ public class Preferences extends PreferenceActivity{
 		 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
 		 return pref.getBoolean(context.getString(R.string.prefs_enable_wifi_key), true);
 	 }
+	 
+	 public static boolean getTapToClick(Context context){
+		 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+		 return pref.getBoolean(context.getString(R.string.prefs_tap_to_click_key), true);
+		 
+	 }
+	 public static boolean getTiltToSteer(Context context){
+		 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+		 return pref.getBoolean(context.getString(R.string.prefs_enable_mouse_tilting_key), false);
+		 
+	 }
+	 
+	 
+	 public static void writeRecentIPs(Context context, ArrayList<String[]> list){
+		 SharedPreferences pref = context.getSharedPreferences(context.getString(R.string.shared_prefs_key), MODE_PRIVATE);
+		 Editor edit = pref.edit();
+        
+         for(int index = 0; index < list.size() && index < MAX_SAVED_HOSTS; index++ ){
+           	 String[] nameAndIpPair = list.get(index);
+        	 for(int j = 0; j < nameAndIpPair.length; j++){
+        		 edit.putString(context.getString(R.string.prefs_recent_ip_prefix) + index + j, nameAndIpPair[j]);
+        	 }
+         }
+         edit.commit();
+	 }
+	 
+	 public static ArrayList<String[]> readRecentIPs(Context context){
+		 SharedPreferences pref = context.getSharedPreferences(context.getString(R.string.shared_prefs_key), MODE_PRIVATE);
+		 ArrayList<String[]> list = new ArrayList<String[]>();
+		 
+		 for(int index = 0; index < MAX_SAVED_HOSTS; index++){
+			 String[] nameAndIpPair = new String[2];
+			 for(int j = 0; j < 2; j++){
+				 String str= pref.getString(context.getString(R.string.prefs_recent_ip_prefix) + index + j, "");
+				 if(!str.equals("")){
+					 nameAndIpPair[j] = str;
+				 }
+			 }
+			 list.add(nameAndIpPair);
+		 }
+			return list;
+	 }
+		 
+	 
 }
