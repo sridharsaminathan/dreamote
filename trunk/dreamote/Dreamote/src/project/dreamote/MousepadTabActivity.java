@@ -40,7 +40,6 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
 	private float maxYdiff;
 	
 	SensorManager sensorManager = null;
-	private boolean tiltFuncOn = false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,24 +50,29 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
 		
 		findViews();
 		setListeners();
-		
-		setGyroListener(true);
 	}
+	
 	@Override
 	public void onResume(){
 		super.onResume();
-		setGyroListener(true);
+		
+		setListeners();
+		
 		if(!ClientCommunication.isConnected(this) && Preferences.getShowEnableWifiPopup(this)){
 			Toast toast = Toast.makeText(this, getString(R.string.enable_wifi_message), Toast.LENGTH_SHORT);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}
+		
+		if(Preferences.getTiltToSteer(this))
+			setGyroListener(true);
 	}
 	
 	@Override
 	public void onStop() {
 		super.onStop();
-		setGyroListener(false);
+		if(Preferences.getTiltToSteer(this))
+			setGyroListener(false);
 	}
 	
 	private void setGyroListener(boolean set) {
@@ -91,7 +95,12 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
     
     private void setListeners() {
     	mousePad.setOnTouchListener(this);
-    	mousePad.setOnClickListener(this);
+    	
+    	if(Preferences.getTapToClick(this))
+    		mousePad.setOnClickListener(this);
+    	else
+    		mousePad.setOnClickListener(null);
+    	
     	mouseScroll.setOnTouchListener(this);
     	leftMouseBtn.setOnTouchListener(this);
     	rightMouseBtn.setOnTouchListener(this);
