@@ -31,6 +31,7 @@
     
     <string name="server_connect_error">Could not connect. \nMake sure IP format is correct</string>
     <string name="enable_wifi_message">Enable Wifi</string>
+    <string name="pop_up_programs_updated">Progam lists updated</string>
         
     <!-- Key values -->
     <string name="shared_prefs_key">shared prefs</string>

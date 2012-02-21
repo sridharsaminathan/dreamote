@@ -5,6 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +22,7 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	private LinearLayout otherPrograms;
 	private Button refreshButton;
 	private boolean fetchingData = false;
+	private Toast toast = null;
 	
 	
 	@Override
@@ -78,11 +80,9 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 					TextView programInfo = (TextView)listItem.findViewById(R.id.txt_programs_info);
 					programInfo.setText(info[1]);
 					supportedPrograms.addView(listItem);
-					
-					
 				}
 			}
-			(Toast.makeText(this, "Program List uppdated", Toast.LENGTH_SHORT)).show();
+			showToast(getString(R.string.pop_up_programs_updated));
 		}
 		
 	}
@@ -110,11 +110,9 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 					TextView programInfo = (TextView)listItem.findViewById(R.id.txt_programs_info);
 					programInfo.setText(info[1]);
 					otherPrograms.addView(listItem);
-					
-					
 				}
 			}
-			(Toast.makeText(this, "Program List uppdated", Toast.LENGTH_SHORT)).show();
+			showToast(getString(R.string.pop_up_programs_updated));
 		}
 		
 	}
@@ -132,11 +130,12 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.btn_update_programs_list){
-			//set the flag to false so we only fetch the new data
-			parent.setSupportedDataAvailble(false);
-			parent.setOtherDataAvailable(false);
+			
 			//test if we are already fetching data. prevents spamming on button to create loads of threads
 			if(!fetchingData){
+				//set the flag to false so we only fetch the new data
+				parent.setSupportedDataAvailble(false);
+				parent.setOtherDataAvailable(false);
 				fetchingData = true;
 				fetchData();
 				parent.sendGetOpenWindows();
@@ -154,32 +153,32 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 	
 	
 	//method to fetch the received data from the server-program
-	//loops for 5sec. if no data is available by then the thread shuts down because something brobably went wrong
+	//loops for 3sec. if no data is available by then the thread shuts down because there was no data to fetch
 	private void fetchData(){
 		
 		new Thread( new Runnable(){
 			@Override
 			public void run() {
 				int fetchAttempts = 0;
-				while(fetchAttempts < 10){
+				 int listsFilled = 0;
+				while(fetchAttempts < 30){
 					if(parent.isSupportedDataAvailable()){
 						threadedFillSupportedProgramsList(handleFetchedData(parent.getSupportedProgramsDataArray()));
-						
-					}else if(parent.isOtherDataAvailable()){
+						listsFilled++;
+					}if(parent.isOtherDataAvailable()){
 						threadedFillOtherProgramsList(handleFetchedData(parent.getOtherProgramsDataArray()));
-						
+						listsFilled++;
 					}
+					if(listsFilled == 2)
+						break;
 					else{
 						fetchAttempts++;
 						try{
-							Thread.sleep(300);
+							Thread.sleep(100);
 						}catch(Exception e){
 							e.printStackTrace();
 						}
 					}
-					
-					
-					
 				}
 				fetchingData = false;
 			}
@@ -203,8 +202,16 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 		}
 		return inData;
 	}
-
 	
+	private void showToast(String str){
+		if(toast != null){
+			toast.cancel();
+		}
+		toast = Toast.makeText(this, str, Toast.LENGTH_SHORT);
+		toast.show();
+		
+		
+	}
 
 	
 	
