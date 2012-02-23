@@ -34,26 +34,6 @@ public class ProgramsSelectTabActivity extends Activity implements OnClickListen
 		setListeners();
 		
 		
-		//test
-		/*ArrayList<String[]> list = new ArrayList<String[]>();
-		list.add(new String[]{ "Spotify", "Spotify - Nirvana - SmellsLike Teen Spirit" });
-		list.add(new String[]{ "Vlc", "VideoLan Media Player" });
-		list.add(new String[]{ "Itunes", "Itunes" });
-		
-		ArrayList<String[]> list2 = new ArrayList<String[]>();
-		list2.add(new String[]{ "Skype", "Skype - martinnume" });
-		list2.add(new String[]{ "firefox", "SweClockers.com" });
-		list2.add(new String[]{ "Eclipse", "Java - Dreamote/src/project/dreamote.." });
-		list2.add(new String[]{ "Skype", "Skype - martinnume" });
-		list2.add(new String[]{ "firefox", "SweClockers.com" });
-		list2.add(new String[]{ "Eclipse", "Java - Dreamote/src/project/dreamote.." });
-		list2.add(new String[]{ "Skype", "Skype - martinnume" });
-		list2.add(new String[]{ "firefox", "SweClockers.com" });
-		list2.add(new String[]{ "Eclipse", "Java - Dreamote/src/project/dreamote.." });
-		
-		fillSupportedProgramsList(list);
-		fillOtherProgramsList(list2);*/
-		
 	}
 	
 	private void findViews(){

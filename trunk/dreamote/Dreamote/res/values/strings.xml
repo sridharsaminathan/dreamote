@@ -30,7 +30,7 @@
     <string name="enter_server_info_lbl">Enter server information</string>
     <string name="ip_lbl">IP nr</string>
     <string name="port_lbl">Port nr</string>
-    
+    <string name="computer_name_lbl">Enter a name:</string>
     <string name="connect_lbl">Connect</string>
     <string name="cancel_lbl">Cancel</string>
     <string name="ok_lbl">OK</string>
@@ -41,6 +41,7 @@
         
     <!-- Key values -->
     <string name="shared_prefs_key">shared prefs</string>
+    <string name="computer_name_key">computername</string>
     <string name="ip_key">ip</string>
     <string name="port_key">port</string>
     <string name="prefs_enable_wifi_key">enablewifi</string>

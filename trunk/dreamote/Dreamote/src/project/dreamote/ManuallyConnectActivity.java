@@ -9,8 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class ManuallyConnectActivity extends Activity implements OnClickListener{
-	private EditText ipTxt, portTxt;
+	private EditText ipTxt, portTxt, computerName;
 	private Button connectBtn;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstance){
@@ -33,6 +34,7 @@ public class ManuallyConnectActivity extends Activity implements OnClickListener
 		connectBtn = (Button)findViewById(R.id.connect_btn);
 		ipTxt = (EditText)findViewById(R.id.ip_edit_text);
 		portTxt = (EditText)findViewById(R.id.port_edit_text);
+		computerName = (EditText)findViewById(R.id.computer_name_edit_text);
 	}
 	
 	private void setListeners() {
@@ -44,8 +46,9 @@ public class ManuallyConnectActivity extends Activity implements OnClickListener
 		if(v.getId() == connectBtn.getId()) {
 			String ip = ipTxt.getText().toString();
 			String port = portTxt.getText().toString();
+			String compName = computerName.getText().toString();
 			if(isIPValid(ip)) {
-				Preferences.setConnectedServer(this, ip, Integer.parseInt(port));
+				Preferences.setConnectedServer(this, compName, ip, Integer.parseInt(port));
 				this.setResult(RESULT_OK);
 				this.finish();
 			
