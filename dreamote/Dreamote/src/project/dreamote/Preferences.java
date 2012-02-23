@@ -19,10 +19,11 @@ public class Preferences extends PreferenceActivity{
             addPreferencesFromResource(R.xml.preferences);
 	 }
 	 
-	 public static void setConnectedServer(Context context, String ip, int port) {
+	 public static void setConnectedServer(Context context,String name, String ip, int port) {
 		 SharedPreferences pref = context.getSharedPreferences(
 				 context.getString(R.string.shared_prefs_key), MODE_PRIVATE);
 		 Editor edit = pref.edit();
+		 edit.putString(context.getString(R.string.computer_name_key), name);
 		 edit.putString(context.getString(R.string.ip_key), ip);
 		 edit.putInt(context.getString(R.string.port_key), port);
 		 edit.commit();
@@ -41,6 +42,15 @@ public class Preferences extends PreferenceActivity{
 		 
 		 return pref.getInt(context.getString(R.string.port_key), 0);
 	 }
+	 
+	 public static String getConnectedServerName(Context context){
+		 SharedPreferences pref = context.getSharedPreferences(
+				 context.getString(R.string.shared_prefs_key), MODE_PRIVATE);
+		 
+		 return pref.getString(context.getString(R.string.computer_name_key), "");
+		 
+	 }
+	 
 	 
 	 public static boolean getShowEnableWifiPopup(Context context){
 		 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -77,14 +87,17 @@ public class Preferences extends PreferenceActivity{
 		 ArrayList<String[]> list = new ArrayList<String[]>();
 		 
 		 for(int index = 0; index < MAX_SAVED_HOSTS; index++){
-			 String[] nameAndIpPair = new String[2];
-			 for(int j = 0; j < 2; j++){
+			 String[] nameAndIpPair = new String[3];
+			 int emptyStrings = 0;
+			 for(int j = 0; j < 3; j++){
 				 String str= pref.getString(context.getString(R.string.prefs_recent_ip_prefix) + index + j, "");
-				 if(!str.equals("")){
-					 nameAndIpPair[j] = str;
+				 nameAndIpPair[j] = str;
+				 if(str.equals("")){
+					 emptyStrings++;
 				 }
 			 }
-			 list.add(nameAndIpPair);
+			 if(emptyStrings == 0)
+				 list.add(nameAndIpPair);
 		 }
 			return list;
 	 }

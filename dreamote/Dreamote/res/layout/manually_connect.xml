@@ -11,11 +11,27 @@
 	    android:text="@string/enter_server_info_lbl"
 	    android:layout_marginBottom="20dip"
 	/>
+	<TextView 
+	    android:id="@+id/computer_name_lbl"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/server_info_lbl"
+	    android:layout_marginTop="6dip"
+	    android:layout_marginLeft="4dip"
+	    android:text="@string/computer_name_lbl"
+	    />
+	<EditText 
+		android:id="@+id/computer_name_edit_text"
+		android:layout_width="200dip"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/computer_name_lbl"
+		android:singleLine="true"
+	/>
 	<TextView
 	    android:id="@+id/server_ip_lbl"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/server_info_lbl"
+		android:layout_below="@id/computer_name_edit_text"
 		android:layout_marginTop="6dip"
 		android:layout_marginLeft="4dip"
 		android:text="@string/ip_lbl"
@@ -32,7 +48,7 @@
 	    android:id="@+id/server_port_lbl"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/server_info_lbl"
+		android:layout_below="@id/computer_name_edit_text"
 		android:layout_toRightOf="@id/ip_edit_text"
 		android:layout_marginTop="6dip"
 		android:layout_marginLeft="4dip"
