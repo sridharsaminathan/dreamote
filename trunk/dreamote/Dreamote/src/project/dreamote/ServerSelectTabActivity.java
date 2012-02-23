@@ -43,6 +43,9 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 //		fillServerHistoryList(list);
 	}
 	
+	/**
+	 * Find views used in the activity
+	 */
 	private void findViews() {
 		foundServersList = (ListView)findViewById(R.id.found_servers_list);
 		serverHistoryListView = (ListView)findViewById(R.id.server_history_list);
@@ -50,23 +53,34 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 		connectManuallyBtn = (Button)findViewById(R.id.manually_connect_btn);
 	}
 	
+	/**
+	 * Connect the listeners
+	 */
 	private void setListeners() {
 		connectManuallyBtn.setOnClickListener(this);
 		updateServerListBtn.setOnClickListener(this);
 		foundServersList.setOnItemClickListener(this);
 		serverHistoryListView.setOnItemClickListener(this);
 	}
-	
+	/**
+	 * Fill the broadcast listview
+	 */
 	private void fillFoundServerList() {
 		foundServersList.setAdapter(new ServerListAdapter(this, R.layout.server_list_item, broadCastList));
 		foundServersList.invalidate();
 	}
 	
+	/**
+	 * Fill the server history listview
+	 */
 	private void fillServerHistoryList() {
 		serverHistoryListView.setAdapter(new ServerListAdapter(this, R.layout.server_list_item, serverHistoryList));
 		serverHistoryListView.invalidate();
 	}
 	
+	/**
+	 * Threaded fill server list. used when we need to fill the listview from another thread than gui-thread
+	 */
 	 private void threadedFillFoundServerList(){
 			this.runOnUiThread(new Runnable(){
 				@Override
@@ -77,6 +91,10 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 	    		});
 		}
 	
+	/**
+	 * Adds the serverInfo data to the broadCastList and updates the listview
+	 * @param data serverInfoarray
+	 */
 	public void receiveServerData(String[] data){
 		broadCastList.add(data);
 		threadedFillFoundServerList();
@@ -144,11 +162,16 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 		}
 	}
 	
-	private boolean isServerAlreadyInHistoryList(String[] trupple){
+	/**
+	 * Checks if the tripple-string-array with serverinfo already exists in the serverHistoryList
+	 * @param serverInfo 
+	 * @return returns true if the serverInfo already exists
+	 */
+	private boolean isServerAlreadyInHistoryList(String[] serverInfo){
 		for(int i = 0; i < serverHistoryList.size(); i++){
 			String[] tripple = serverHistoryList.get(i);
-			if(tripple.length >= 2  && trupple.length >= 2){
-				if(tripple[0].equalsIgnoreCase(trupple[0]) && tripple[1].equalsIgnoreCase(trupple[1])){
+			if(tripple.length >= 2  && serverInfo.length >= 2){
+				if(tripple[0].equalsIgnoreCase(serverInfo[0]) && tripple[1].equalsIgnoreCase(serverInfo[1])){
 					return true;
 				}
 			}
@@ -156,6 +179,10 @@ public class ServerSelectTabActivity extends Activity implements OnClickListener
 		return false;
 	}
 	
+	/**
+	 * Adds the server to the serverHistoryList
+	 * @param trupple an array with length=3 {computername, ipaddress, port}
+	 */
 	private void addServerToHistoryList(String[] trupple){
 		//add the new server first in the list
 		serverHistoryList.add(0, trupple);
