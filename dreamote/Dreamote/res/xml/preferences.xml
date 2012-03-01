@@ -19,16 +19,15 @@
                 	android:defaultValue="false"
                 	android:summary="@string/prefs_enable_mouse_tilting_summary"
                 	android:key="@string/prefs_enable_mouse_tilting_key"/>
-               
-               	<SeekBarPreference
+               	<Preference
                		android:title="@string/prefs_mouse_sensitivity_title"
-   					android:defaultValue="5"
    					android:summary="@string/prefs_mouse_sensitivity_summary"
    					android:key="@string/prefs_mouse_sensitivity_key">
-   				</SeekBarPreference>
-               
-                
-               	
+   				</Preference>
+   				<Preference
+               		android:title="@string/prefs_scroll_sensitivity_title"
+   					android:summary="@string/prefs_scroll_sensitivity_summary"
+   					android:key="@string/prefs_scroll_sensitivity_key">
+   				</Preference>
         </PreferenceCategory>
-        
 </PreferenceScreen>

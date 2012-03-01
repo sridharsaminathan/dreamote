@@ -15,12 +15,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MousepadTabActivity extends Activity implements OnTouchListener, SensorEventListener, OnClickListener, Observer {
 	private static final int PAD_CLICK_DIFF = 7;
-	private static final int SCROLL_TICK = 10;
+	private static final int SCROLL_TICK = 150;
 	
 	private MainTabHostActivity parent;
 	
@@ -39,6 +38,9 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
 	private float maxXdiff;
 	private float maxYdiff;
 	
+	private int scrollSensitivity;
+	private int mouseSensitivity;
+	
 	SensorManager sensorManager = null;
 	
 	@Override
@@ -55,6 +57,9 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
 	@Override
 	public void onResume(){
 		super.onResume();
+		
+		scrollSensitivity = Preferences.getScrollSensitivity(this);
+		mouseSensitivity = Preferences.getMouseSensitivity(this);
 		
 		setListeners();
 		
@@ -124,7 +129,7 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
 	
 	private boolean handleActionMove(int viewId, float eventX, float eventY) {
 		if(viewId == mouseScroll.getId()) {
-			if(Math.abs(oldScrollY-eventY) > SCROLL_TICK) {
+			if(Math.abs(oldScrollY-eventY) > SCROLL_TICK/scrollSensitivity) {
 				int action = oldScrollY > eventY ?
 						ActionConstants.ACTION_SCROLL_UP : ActionConstants.ACTION_SCROLL_DOWN;
 				parent.sendMouseScroll(action);
