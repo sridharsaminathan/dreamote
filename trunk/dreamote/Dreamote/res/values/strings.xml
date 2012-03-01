@@ -19,9 +19,12 @@
     <string name="prefs_tap_to_click_title">Tap To Click</string>
 	<string name="prefs_tap_to_click_summary">Enable tap-to-click on the mousepad</string>
 	<string name="prefs_mouse_sensitivity_title">Mouse Sensitivity</string>
-    <string name="prefs_mouse_sensitivity_summary">Set the Souse Sensitivty</string>
+    <string name="prefs_mouse_sensitivity_summary">Set the Mouse Sensitivty</string>
+    <string name="prefs_scroll_sensitivity_title">Scroll Sensitivity</string>
+    <string name="prefs_scroll_sensitivity_summary">Set the Scroll Sensitivty</string>
 	<string name="prefs_enable_mouse_tilting_title">Tilt-to-Steer</string> 
 	<string name="prefs_enable_mouse_tilting_summary">Enable tilting to control the mouse</string>
+	
 	    
     <string name="found_servers_lbl">Found Servers</string>
     <string name="server_history_lbl">Server history</string>
@@ -47,6 +50,7 @@
     <string name="prefs_enable_wifi_key">enablewifi</string>
     <string name="prefs_tap_to_click_key">taptoclickkey</string>
     <string name="prefs_mouse_sensitivity_key">mousesensitivity</string>
+    <string name="prefs_scroll_sensitivity_key">scrollsensitivity</string>
     <string name="prefs_recent_ip_prefix">recentip</string>
     <string name="prefs_enable_mouse_tilting_key">tilttosteer</string>
 </resources>
