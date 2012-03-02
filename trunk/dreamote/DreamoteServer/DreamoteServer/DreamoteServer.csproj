@@ -48,6 +48,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ic_launcher2.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CoreAudioApi">
       <HintPath>D:\Firefox\CoreAudio2_Src\CoreAudioApi\bin\Debug\CoreAudioApi.dll</HintPath>
