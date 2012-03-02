@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">Dreamote</string>
+
+    
+    <string name="mousepad_tab_tag">Mousepad</string>
+    <string name="programs_tab_tag">Programs</string>
+    <string name="empty_tab_tag">empty</string>
+    <string name="server_tab_tag">Servers</string>
+    <string name="more_tab_tag">More</string>
+    <string name="about_text">blablabla</string>
+    <string name="pref_first_category_title">First Category</string>
+    
+    <!--  Prefs -->
+    <string name="prefs_enable_wifi_title">Popup Enable Wifi</string>
+    <string name="prefs_enable_wifi_summary">Enable this to show a warning when Wifi is off</string>
+    <string name="prefs_tap_to_click_title">Tap To Click</string>
+	<string name="prefs_tap_to_click_summary">Enable tap-to-click on the mousepad</string>
+	<string name="prefs_mouse_sensitivity_title">Mouse Sensitivity</string>
+    <string name="prefs_mouse_sensitivity_summary">Set the Mouse Sensitivty</string>
+    <string name="prefs_scroll_sensitivity_title">Scroll Sensitivity</string>
+    <string name="prefs_scroll_sensitivity_summary">Set the Scroll Sensitivty</string>
+	<string name="prefs_enable_mouse_tilting_title">Tilt-to-Steer</string> 
+	<string name="prefs_enable_mouse_tilting_summary">Enable tilting to control the mouse</string>
+	
+	    
+    <string name="found_servers_lbl">Found Servers</string>
+    <string name="server_history_lbl">Server history</string>
+    <string name="manually_connect_lbl">Manually connect</string>
+    
+    <string name="enter_server_info_lbl">Enter server information</string>
+    <string name="ip_lbl">IP nr</string>
+    <string name="port_lbl">Port nr</string>
+    <string name="computer_name_lbl">Enter a name:</string>
+    <string name="connect_lbl">Connect</string>
+    <string name="cancel_lbl">Cancel</string>
+    <string name="ok_lbl">OK</string>
+    
+    <string name="server_connect_error">Could not connect. \nMake sure IP format is correct</string>
+    <string name="enable_wifi_message">Enable Wifi</string>
+    <string name="pop_up_programs_updated">Progam lists updated</string>
+        
+    <!-- Key values -->
+    <string name="shared_prefs_key">shared prefs</string>
+    <string name="computer_name_key">computername</string>
+    <string name="ip_key">ip</string>
+    <string name="port_key">port</string>
+    <string name="prefs_enable_wifi_key">enablewifi</string>
+    <string name="prefs_tap_to_click_key">taptoclickkey</string>
+    <string name="prefs_mouse_sensitivity_key">mousesensitivity</string>
+    <string name="prefs_scroll_sensitivity_key">scrollsensitivity</string>
+    <string name="prefs_recent_ip_prefix">recentip</string>
+    <string name="prefs_enable_mouse_tilting_key">tilttosteer</string>
+</resources>
