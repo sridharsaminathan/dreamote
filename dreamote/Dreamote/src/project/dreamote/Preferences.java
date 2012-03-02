@@ -18,9 +18,9 @@ import android.widget.SeekBar;
 public class Preferences extends PreferenceActivity implements OnPreferenceClickListener{
 	 private static final int MAX_SAVED_HOSTS = 5;
 	 
-	 private static final int MAX_SCROLL_SENS = 19;
+	 private static final int MAX_SCROLL_SENS = 20;
 	 private static final int MAX_MOUSE_SENS = 6;
-	 private static final int DEFAULT_SCROLL_SENS = 14 ;
+	 private static final int DEFAULT_SCROLL_SENS = 12 ;
 	 private static final int DEFAULT_MOUSE_SENS = 4;
 	
 	
