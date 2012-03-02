@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<RelativeLayout 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" >
+		<TextView
+		    android:id="@+id/txt_supported_programs" 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Supported Programs"
+		    android:paddingBottom="3dp"
+		    android:layout_marginLeft="5dp"
+		    android:paddingTop="3dp"
+		    style="@style/white_lbl_text"
+		    />
+		<Button
+		    android:id="@+id/btn_update_programs_list"
+		  	android:layout_width="32dip"
+		  	android:layout_height="32dip"
+		  	android:layout_alignParentRight="true"
+		  	android:layout_margin="3dip"
+		  	android:background="@drawable/btn_update_selector"/>
+		
+		<LinearLayout 
+		 	android:id ="@+id/layout_supported_programs"		    
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:paddingLeft="10dp"
+		    android:paddingRight="10dp"
+		    android:layout_below="@id/btn_update_programs_list"
+		    />
+		<TextView
+		    android:id="@+id/txt_other_programs" 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Other Programs"
+		    android:layout_marginLeft="5dp"
+		    style="@style/white_lbl_text"
+		    android:layout_below="@id/layout_supported_programs"/>
+		<LinearLayout 
+		    android:id="@+id/layout_other_programs"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:paddingLeft="10dp"
+		    android:paddingRight="10dp"
+		    android:layout_below="@id/txt_other_programs"
+		    
+		  />
+	</RelativeLayout>
+</ScrollView>

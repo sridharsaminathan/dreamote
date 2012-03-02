@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="page_background_grey">#413e3e</color>
+	<color name="drawer_content_background">#969393</color>
+	<color name="program_list_item_selected">#B01F1F</color>
+</resources>
