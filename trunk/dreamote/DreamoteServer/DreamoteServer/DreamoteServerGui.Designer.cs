@@ -40,10 +40,10 @@
             this.txt_ip = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.checkbox_boot = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItem_restore = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkbox_boot = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -148,17 +148,6 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
-            // checkbox_boot
-            // 
-            this.checkbox_boot.AutoSize = true;
-            this.checkbox_boot.Location = new System.Drawing.Point(18, 175);
-            this.checkbox_boot.Name = "checkbox_boot";
-            this.checkbox_boot.Size = new System.Drawing.Size(164, 17);
-            this.checkbox_boot.TabIndex = 3;
-            this.checkbox_boot.Text = "Run this on Windows Startup";
-            this.checkbox_boot.UseVisualStyleBackColor = true;
-            this.checkbox_boot.CheckStateChanged += new System.EventHandler(this.checkbox_boot_CheckStateChanged);
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -180,6 +169,17 @@
             this.menuItem_exit.Size = new System.Drawing.Size(152, 22);
             this.menuItem_exit.Text = "Exit";
             this.menuItem_exit.Click += new System.EventHandler(this.menuItem_exit_Click);
+            // 
+            // checkbox_boot
+            // 
+            this.checkbox_boot.AutoSize = true;
+            this.checkbox_boot.Location = new System.Drawing.Point(18, 175);
+            this.checkbox_boot.Name = "checkbox_boot";
+            this.checkbox_boot.Size = new System.Drawing.Size(164, 17);
+            this.checkbox_boot.TabIndex = 3;
+            this.checkbox_boot.Text = "Run this on Windows Startup";
+            this.checkbox_boot.UseVisualStyleBackColor = true;
+            this.checkbox_boot.CheckStateChanged += new System.EventHandler(this.checkbox_boot_CheckStateChanged);
             // 
             // DreamoteServerGui
             // 
