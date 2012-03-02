@@ -150,13 +150,13 @@ namespace DreamoteServer
         public void ScrollWheelDown()
         {
          
-            mouse_event(MOUSEEVENT_WHEEL,0, 0, -50, 0);
+            mouse_event(MOUSEEVENT_WHEEL,0, 0, -20, 0);
             
         }
         public void ScrollWheelUp()
         {
 
-            mouse_event(MOUSEEVENT_WHEEL, 0, 0, 50, 0);
+            mouse_event(MOUSEEVENT_WHEEL, 0, 0, 20, 0);
         }
 
         public void MediaPausePlay()
