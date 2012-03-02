@@ -34,7 +34,7 @@ namespace DreamoteServer
         {
             txt_ip.Text = PerformAction.GetIpAddres();
             txt_port.Text = DEFAULT_PORT.ToString();
-
+            
             if (rkApp.GetValue(REGISTRY_NAME) == null)
             {
                 checkbox_boot.Checked = false;
@@ -87,13 +87,8 @@ namespace DreamoteServer
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
-                notifyIcon1.Visible = true;
-                notifyIcon1.ShowBalloonTip(500);
+                
                 this.Hide();
-            }else if(FormWindowState.Normal == this.WindowState)
-            {
-                notifyIcon1.Visible = false;
-
             }
 
         }
@@ -130,6 +125,23 @@ namespace DreamoteServer
             }
 
 
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void menuItem_restore_Click(object sender, EventArgs e)
+        {
+            this.Show();
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void menuItem_exit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

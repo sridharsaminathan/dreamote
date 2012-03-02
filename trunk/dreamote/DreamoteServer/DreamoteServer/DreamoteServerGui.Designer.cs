@@ -29,19 +29,24 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DreamoteServerGui));
             this.btn_start_server = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_stop_server = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lbl_port_invalid = new System.Windows.Forms.Label();
             this.txt_port = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txt_ip = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.checkbox_boot = new System.Windows.Forms.CheckBox();
-            this.btn_stop_server = new System.Windows.Forms.Button();
-            this.lbl_port_invalid = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItem_restore = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_start_server
@@ -65,6 +70,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Server Controls";
             // 
+            // btn_stop_server
+            // 
+            this.btn_stop_server.Location = new System.Drawing.Point(119, 19);
+            this.btn_stop_server.Name = "btn_stop_server";
+            this.btn_stop_server.Size = new System.Drawing.Size(75, 23);
+            this.btn_stop_server.TabIndex = 1;
+            this.btn_stop_server.Text = "Stop Server";
+            this.btn_stop_server.UseVisualStyleBackColor = true;
+            this.btn_stop_server.Click += new System.EventHandler(this.btn_stop_server_Click);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lbl_port_invalid);
@@ -78,6 +93,17 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Connection Info";
+            // 
+            // lbl_port_invalid
+            // 
+            this.lbl_port_invalid.AutoSize = true;
+            this.lbl_port_invalid.ForeColor = System.Drawing.Color.Red;
+            this.lbl_port_invalid.Location = new System.Drawing.Point(195, 42);
+            this.lbl_port_invalid.Name = "lbl_port_invalid";
+            this.lbl_port_invalid.Size = new System.Drawing.Size(63, 13);
+            this.lbl_port_invalid.TabIndex = 4;
+            this.lbl_port_invalid.Text = "Port Invalid!";
+            this.lbl_port_invalid.Visible = false;
             // 
             // txt_port
             // 
@@ -116,8 +142,11 @@
             // 
             this.notifyIcon1.BalloonTipText = "Dreamote Server";
             this.notifyIcon1.BalloonTipTitle = "Dreamote Title";
-            this.notifyIcon1.Text = "Dreamote";
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Dreamote Server Gui";
             this.notifyIcon1.Visible = true;
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
             // checkbox_boot
             // 
@@ -130,26 +159,27 @@
             this.checkbox_boot.UseVisualStyleBackColor = true;
             this.checkbox_boot.CheckStateChanged += new System.EventHandler(this.checkbox_boot_CheckStateChanged);
             // 
-            // btn_stop_server
+            // contextMenuStrip1
             // 
-            this.btn_stop_server.Location = new System.Drawing.Point(119, 19);
-            this.btn_stop_server.Name = "btn_stop_server";
-            this.btn_stop_server.Size = new System.Drawing.Size(75, 23);
-            this.btn_stop_server.TabIndex = 1;
-            this.btn_stop_server.Text = "Stop Server";
-            this.btn_stop_server.UseVisualStyleBackColor = true;
-            this.btn_stop_server.Click += new System.EventHandler(this.btn_stop_server_Click);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItem_restore,
+            this.menuItem_exit});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
             // 
-            // lbl_port_invalid
+            // menuItem_restore
             // 
-            this.lbl_port_invalid.AutoSize = true;
-            this.lbl_port_invalid.ForeColor = System.Drawing.Color.Red;
-            this.lbl_port_invalid.Location = new System.Drawing.Point(195, 42);
-            this.lbl_port_invalid.Name = "lbl_port_invalid";
-            this.lbl_port_invalid.Size = new System.Drawing.Size(63, 13);
-            this.lbl_port_invalid.TabIndex = 4;
-            this.lbl_port_invalid.Text = "Port Invalid!";
-            this.lbl_port_invalid.Visible = false;
+            this.menuItem_restore.Name = "menuItem_restore";
+            this.menuItem_restore.Size = new System.Drawing.Size(152, 22);
+            this.menuItem_restore.Text = "Restore";
+            this.menuItem_restore.Click += new System.EventHandler(this.menuItem_restore_Click);
+            // 
+            // menuItem_exit
+            // 
+            this.menuItem_exit.Name = "menuItem_exit";
+            this.menuItem_exit.Size = new System.Drawing.Size(152, 22);
+            this.menuItem_exit.Text = "Exit";
+            this.menuItem_exit.Click += new System.EventHandler(this.menuItem_exit_Click);
             // 
             // DreamoteServerGui
             // 
@@ -165,6 +195,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,6 +214,9 @@
         private System.Windows.Forms.CheckBox checkbox_boot;
         private System.Windows.Forms.Button btn_stop_server;
         private System.Windows.Forms.Label lbl_port_invalid;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_restore;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_exit;
     }
 }
 

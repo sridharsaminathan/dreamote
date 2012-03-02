@@ -10,7 +10,7 @@ using Microsoft.Win32;
 using System.Net;
 using System.Net.Sockets;
 using CoreAudioApi;
-
+using System.Drawing;
 
 namespace DreamoteServer
 {
@@ -25,7 +25,6 @@ namespace DreamoteServer
         private const int MOUSEEVENT_MIDDLEUP = 0x040;
         private const int MOUSEEVENT_WHEEL = 0x800;
 
-        private const int KEYCODE_MEDIA_PLAY_PAUSE = 0x00000055;
 
 
         //Scroll Constants
@@ -44,6 +43,15 @@ namespace DreamoteServer
         private const int SB_PAGEBOTTOM = 7; // Scrolls to the upper right
         private const int SB_RIGHT = 7; // Scrolls to the right
         private const int SB_ENDSCROLL = 8; // Ends scroll
+
+        //window constants
+        private const int SW_HIDE = 0;
+        private const int SW_NORMAL = 1;
+        private const int SW_SHOWMINIMIZED = 2;
+        private const int SW_MAXIMIZE = 3;
+        private const int SW_MINIMIZE = 6;
+        private const int SW_RESTORE = 9;
+
 
         private List<String> supportedPrograms;
 
@@ -67,7 +75,31 @@ namespace DreamoteServer
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
 
-        
+        //*************************
+        //window manipulation
+        //*************************
+        [DllImport("User32")] 
+        private static extern int ShowWindow(int hwnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        static extern bool SetWindowPos(
+             int hWnd,           // window handle
+             int hWndInsertAfter,    // placement-order handle
+             int X,          // horizontal position
+             int Y,          // vertical position
+             int cx,         // width
+             int cy,         // height
+             uint uFlags);
+
+
         private MMDevice device;
 
         public PerformAction()
@@ -343,6 +375,49 @@ namespace DreamoteServer
         public void SetMasterVolume(int vol){
             device.AudioEndpointVolume.MasterVolumeLevelScalar = ((float)vol / 100.0f);
             
+        }
+
+
+
+
+        private struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public int showCmd;
+            public System.Drawing.Point ptMinPosition;
+            public System.Drawing.Point ptMaxPosition;
+            public System.Drawing.Rectangle rcNormalPosition;
+        }
+        private WINDOWPLACEMENT GetWindowPlacement()
+        {
+
+            WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
+            placement.length = Marshal.SizeOf(placement);
+            GetWindowPlacement(GetActiveWindowHandle(), ref placement);
+            return placement;
+
+        }
+
+        public void MaximizeActiveWindow()
+        {
+            WINDOWPLACEMENT param = new WINDOWPLACEMENT();
+            param.showCmd = SW_MAXIMIZE;
+            param.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
+            SetWindowPlacement(GetActiveWindowHandle(), ref param);
+        }
+
+        public void NormalizeActiveWindow()
+        {
+           /* WINDOWPLACEMENT param = new WINDOWPLACEMENT();
+            param.showCmd = 5;
+            param.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
+            SetWindowPlacement(GetActiveWindowHandle(), ref param);*/
+            
+            ShowWindow(GetActiveWindowHandle().ToInt32(), 9);
+            /*WINDOWPLACEMENT param = GetWindowPlacement();
+            param.showCmd = 1;
+            SetWindowPlacement(GetActiveWindowHandle(), ref param);*/
         }
 
     }

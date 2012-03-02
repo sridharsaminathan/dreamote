@@ -127,6 +127,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dll\CoreAudioApi.dll" />
+    <Content Include="ic_launcher.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ic_launcher.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="supported_programs.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -51,12 +51,19 @@ namespace DreamoteServer
 
         public void send(String msg)
         {
-            sender.Port = 52568;
-            byte[] sendData = new byte[1024];
-            sendData = Encoding.UTF8.GetBytes(msg);
-            newsock.Send(sendData, sendData.Length, sender);
-            Console.WriteLine("[Sent]" + msg);
+            try
+            {
 
+                sender.Port = 52568;
+                byte[] sendData = new byte[1024];
+                sendData = Encoding.UTF8.GetBytes(msg);
+                newsock.Send(sendData, sendData.Length, sender);
+                Console.WriteLine("[Sent]" + msg);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public void CloseConnections()
