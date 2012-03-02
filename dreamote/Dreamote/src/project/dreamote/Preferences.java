@@ -19,9 +19,9 @@ public class Preferences extends PreferenceActivity implements OnPreferenceClick
 	 private static final int MAX_SAVED_HOSTS = 5;
 	 
 	 private static final int MAX_SCROLL_SENS = 19;
-	 private static final int MAX_MOUSE_SENS = 10;
-	 private static final int DEFAULT_SCROLL_SENS = 14;
-	 private static final int DEFAULT_MOUSE_SENS = 5;
+	 private static final int MAX_MOUSE_SENS = 6;
+	 private static final int DEFAULT_SCROLL_SENS = 14 ;
+	 private static final int DEFAULT_MOUSE_SENS = 4;
 	
 	
 	 @Override
