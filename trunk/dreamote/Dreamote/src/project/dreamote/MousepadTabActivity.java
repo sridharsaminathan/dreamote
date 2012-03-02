@@ -1,14 +1,12 @@
 package project.dreamote;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +15,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MousepadTabActivity extends Activity implements OnTouchListener, SensorEventListener, OnClickListener, Observer {
+public class MousepadTabActivity extends Activity implements OnTouchListener, SensorEventListener, OnClickListener {
 	private static final int PAD_CLICK_DIFF = 7;
 	private static final int SCROLL_TICK = 150;
 	
@@ -137,9 +135,13 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
 			}
 			return true;
 		} else if(viewId == mousePad.getId()) {
-			parent.sendMouseMove(oldMouseX, oldMouseY, eventX, eventY);
+//			parent.sendMouseMove(oldMouseX, oldMouseY, eventX, eventY);
+//			sendMouseMoves(calcXDiff(oldMouseX, eventX), calcYDiff(oldMouseY, eventY));
+			sendMouseMoves(oldMouseX, oldMouseY, eventX, eventY);
 			oldMouseX = eventX;
 			oldMouseY = eventY;
+			
+			// calculate max diff in X and Y to determine what to do on action up
 			float xDiff = Math.abs(pressedMouseX-eventX);
 			float yDiff = Math.abs(pressedMouseY-eventY);
 			maxXdiff = xDiff > maxXdiff ? xDiff : maxXdiff;
@@ -148,7 +150,7 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
 		}
 		return false;
 	}
-	
+
 	private boolean handleActionUp(int viewId, float eventX, float eventY) {
 		if (viewId == leftMouseBtn.getId()) {
 			parent.sendMouseClick(ActionConstants.ACTION_MOUSE_LEFT_RELEAS);
@@ -190,18 +192,45 @@ public class MousepadTabActivity extends Activity implements OnTouchListener, Se
 			break;
 		}
 	}
-	
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		
-		
-	}
+
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	}
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		sendMouseMoves(-2*(int)event.values[0], -2*(int)event.values[1]);
+		int moveX = -(int)event.values[0];
+		int moveY = -(int)event.values[1];
+		if(Math.abs(moveX) < 3 && Math.abs(moveY) < 3)
+			sendMouseMoves(moveX, moveY);
+		else
+			sendMouseMoves(mouseSensitivity*moveX, mouseSensitivity*moveY);
+	}
+	
+	private void sendMouseMoves(float oldX, float oldY, float newX, float newY) {
+		int diffX = -(int)((oldX - newX));
+		int diffY = -(int)((oldY - newY));
+		
+		if(diffX >= 10 || diffY >=10) {
+			Log.e("X Move", "" + diffX);
+			Log.e("Y Move", "" + diffY);
+		}
+		
+		if(Math.abs(diffX) < 3 && Math.abs(diffY) < 3)
+			sendMouseMoves(diffX, diffY);
+		else if(Math.abs(diffX) < 6 && Math.abs(diffY) < 6) {
+			int sens = mouseSensitivity/5;
+		    sens = sens < 1 ? 1 : sens;
+			sendMouseMoves(sens*diffX, sens*diffY);
+		} else if(Math.abs(diffX) < 10 && Math.abs(diffY) < 10) {
+			int sens = mouseSensitivity/4;
+		    sens = sens < 1 ? 1 : sens;
+			sendMouseMoves(sens*diffX, sens*diffY);
+		} else if(Math.abs(diffX) < 15 && Math.abs(diffY) < 15) {
+		    int sens = mouseSensitivity/3;
+		    sens = sens < 1 ? 1 : sens;
+			sendMouseMoves(sens*diffX, sens*diffY);
+		} else
+			parent.sendMouseMove(mouseSensitivity*diffX, mouseSensitivity*diffY);
 	}
 	
 	private void sendMouseMoves(int moveX, int moveY) {
