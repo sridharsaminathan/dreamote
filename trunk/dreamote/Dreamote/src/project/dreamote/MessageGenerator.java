@@ -68,4 +68,8 @@ public class MessageGenerator implements ActionConstants{
 		return "" + ACTION_MEDIA_PREVIOUS;
 	}
 	
+	public static String createMaximizeOrRestore(){
+		return "" + ACTION_MAXIMIZE_OR_RESTORE_WINDOW;
+	}
+	
 }
