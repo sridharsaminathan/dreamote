@@ -31,6 +31,7 @@ namespace DreamoteServer
         public const int ACTION_MEDIA_PLAY_PAUSE = 0x12;
         public const int ACTION_MEDIA_NEXT = 0x13;
         public const int ACTION_MEDIA_PREVIOUS  = 0x14;
+        public const int ACTION_MAXIMIZE_OR_RESTORE_WINDOW = 0x15;
 
        public const int BROADCAST_PORT = 9050;
     }
