@@ -27,6 +27,8 @@ public interface ActionConstants {
 	public static final int ACTION_MEDIA_NEXT = 0x13;
 	public static final int ACTION_MEDIA_PREVIOUS = 0x14;
 	
+	public static final int ACTION_MAXIMIZE_OR_RESTORE_WINDOW = 0x15;
+	
 	
 	public static final int BROADCAST_PORT = 9050;
 	public static final long BROADCAST_WAIT_FOR_REPLY_TIME = 1500;

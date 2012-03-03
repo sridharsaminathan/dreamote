@@ -39,6 +39,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private Button mediaPlayPause;
 	private Button mediaNext;
 	private Button mediaPrevious;
+	private Button maximizeOrRestoreWindow;
 	private final static int RECEIVING_PORT= 52568;
 	private View drawerContent;
 	
@@ -85,6 +86,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	mediaNext = (Button)findViewById(R.id.btn_next);
     	mediaPrevious = (Button)findViewById(R.id.btn_previous);
     	drawerContent = findViewById(R.id.media_drawer_content);
+    	maximizeOrRestoreWindow = (Button)findViewById(R.id.btn_toggle_fullscreen);
     }
     
     private void setListeners() {
@@ -93,7 +95,9 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	mediaPlayPause.setOnClickListener(this);
     	mediaNext.setOnClickListener(this);
     	mediaPrevious.setOnClickListener(this);
+    	maximizeOrRestoreWindow.setOnClickListener(this);
     	drawerContent.setOnTouchListener(this);
+    	
     }
     
     private void startReceiverThread(){
@@ -283,6 +287,9 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 			break;
 		case R.id.btn_previous:
 			communication.sendCommand(MessageGenerator.createMediaPrevious());
+			break;
+		case R.id.btn_toggle_fullscreen:
+			communication.sendCommand(MessageGenerator.createMaximizeOrRestore());
 			break;
 		}
 	}
