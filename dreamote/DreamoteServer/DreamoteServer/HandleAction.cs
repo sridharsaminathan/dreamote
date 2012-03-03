@@ -92,6 +92,9 @@ namespace DreamoteServer
                 case ServerConstants.ACTION_MEDIA_PREVIOUS:
                     pa.MediaPrevious();
                     break;
+                case ServerConstants.ACTION_MAXIMIZE_OR_RESTORE_WINDOW:
+                    pa.SetActiveWindowPlacement();
+                    break;
             }
                 
         }

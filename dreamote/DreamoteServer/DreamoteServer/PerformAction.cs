@@ -49,8 +49,14 @@ namespace DreamoteServer
         private const int SW_NORMAL = 1;
         private const int SW_SHOWMINIMIZED = 2;
         private const int SW_MAXIMIZE = 3;
+        private const int SW_SHOWNOACTIVE = 4;
+        private const int SW_SHOW = 5;
         private const int SW_MINIMIZE = 6;
+        private const int SW_SHOWMINNOACTIVE = 7;
+        private const int SW_SHOWNA = 8;
         private const int SW_RESTORE = 9;
+        private const int SW_SHOWDEFAULT = 10;
+        private const int SW_FORCEMINIMIZE = 11;
 
 
         private List<String> supportedPrograms;
@@ -78,26 +84,15 @@ namespace DreamoteServer
         //*************************
         //window manipulation
         //*************************
-        [DllImport("User32")] 
-        private static extern int ShowWindow(int hwnd, int nCmdShow);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+        static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
 
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
 
-        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
-        static extern bool SetWindowPos(
-             int hWnd,           // window handle
-             int hWndInsertAfter,    // placement-order handle
-             int X,          // horizontal position
-             int Y,          // vertical position
-             int cx,         // width
-             int cy,         // height
-             uint uFlags);
 
 
         private MMDevice device;
@@ -385,39 +380,37 @@ namespace DreamoteServer
             public int length;
             public int flags;
             public int showCmd;
-            public System.Drawing.Point ptMinPosition;
-            public System.Drawing.Point ptMaxPosition;
-            public System.Drawing.Rectangle rcNormalPosition;
-        }
-        private WINDOWPLACEMENT GetWindowPlacement()
-        {
-
-            WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
-            placement.length = Marshal.SizeOf(placement);
-            GetWindowPlacement(GetActiveWindowHandle(), ref placement);
-            return placement;
-
+            public Point ptMinPosition;
+            public Point ptMaxPosition;
+            public Rectangle rcNormalPosition;
         }
 
-        public void MaximizeActiveWindow()
+        public void SetActiveWindowPlacement()
         {
-            WINDOWPLACEMENT param = new WINDOWPLACEMENT();
-            param.showCmd = SW_MAXIMIZE;
-            param.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
-            SetWindowPlacement(GetActiveWindowHandle(), ref param);
-        }
+            //get a Handle to the active window
+            IntPtr target_hwnd = GetActiveWindowHandle();
+            if (target_hwnd != IntPtr.Zero)
+            {
+                //prepare the WINDOWPLACEMENT struct
+                WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
+                placement.length = Marshal.SizeOf(placement);
 
-        public void NormalizeActiveWindow()
-        {
-           /* WINDOWPLACEMENT param = new WINDOWPLACEMENT();
-            param.showCmd = 5;
-            param.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
-            SetWindowPlacement(GetActiveWindowHandle(), ref param);*/
-            
-            ShowWindow(GetActiveWindowHandle().ToInt32(), 9);
-            /*WINDOWPLACEMENT param = GetWindowPlacement();
-            param.showCmd = 1;
-            SetWindowPlacement(GetActiveWindowHandle(), ref param);*/
+                // Get the window's current placement.
+                GetWindowPlacement(target_hwnd, out placement);
+
+                //check the current placement
+                if (placement.showCmd == SW_MAXIMIZE)
+                {
+                    placement.showCmd = SW_NORMAL;
+                }
+                else
+                {
+                    placement.showCmd = SW_MAXIMIZE;
+                }
+
+                //perform the action
+                SetWindowPlacement(target_hwnd, ref placement);
+            }
         }
 
     }
