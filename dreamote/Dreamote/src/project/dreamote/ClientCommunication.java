@@ -30,7 +30,6 @@ public class ClientCommunication implements ActionConstants{
     public ClientCommunication(String ip, int port){
         this.serverIP = ip;
         this.serverPort = port;
-        //sendCommand("Connecting");    //Establish connection.
         clientSocket = null;
         createSocket();
     }
@@ -93,14 +92,14 @@ public class ClientCommunication implements ActionConstants{
     	return false;
     }
     
-    public int getCurrentPort(){
-    	return clientSocket.getLocalPort();
+    public DatagramSocket getSocket(){
+    	return clientSocket;
     }
     
     public boolean updateServerInfo(String ip, int port) {
     	this.serverIP = ip;
     	this.serverPort = port;
-    	
+    	closeSocket();
     	return createSocket();
     }
     public static boolean isConnected(Context context) {
@@ -158,7 +157,7 @@ public class ClientCommunication implements ActionConstants{
         }
     }
     	
-    
+  
     
 
 }

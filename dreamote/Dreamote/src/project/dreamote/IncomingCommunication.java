@@ -8,22 +8,16 @@ public class IncomingCommunication extends Observable implements Runnable, Actio
 
 	private boolean running = true;
 	private DatagramSocket socket = null;
-	private int port;
 	
 	
-	public IncomingCommunication(int port){
-		this.port = port;
+	public IncomingCommunication(DatagramSocket socket){
+		this.socket = socket;
 		
 		
 	}
-	
-	
-	
 	@Override
 	public void run() {
 		try{
-			socket = new DatagramSocket(port);
-			socket.setReuseAddress(true);
 			byte[] receiveData = new byte[1024];
 			
 			while(running){
