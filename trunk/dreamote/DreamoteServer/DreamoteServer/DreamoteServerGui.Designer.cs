@@ -189,6 +189,7 @@
             this.Controls.Add(this.checkbox_boot);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DreamoteServerGui";
             this.Text = "Dreamote Server Gui";
             this.Resize += new System.EventHandler(this.DreamoteServerGui_Resize);
