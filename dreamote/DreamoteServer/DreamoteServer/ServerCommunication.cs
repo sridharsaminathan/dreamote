@@ -53,8 +53,6 @@ namespace DreamoteServer
         {
             try
             {
-
-                sender.Port = 52568;
                 byte[] sendData = new byte[1024];
                 sendData = Encoding.UTF8.GetBytes(msg);
                 newsock.Send(sendData, sendData.Length, sender);
