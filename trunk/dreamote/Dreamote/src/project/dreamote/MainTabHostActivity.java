@@ -40,7 +40,6 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
 	private Button mediaNext;
 	private Button mediaPrevious;
 	private Button maximizeOrRestoreWindow;
-	private final static int RECEIVING_PORT= 52568;
 	private View drawerContent;
 	
 	private IncomingCommunication com = null;
@@ -65,18 +64,19 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
         setListeners();
         createTabs();
         
+        startReceiverThread();
     }
     
     @Override
     public void onStart(){
     	super.onStart();
-    	startReceiverThread();
+    	
     }
     
     @Override
     public void onStop(){
     	super.onStop();
-    	stopReceiverThread();
+    	
     }
     private void findViews() {
     	tabHost = (TabHost)findViewById(android.R.id.tabhost);
@@ -101,7 +101,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     }
     
     private void startReceiverThread(){
-    		com = new IncomingCommunication(RECEIVING_PORT);
+    		com = new IncomingCommunication(communication.getSocket());
     		com.addObserver(this);
         	receiverThread = new Thread(com);
         	receiverThread.start();
@@ -133,11 +133,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     }
     
     private void stopReceiverThread(){
-    	if(com != null){
-    		com.shutDown();
-    		
-    		
-    	}
+    	
     	if(receiverThread != null){
     		receiverThread.interrupt();
     		receiverThread = null;
@@ -191,6 +187,7 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     	
     	boolean connected = communication.updateServerInfo(
     			Preferences.getConnectedServerIp(this), Preferences.getConnectedServerPort(this));
+    	startReceiverThread();
     	
     	if(!connected) {
     		 AlertDialog.Builder builder = new AlertDialog.Builder(this);
