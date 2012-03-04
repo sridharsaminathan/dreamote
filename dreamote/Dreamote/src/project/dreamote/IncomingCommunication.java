@@ -2,6 +2,7 @@ package project.dreamote;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketTimeoutException;
 import java.util.Observable;
 
 public class IncomingCommunication extends Observable implements Runnable, ActionConstants{
@@ -17,18 +18,32 @@ public class IncomingCommunication extends Observable implements Runnable, Actio
 	}
 	@Override
 	public void run() {
-		try{
+		
 			byte[] receiveData = new byte[1024];
 			
 			while(running){
-				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-				socket.receive(receivePacket);
-				String data = new String( receivePacket.getData(), 0 , receivePacket.getLength());
-				handleData(data);
+				try{
+					
+					DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+					socket.setSoTimeout(2000);
+					socket.receive(receivePacket);
+					String data = new String( receivePacket.getData(), 0 , receivePacket.getLength());
+					handleData(data);
+				
+				}catch(SocketTimeoutException es){
+					if(!running){
+						socket.close();
+						break;
+					}else
+						continue;
+					
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
 			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		
 		
 	}
 	
@@ -49,13 +64,8 @@ public class IncomingCommunication extends Observable implements Runnable, Actio
 		
 	}
 	
-	public void shutDown(){
+	public void stopThread(){
 		running = false;
-		if(socket != null){
-			
-			socket.disconnect();
-			socket.close();
-		}
 		
 	}
 	

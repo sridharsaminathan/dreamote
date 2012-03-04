@@ -133,11 +133,11 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     }
     
     private void stopReceiverThread(){
-    	
-    	if(receiverThread != null){
-    		receiverThread.interrupt();
-    		receiverThread = null;
+    	if(com != null){
+    		com.stopThread();
+    		com = null;
     	}
+    	receiverThread = null;
     }
     
     private void setupVolumeController() {
@@ -185,8 +185,10 @@ public class MainTabHostActivity extends ActivityGroup implements OnClickListene
     
     public void updateServerInfo() {
     	
-    	boolean connected = communication.updateServerInfo(
-    			Preferences.getConnectedServerIp(this), Preferences.getConnectedServerPort(this));
+    	boolean connected = communication.updateServerInfo(Preferences.getConnectedServerIp(this), Preferences.getConnectedServerPort(this));
+    	//stop the old receiver thread
+    	stopReceiverThread();
+    	//start new receiverthread
     	startReceiverThread();
     	
     	if(!connected) {

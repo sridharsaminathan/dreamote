@@ -99,7 +99,6 @@ public class ClientCommunication implements ActionConstants{
     public boolean updateServerInfo(String ip, int port) {
     	this.serverIP = ip;
     	this.serverPort = port;
-    	closeSocket();
     	return createSocket();
     }
     public static boolean isConnected(Context context) {
@@ -152,6 +151,7 @@ public class ClientCommunication implements ActionConstants{
             DatagramPacket sendPacket = new DatagramPacket(sendData,sendData.length,broadcastAdr, BROADCAST_PORT);
             bCastSocket.setBroadcast(true);
             bCastSocket.send(sendPacket);
+            bCastSocket.close();
         }catch(IOException e){
         	e.printStackTrace();
         }
