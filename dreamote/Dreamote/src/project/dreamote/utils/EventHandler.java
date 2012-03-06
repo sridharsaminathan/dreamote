@@ -1,6 +1,5 @@
 package project.dreamote.utils;
 
-import project.dreamote.ActionConstants;
 import project.dreamote.MainTabHostActivity;
 import project.dreamote.Preferences;
 import project.dreamote.R;

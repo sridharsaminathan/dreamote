@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import project.dreamote.utils.BroadCastRepliesThread;
+import project.dreamote.utils.ClientCommunication;
+import project.dreamote.utils.ServerListAdapter;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
