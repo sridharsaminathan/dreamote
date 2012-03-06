@@ -1,5 +1,6 @@
 package project.dreamote;
 
+import project.dreamote.utils.ClientCommunication;
 import project.dreamote.utils.EventHandler;
 import android.app.Activity;
 import android.os.Bundle;

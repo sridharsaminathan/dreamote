@@ -1,4 +1,4 @@
-package project.dreamote;
+package project.dreamote.utils;
 
 public interface ActionConstants {
 	public static final int ACTION_MOUSE_MOVE = 0x00;

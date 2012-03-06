@@ -1,4 +1,5 @@
-package project.dreamote;
+package project.dreamote.utils;
+
 
 public class MessageGenerator implements ActionConstants{
 	

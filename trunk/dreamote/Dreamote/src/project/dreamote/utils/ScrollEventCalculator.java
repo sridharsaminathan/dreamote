@@ -1,6 +1,5 @@
 package project.dreamote.utils;
 
-import project.dreamote.ActionConstants;
 
 public class ScrollEventCalculator {
 	private static final int SCROLL_TICK = 10;

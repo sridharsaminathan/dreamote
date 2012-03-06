@@ -1,9 +1,10 @@
-package project.dreamote;
+package project.dreamote.utils;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 import java.util.Observable;
+
 
 public class IncomingCommunication extends Observable implements Runnable, ActionConstants{
 

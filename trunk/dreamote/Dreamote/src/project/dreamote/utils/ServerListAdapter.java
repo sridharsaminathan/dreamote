@@ -1,6 +1,10 @@
-package project.dreamote;
+package project.dreamote.utils;
 
 import java.util.ArrayList;
+
+import project.dreamote.R;
+import project.dreamote.R.id;
+import project.dreamote.R.layout;
 
 import android.content.Context;
 import android.view.LayoutInflater;
