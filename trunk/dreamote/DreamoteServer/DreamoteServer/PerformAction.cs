@@ -58,8 +58,16 @@ namespace DreamoteServer
         private const int SW_SHOWDEFAULT = 10;
         private const int SW_FORCEMINIMIZE = 11;
 
+        public enum SupportedProgs
+        {
+            ProgramName = 0,
+            ToggleFullscreen = 1
+        }
 
-        private List<String> supportedPrograms;
+        private const int SP_PROGRAMNAME = 0;
+        private const int SP_TOGGLE_FULLSCREEN = 1;
+        
+        
 
 
         [DllImport("user32.dll")]
@@ -93,15 +101,16 @@ namespace DreamoteServer
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
 
+        private List<String[]> supportedPrograms;
 
-
-        private MMDevice device;
+        private MMDevice defaultDevice;
 
         public PerformAction()
         {
             MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
-            device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
-            supportedPrograms = SupportedPrograms.getSupportedPrograms();
+            defaultDevice = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+
+            supportedPrograms = SupportedPrograms.GetSupportedPrograms();
         }
 
         public static void SetCursorPosition(int xDiff, int yDiff)
@@ -226,7 +235,8 @@ namespace DreamoteServer
             for (int i = 0; i < openPrograms.Count; i++)
             {
                 String[] program = openPrograms[i];
-                if (supportedPrograms.Contains(program[0].ToLower()))
+
+                if (isSupportedProgram(program))
                 {
                     sup.Add(program);
 
@@ -239,6 +249,22 @@ namespace DreamoteServer
             
             supported = StringArrayListToString(sup);
             other = StringArrayListToString(oth);
+        }
+
+
+        private Boolean isSupportedProgram(String[] program)
+        {
+            String[] supportedPrg;
+            for (int i = 0; i < supportedPrograms.Count; i++)
+            {
+                supportedPrg = supportedPrograms[i];
+                if (supportedPrg[SP_PROGRAMNAME].Equals(program[SP_PROGRAMNAME].ToLower()))
+                {
+                    return true;
+                }
+
+            }
+            return false;
         }
 
 
@@ -255,9 +281,9 @@ namespace DreamoteServer
                 String[] program = new String[2];
                 String title = process.MainWindowTitle;
                 title = (title.Length < 30 ? title : (title.Substring(0, 30) +  "..."));
-                String processName = process.ProcessName;
+                
                 program[1] = title;
-                program[0] = processName;
+                program[0] = process.ProcessName;
                 programs.Add(program);
                 
             }
@@ -364,11 +390,11 @@ namespace DreamoteServer
 
         public int GetMasterVolume()
         {
-            return (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
+            return (int)(defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
         }
 
         public void SetMasterVolume(int vol){
-            device.AudioEndpointVolume.MasterVolumeLevelScalar = ((float)vol / 100.0f);
+            defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar = ((float)vol / 100.0f);
             
         }
 

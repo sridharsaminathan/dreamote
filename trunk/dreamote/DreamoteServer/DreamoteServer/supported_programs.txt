@@ -1,2 +1,5 @@
-#Dreamote supported programs
-spotify:vlc:wmplayer
+#Dreamote supported programs(process name)
+#program:fullscreen
+spotify
+vlc:f
+wmplayer
