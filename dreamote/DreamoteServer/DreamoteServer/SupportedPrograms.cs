@@ -11,9 +11,9 @@ namespace DreamoteServer
 
 
 
-        public static List<String> getSupportedPrograms()
+        public static List<String[]> GetSupportedPrograms()
         {
-            List<String> supportedPrograms = new List<String>();
+            List<String[]> supportedPrograms = new List<String[]>();
             try
             {
                 
@@ -25,14 +25,7 @@ namespace DreamoteServer
                         if (!line.StartsWith("#"))
                         {
                             String[] program = line.Split(':');
-                            foreach(String str in program){
-                                 
-                                if (!String.IsNullOrWhiteSpace(str))
-                                {
-                                    supportedPrograms.Add(str);
-                                }
-                            }
-
+                            supportedPrograms.Add(program);
                         }
                     }
                 }

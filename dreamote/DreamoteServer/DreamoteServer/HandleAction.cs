@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 
 namespace DreamoteServer
@@ -56,6 +57,9 @@ namespace DreamoteServer
                     String other;
                     pa.GetOpenWindows(out supported, out other);
                     serverCommunication.send( MessageGenerator.CreateStringOpenSupportedWindows(supported));
+
+                    //delay to separate the sent packets
+                    Thread.Sleep(10);
                     serverCommunication.send(MessageGenerator.CreateStringOpenOtherWindows(other));
                     break;
                 case ServerConstants.ACTION_SCROLL_UP:
