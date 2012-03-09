@@ -426,7 +426,7 @@ namespace DreamoteServer
             {
                 if (isSupportedProgram(process.ProcessName))
                 {
-                    SupportedProgramSetFullscreen(process.ProcessName);
+                    SupportedProgramDoAction(process.ProcessName, SP_TOGGLE_FULLSCREEN);
                 }
                 else
                 {
@@ -435,7 +435,7 @@ namespace DreamoteServer
             }
         }
 
-        private void SupportedProgramSetFullscreen(String processName)
+        private void SupportedProgramDoAction(String processName, int actionCommand)
         {
             for (int i = 0; i < supportedPrograms.Count; i++)
             {
@@ -443,10 +443,10 @@ namespace DreamoteServer
                 if (program[SP_PROCESSNAME].Equals(processName.ToLower()))
                 {
                     //Toggle fullscreencommand is on position 1 in array, size  of array needs to be atleast 2
-                    if (program.Length >= SP_TOGGLE_FULLSCREEN + 1)
+                    if (program.Length >= actionCommand + 1)
                     {
                         //retreive the command
-                        String command = program[SP_TOGGLE_FULLSCREEN];
+                        String command = program[actionCommand];
                         if (command != null && command.Length > 0)
                         {
                             //do the command
