@@ -64,11 +64,13 @@ namespace DreamoteServer
             ToggleFullscreen = 1
         }
 
-        private const int SP_PROGRAMNAME = 0;
+        private const int SP_PROCESSNAME = 0;
         private const int SP_TOGGLE_FULLSCREEN = 1;
         
         
-
+        //*************************
+        //mouse and keyboard events 
+        //*************************
 
         [DllImport("user32.dll")]
         private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
@@ -76,6 +78,11 @@ namespace DreamoteServer
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetCursorPos(int X, int Y);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+
+
 
         [DllImport("user32.dll")]
         static extern IntPtr GetForegroundWindow();
@@ -86,8 +93,10 @@ namespace DreamoteServer
         [DllImport("user32.dll")]
         static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+        [DllImport("user32.dll")]
+        private static extern Int32 GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        
 
         //*************************
         //window manipulation
@@ -101,8 +110,9 @@ namespace DreamoteServer
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
 
-        private List<String[]> supportedPrograms;
 
+
+        private List<String[]> supportedPrograms;
         private MMDevice defaultDevice;
 
         public PerformAction()
@@ -236,7 +246,7 @@ namespace DreamoteServer
             {
                 String[] program = openPrograms[i];
 
-                if (isSupportedProgram(program))
+                if (isSupportedProgram(program[SP_PROCESSNAME]))
                 {
                     sup.Add(program);
 
@@ -252,13 +262,13 @@ namespace DreamoteServer
         }
 
 
-        private Boolean isSupportedProgram(String[] program)
+        private Boolean isSupportedProgram(String processName)
         {
             String[] supportedPrg;
             for (int i = 0; i < supportedPrograms.Count; i++)
             {
                 supportedPrg = supportedPrograms[i];
-                if (supportedPrg[SP_PROGRAMNAME].Equals(program[SP_PROGRAMNAME].ToLower()))
+                if (supportedPrg[SP_PROCESSNAME].Equals(processName.ToLower()))
                 {
                     return true;
                 }
@@ -272,8 +282,6 @@ namespace DreamoteServer
         {
             List<String[]> programs = new List<String[]>();
             IEnumerable<Process> processes = Process.GetProcesses().Where(p => p.MainWindowHandle != IntPtr.Zero && !p.ProcessName.Equals("explorer") && !p.ProcessName.Equals("DreamoteServer"));
-           
-
             
             
             foreach (var process in processes)
@@ -411,7 +419,66 @@ namespace DreamoteServer
             public Rectangle rcNormalPosition;
         }
 
-        public void SetActiveWindowPlacement()
+        public void ToggleFullscreen()
+        {
+            Process process = GetActiveProcess();
+            if (process != null)
+            {
+                if (isSupportedProgram(process.ProcessName))
+                {
+                    SupportedProgramSetFullscreen(process.ProcessName);
+                }
+                else
+                {
+                    SetMaximizeWindow();
+                }
+            }
+        }
+
+        private void SupportedProgramSetFullscreen(String processName)
+        {
+            for (int i = 0; i < supportedPrograms.Count; i++)
+            {
+                String[] program = supportedPrograms[i];
+                if (program[SP_PROCESSNAME].Equals(processName.ToLower()))
+                {
+                    //Toggle fullscreencommand is on position 1 in array, size  of array needs to be atleast 2
+                    if (program.Length >= SP_TOGGLE_FULLSCREEN + 1)
+                    {
+                        //retreive the command
+                        String command = program[SP_TOGGLE_FULLSCREEN];
+                        if (command != null && command.Length > 0)
+                        {
+                            //do the command
+                            sendKeyBoardKey(command);
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        private Process GetActiveProcess()
+        {
+            IntPtr hwnd = GetActiveWindowHandle();
+            return hwnd != null ? GetProcessByHandle(hwnd) : null;
+        }
+
+        private Process GetProcessByHandle(IntPtr hwnd)
+        {
+            try
+            {
+                uint processID;
+                GetWindowThreadProcessId(hwnd, out processID);
+                return Process.GetProcessById((int)processID);
+            }
+            catch { return null; }
+        }
+
+
+
+        public void SetMaximizeWindow()
         {
             //get a Handle to the active window
             IntPtr target_hwnd = GetActiveWindowHandle();
