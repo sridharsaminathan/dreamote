@@ -97,7 +97,7 @@ namespace DreamoteServer
                     pa.MediaPrevious();
                     break;
                 case ServerConstants.ACTION_MAXIMIZE_OR_RESTORE_WINDOW:
-                    pa.SetActiveWindowPlacement();
+                    pa.ToggleFullscreen();
                     break;
             }
                 
