@@ -1,4 +1,4 @@
-package project.dreamote.utils;
+package project.dremote.communication;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -6,6 +6,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+
+import project.dreamote.utils.ActionConstants;
+import project.dreamote.utils.MessageGenerator;
 
 
 import android.content.Context;
@@ -35,6 +38,10 @@ public class ClientCommunication implements ActionConstants{
         createSocket();
     }
     
+    /**
+     * Creates a socket
+     * @return true if is was successfull
+     */
     private boolean createSocket(){
     	try {
     		clientSocket = new DatagramSocket();
@@ -85,6 +92,10 @@ public class ClientCommunication implements ActionConstants{
         }
     }
     
+    /**
+     * Closes the socket
+     * @return true if it socket was successfully closed
+     */
     public boolean closeSocket(){
     	if(clientSocket != null){
     		clientSocket.close();
@@ -93,15 +104,31 @@ public class ClientCommunication implements ActionConstants{
     	return false;
     }
     
+    /**
+     * Gets the socket
+     * @return socket
+     */
     public DatagramSocket getSocket(){
     	return clientSocket;
     }
     
+    /**
+     * Updates the connection info 
+     * @param ip ipaddress
+     * @param port port to the server
+     * @return true if a creation of a socket was sucessful
+     */
     public boolean updateServerInfo(String ip, int port) {
     	this.serverIP = ip;
     	this.serverPort = port;
     	return createSocket();
     }
+    
+    /**
+     * Checks if the phone hase wireless turned on if it is connected to a wireless network.
+     * @param context 
+     * @return
+     */
     public static boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager)
             context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -114,7 +141,11 @@ public class ClientCommunication implements ActionConstants{
     }
     
    
-    	
+    /**
+     * Gets the broadcastaddress in the current network 
+     * @param context Context of the application
+     * @return the Inetaddress Object that contains the broadcastaddress
+     */
     public static InetAddress getBroadcastAddress(Context context) {
     	try{
     		WifiManager myWifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
@@ -135,14 +166,20 @@ public class ClientCommunication implements ActionConstants{
     	return null;
     }
     
-    
+    /**
+     * Sends a broadcastpacket
+     * @param context context of application
+     */
     public static void sendBroadCast(Context context){
     	InetAddress i = getBroadcastAddress(context);
 		if(i != null){
 			sendBroadcast(i);
 		}
     }
-    
+    /**
+     * Sends a broadcastpacket
+     * @param broadcastAdr receiver address
+     */
     private static void sendBroadcast(InetAddress broadcastAdr){
         try{            
             byte[] sendData = new byte[1024];        

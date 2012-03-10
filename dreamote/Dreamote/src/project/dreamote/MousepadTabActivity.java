@@ -1,7 +1,7 @@
 package project.dreamote;
 
-import project.dreamote.utils.ClientCommunication;
 import project.dreamote.utils.EventHandler;
+import project.dremote.communication.ClientCommunication;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;

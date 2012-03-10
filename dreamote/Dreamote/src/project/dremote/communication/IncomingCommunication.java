@@ -1,11 +1,17 @@
-package project.dreamote.utils;
+package project.dremote.communication;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 import java.util.Observable;
 
+import project.dreamote.utils.ActionConstants;
 
+/**
+ * Thread for receiving the incoming data sent from the server
+ * @author nume
+ *
+ */
 public class IncomingCommunication extends Observable implements Runnable, ActionConstants{
 
 	private boolean running = true;
